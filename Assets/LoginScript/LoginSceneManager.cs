@@ -15,7 +15,7 @@ public class LoginSceneManager : MonoBehaviour
 
 
 
-    public void ignupButton()
+    public void SignupButton()
     {
         loginScene.SetActive(false);
     }
