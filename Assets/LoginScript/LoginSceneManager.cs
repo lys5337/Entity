@@ -11,7 +11,6 @@ public class LoginSceneManager : MonoBehaviour
 
     public GameObject signScene;
     public GameObject loginScene;
-    public GameObject Main;
 
 
 
@@ -24,7 +23,5 @@ public class LoginSceneManager : MonoBehaviour
     {
         loginScene.SetActive(true);
     }
-
-
 }
 }

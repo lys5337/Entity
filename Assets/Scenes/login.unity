@@ -2124,7 +2124,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   signScene: {fileID: 2025686749}
   loginScene: {fileID: 105782468}
-  Main: {fileID: 0}
 --- !u!4 &1066928907
 Transform:
   m_ObjectHideFlags: 0
