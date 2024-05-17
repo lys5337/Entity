@@ -12,7 +12,7 @@ public class Floor : MonoBehaviour
     public Encounter encounter;
     SceneManager sceneManager;
     Map map;
-    HorizontalLayoutGroup horizontalLayoutGroup;
+    VerticalLayoutGroup verticalLayoutGroup;
     private void Awake()
     {
         
@@ -30,7 +30,7 @@ public class Floor : MonoBehaviour
     }
     public void SetNodesActive(Encounter _encounter)
     {
-        horizontalLayoutGroup = GetComponent<HorizontalLayoutGroup>();
+            verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
         sceneManager = FindObjectOfType<SceneManager>();
         map = FindObjectOfType<Map>();
 
@@ -45,10 +45,10 @@ public class Floor : MonoBehaviour
             n.GetComponent<Node>().clickedIcon.enabled=false;
             n.GetComponent<Node>().floor=this;
         }
-            
-        horizontalLayoutGroup.spacing= Random.Range(25f,125f);
-        horizontalLayoutGroup.padding.left= Random.Range(0,125);
-        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2 (600, Random.Range(80,120));
+
+        verticalLayoutGroup.spacing= Random.Range(25f,125f);
+        verticalLayoutGroup.padding.top= Random.Range(0,125);
+        //this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2 (600, Random.Range(80,120));
         activeNodes.Clear();
         nodes.Shuffle();
         EnableNode(nodes[0]);
