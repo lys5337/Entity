@@ -256,14 +256,18 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void EndFight(bool win)
     {
-        if(!win)
-            gameover.SetActive(true);
-
-        if(gameManager.PlayerHasRelic("BurningBlood"))
+        if (!win)
         {
-            player.currentHealth+=6;
-            if(player.currentHealth>player.maxHealth)
-                player.currentHealth=player.maxHealth;
+            gameover.SetActive(true);
+        }
+
+        if (gameManager.PlayerHasRelic("BurningBlood"))
+        {
+            player.currentHealth += 6;
+            if (player.currentHealth > player.maxHealth)
+            {
+                player.currentHealth = player.maxHealth;
+            }
 
             player.UpdateHealthUI(player.currentHealth);
         }
@@ -272,11 +276,17 @@ public class BattleSceneManager : MonoBehaviour
         HandleEndScreen();
 
         gameManager.UpdateFloorNumber();
-        gameManager.UpdateGoldNumber(enemies[0].goldDrop);
 
-        if(enemies[0].bird)
+        // 보상을 여기서 추가합니다.
+        int goldReward = enemies[0].goldDrop;
+        gameManager.UpdateGoldNumber(goldReward);
+
+        if (enemies[0].bird)
+        {
             birdIcon.SetActive(false);
+        }
     }
+
     public void HandleEndScreen()
     {
         //gold
@@ -284,11 +294,11 @@ public class BattleSceneManager : MonoBehaviour
         endScreen.goldReward.gameObject.SetActive(true);
         endScreen.cardRewardButton.gameObject.SetActive(true);
 
-        endScreen.goldReward.relicName.text = enemies[0].goldDrop.ToString()+" Gold";
-        gameManager.UpdateGoldNumber(gameManager.goldAmount+=enemies[0].goldDrop);
+        // 여기에서는 UI 업데이트만 수행합니다.
+        endScreen.goldReward.relicName.text = enemies[0].goldDrop.ToString() + " Gold";
 
-        //relics
-        if(enemies[0].nob)
+            //relics
+            if (enemies[0].nob)
         {
             gameManager.relicLibrary.Shuffle();
             endScreen.relicReward.gameObject.SetActive(true);

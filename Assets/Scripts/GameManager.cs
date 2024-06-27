@@ -57,10 +57,12 @@ public class GameManager : MonoBehaviour
 	}
 	public void UpdateGoldNumber(int newGold)
 	{
-		goldAmount+=newGold;
+		Debug.Log($"Before update: Current goldAmount = {goldAmount}, newGold = {newGold}");
+		goldAmount += newGold;
 		playerStatsUI.moneyAmountText.text = goldAmount.ToString();
+		Debug.Log($"After update: Updated goldAmount = {goldAmount}");
 	}
-	public void DisplayHealth(int healthAmount, int maxHealth)
+		public void DisplayHealth(int healthAmount, int maxHealth)
     {
         playerStatsUI.healthDisplayText.text = $"{healthAmount} / {maxHealth}";
     }
