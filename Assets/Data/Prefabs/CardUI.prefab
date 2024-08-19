@@ -764,7 +764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &493250454237278987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -841,7 +841,6 @@ MonoBehaviour:
   cardCostText: {fileID: 493250454226606694}
   cardImage: {fileID: 493250453917911620}
   discardEffect: {fileID: 6430551114553073417, guid: 6c3fae2cc847b7d4db03643cb9dfacba, type: 3}
-  cardparent: {fileID: 756042340008923636}
 --- !u!114 &493250454237278984
 MonoBehaviour:
   m_ObjectHideFlags: 0

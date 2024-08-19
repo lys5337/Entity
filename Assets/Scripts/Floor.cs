@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour
 	public List<Image> nodes;
 	public List<Image> activeNodes;
     public Encounter encounter;
-    SceneManager sceneManager;
+    SceneChanger SceneChanger;
     Map map;
     VerticalLayoutGroup verticalLayoutGroup;
     private void Awake()
@@ -20,18 +20,20 @@ public class Floor : MonoBehaviour
     public void StartEncounter()
     {
         if(encounter.encounterType==Encounter.Type.enemy)
-            sceneManager.SelectBattleType("enemy");
+            SceneChanger.SelectBattleType("enemy");
         else if(encounter.encounterType==Encounter.Type.elite)
-            sceneManager.SelectBattleType("elite");
+            SceneChanger.SelectBattleType("elite");
+        else if(encounter.encounterType==Encounter.Type.boss)
+            SceneChanger.SelectBattleType("boss");
         else if(encounter.encounterType==Encounter.Type.rest)
-            sceneManager.SelectScreen("Rest");
+            SceneChanger.SelectScreen("Rest");
         else if(encounter.encounterType==Encounter.Type.chest)
-            sceneManager.SelectScreen("Chest");
+            SceneChanger.SelectScreen("Chest");
     }
     public void SetNodesActive(Encounter _encounter)
     {
             verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
-        sceneManager = FindObjectOfType<SceneManager>();
+        SceneChanger = FindObjectOfType<SceneChanger>();
         map = FindObjectOfType<Map>();
 
         foreach(Transform n in this.gameObject.transform)

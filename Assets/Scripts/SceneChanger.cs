@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace TJ
 {
-    public class SceneManager : MonoBehaviour
+    public class SceneChanger : MonoBehaviour
     {
         public GameObject titleScene;
         public GameObject classSelectionScreen;
+        public GameObject ModeSelectScreen;
         public GameObject battleScene;
         public GameObject chestScene;
         public GameObject restScene;
         public GameObject idleScene;
         public GameObject mapScene;
+        public GameObject nextStageScreen;
+        public GameObject shopScene;
 
         [Header("UI")]
         public Image splashArt;
@@ -27,10 +31,19 @@ namespace TJ
         BattleSceneManager battleSceneManager;
         EndScreen endScreen;
         SceneFader sceneFader;
-        public enum Encounter { enemy, boss, restSite }
         private void Awake()
         {
-            gameManager = GetComponent<GameManager>();
+            // "GameData" 오브젝트를 찾아서 GameManager 컴포넌트를 가져옴
+            GameObject gameDataObject = GameObject.Find("GameData");
+            if (gameDataObject != null)
+            {
+                gameManager = gameDataObject.GetComponent<GameManager>();
+            }
+            else
+            {
+                Debug.LogError("GameData 오브젝트를 찾을 수 없습니다.");
+            }
+
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
             endScreen = FindObjectOfType<EndScreen>();
             sceneFader = FindObjectOfType<SceneFader>();
@@ -64,6 +77,19 @@ namespace TJ
             StartCoroutine(LoadScene("Map"));
             gameManager.LoadCharacterStats();
         }
+        public void Normal()
+        {
+            ModeSelectScreen.SetActive(false);
+        }
+        public void Story()
+        {
+            SceneManager.LoadScene("Stage0");
+        }
+        public void NextStage()
+        {
+            if (SceneManager.GetActiveScene().name == "Stage0")
+                SceneManager.LoadScene("Stage1");
+        }
         public void SelectScreen(string sceneName)
         {
             StartCoroutine(LoadScene(sceneName));
@@ -81,12 +107,21 @@ namespace TJ
             mapScene.SetActive(false);
             chestScene.SetActive(false);
             restScene.SetActive(false);
+            nextStageScreen.SetActive(false);
             playerIcon.SetActive(true);
 
             if (e == "enemy")
                 battleSceneManager.StartHallwayFight();
             else if (e == "elite")
                 battleSceneManager.StartEliteFight();
+            else if (e == "boss")
+            {
+                nextStageScreen.SetActive(true);
+                battleSceneManager.StartBossFight();
+            }
+                
+
+                
 
             //fade from black
             yield return new WaitForSeconds(1);
