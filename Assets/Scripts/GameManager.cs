@@ -33,12 +33,12 @@ namespace TJ
 
         private void InitializeDeck()
         {
-            // µ¦À» ÃÊ±âÈ­ÇÒ ¶§, °¢ Ä«µå¸¦ º¹Á¦ÇØ¼­ °³º°ÀûÀ¸·Î °ü¸®
+            // ë±ì„ ì´ˆê¸°í™”í•  ë•Œ, ê° ì¹´ë“œë¥¼ ë³µì œí•´ì„œ ê°œë³„ì ìœ¼ë¡œ ê´€ë¦¬
             List<Card> clonedDeck = new List<Card>();
             foreach (Card card in playerDeck)
             {
-                Card clonedCard = Instantiate(card); // Card¸¦ º¹Á¦ÇÏ¿© »õ·Î¿î ÀÎ½ºÅÏ½º »ı¼º
-                clonedCard.isUpgraded = false; // ÃÊ±âÈ­ »óÅÂ·Î ¼³Á¤
+                Card clonedCard = Instantiate(card); // Cardë¥¼ ë³µì œí•˜ì—¬ ìƒˆë¡œìš´ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+                clonedCard.isUpgraded = false; // ì´ˆê¸°í™” ìƒíƒœë¡œ ì„¤ì •
                 clonedDeck.Add(clonedCard);
             }
             playerDeck = clonedDeck;

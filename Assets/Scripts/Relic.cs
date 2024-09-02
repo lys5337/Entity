@@ -12,3 +12,4 @@ public class Relic : ScriptableObject
     public Sprite relicIcon;
 }
 }
+//배틀씬 메니져에 소속된 스크립트

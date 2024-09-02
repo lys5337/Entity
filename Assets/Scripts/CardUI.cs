@@ -17,7 +17,7 @@ namespace TJ
         BattleSceneManager battleSceneManager;
         Animator animator;
 
-        // CardManagementUI¸¦ ÀÎ½ºÆåÅÍ¿¡¼­ Á÷Á¢ ÇÒ´çÇÒ ¼ö ÀÖµµ·Ï publicÀ¸·Î ¼±¾ğ
+        // CardManagementUIë¥¼ ì¸ìŠ¤í™í„°ì—ì„œ ì§ì ‘ í• ë‹¹í•  ìˆ˜ ìˆë„ë¡ publicìœ¼ë¡œ ì„ ì–¸
         public CardManagementUI cardManagementUI;
 
         private void Awake()
@@ -25,14 +25,9 @@ namespace TJ
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
             animator = GetComponent<Animator>();
 
-            // ¸¸¾à ÀÎ½ºÆåÅÍ¿¡¼­ ÇÒ´çµÇÁö ¾Ê¾Ò´Ù¸é ÀÚµ¿À¸·Î Ã£´Â ÄÚµå Ãß°¡
             if (cardManagementUI == null)
             {
                 cardManagementUI = FindObjectOfType<CardManagementUI>();
-                if (cardManagementUI == null)
-                {
-                    Debug.LogError("CardManagementUI¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ÀÎ½ºÆåÅÍ¿¡¼­ ÇÒ´çÇØÁÖ¼¼¿ä.");
-                }
             }
         }
 
@@ -57,11 +52,11 @@ namespace TJ
 
             if (cardManagementUI != null)
             {
-                cardManagementUI.gameObject.SetActive(true); // Ä«µå °ü¸® UI ÆĞ³Î È°¼ºÈ­
+                cardManagementUI.gameObject.SetActive(true); // ì¹´ë“œ ê´€ë¦¬ UI íŒ¨ë„ í™œì„±í™”
             }
             else
             {
-                Debug.LogError("CardManagementUI¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                //Debug.LogError("CardManagementUIë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
 
@@ -85,7 +80,7 @@ namespace TJ
 
         public void HandleDrag()
         {
-            // µå·¡±× ·ÎÁ÷ÀÌ ÇÊ¿äÇÒ °æ¿ì ¿©±â¿¡ Ãß°¡
+            // ë“œë˜ê·¸ ë¡œì§ì´ í•„ìš”í•  ê²½ìš° ì—¬ê¸°ì— ì¶”ê°€
         }
 
         public void HandleEndDrag()

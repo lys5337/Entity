@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public GameObject DialogScreen;  // DialogScreen ¿ÀºêÁ§Æ® ÂüÁ¶
+    public GameObject DialogScreen;  // DialogScreen ì˜¤ë¸Œì íŠ¸ ì°¸ì¡°
     private GameObject text1;
     private GameObject text2;
     private GameObject text3;
@@ -11,13 +11,13 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        // DialogScreen ³»ºÎÀÇ ÅØ½ºÆ® ¿ÀºêÁ§Æ® Ã£±â
+        // DialogScreen ë‚´ë¶€ì˜ í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
         text1 = DialogScreen.transform.Find("text1").gameObject;
         text2 = DialogScreen.transform.Find("text2").gameObject;
         text3 = DialogScreen.transform.Find("text3").gameObject;
         text4 = DialogScreen.transform.Find("text4").gameObject;
 
-        // ÃÊ±â »óÅÂ¿¡¼­ ¸ğµç ÅØ½ºÆ® ºñÈ°¼ºÈ­
+        // ì´ˆê¸° ìƒíƒœì—ì„œ ëª¨ë“  í…ìŠ¤íŠ¸ ë¹„í™œì„±í™”
         text1.SetActive(false);
         text2.SetActive(false);
         text3.SetActive(false);
@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         text4.SetActive(true);
     }
 
-    // ¿¹½Ã¿ë ¾÷µ¥ÀÌÆ® ·ÎÁ÷ (½ÇÁ¦·Î´Â MapÀÇ ³ëµå »óÅÂ¿¡ µû¶ó È£ÃâµÇ¾î¾ß ÇÔ)
+    // ì˜ˆì‹œìš© ì—…ë°ì´íŠ¸ ë¡œì§ (ì‹¤ì œë¡œëŠ” Mapì˜ ë…¸ë“œ ìƒíƒœì— ë”°ë¼ í˜¸ì¶œë˜ì–´ì•¼ í•¨)
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))

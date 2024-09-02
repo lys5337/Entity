@@ -15,8 +15,8 @@ MonoBehaviour:
   cardTitle: Bloodletting
   isUpgraded: 0
   cardDescription:
-    baseAmount: Lose 3 HP. Gain 2 Energy
-    upgradedAmount: Lose 3 HP. Gain 2 Energy
+    baseAmount: "3\uC758 \uD53C\uD574, 2\uC758 \uC5D0\uB108\uC9C0\uB97C \uC5BB\uC74C"
+    upgradedAmount: "2\uC758 \uD53C\uD574, 3\uC758 \uC5D0\uB108\uC9C0\uB97C \uC5BB\uC74C"
   cardCost:
     baseAmount: 0
     upgradedAmount: 0

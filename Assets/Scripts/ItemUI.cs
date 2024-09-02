@@ -8,7 +8,7 @@ namespace TJ
         public Text itemNameText;
         public Text priceText;
         public Button buyButton;
-        public Image itemImage; // ¾ÆÀÌÅÛ ¶Ç´Â ·¼¸¯ ÀÌ¹ÌÁö¸¦ Ç¥½ÃÇÒ Image ÄÄÆ÷³ÍÆ® Ãß°¡
+        public Image itemImage; // ì•„ì´í…œ ë˜ëŠ” ë ë¦­ ì´ë¯¸ì§€ë¥¼ í‘œì‹œí•  Image ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
 
         private Item item;
         private Shop shopManager;
@@ -20,35 +20,35 @@ namespace TJ
 
             if (itemNameText == null)
             {
-                Debug.LogError("itemNameText°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError("itemNameTextê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
 
             if (priceText == null)
             {
-                Debug.LogError("priceText°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError("priceTextê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
 
             if (buyButton == null)
             {
-                Debug.LogError("buyButtonÀÌ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError("buyButtonì´ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
 
             if (itemImage == null)
             {
-                Debug.LogError("itemImage°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError("itemImageê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
 
             itemNameText.text = item.itemName;
             priceText.text = item.price.ToString();
-            itemImage.sprite = item.itemSprite; // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö ¼³Á¤
+            itemImage.sprite = item.itemSprite; // ì•„ì´í…œ ì´ë¯¸ì§€ ì„¤ì •
 
             buyButton.onClick.AddListener(() => shopManager.BuyItem(item, buyButton));
         }
 
-        // ·¼¸¯À» ¼³Á¤ÇÏ´Â ¸Ş¼­µå Ãß°¡
+        // ë ë¦­ì„ ì„¤ì •í•˜ëŠ” ë©”ì„œë“œ ì¶”ê°€
         public void SetRelic(Item relicItem, Shop manager)
         {
-            SetItem(relicItem, manager); // ·¼¸¯µµ SetItemÀ¸·Î Ã³¸®
+            SetItem(relicItem, manager); // ë ë¦­ë„ SetItemìœ¼ë¡œ ì²˜ë¦¬
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TJ
 
         private void Awake()
         {
-            // °ÔÀÓ ¸Å´ÏÀúÀÇ ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÏ°í, ÇÃ·¹ÀÌ¾î ½ºÅÈ UI °´Ã¼¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+            // ê²Œì„ ë§¤ë‹ˆì €ì˜ ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•˜ê³ , í”Œë ˆì´ì–´ ìŠ¤íƒ¯ UI ê°ì²´ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.playerStatsUI = this;
@@ -26,11 +26,11 @@ namespace TJ
 
         public void DisplayRelics()
         {
-            // ¸ğµç ±âÁ¸ ÀÚ½Ä °´Ã¼¸¦ Á¦°ÅÇÕ´Ï´Ù.
+            // ëª¨ë“  ê¸°ì¡´ ìì‹ ê°ì²´ë¥¼ ì œê±°í•©ë‹ˆë‹¤.
             foreach (Transform c in relicParent)
                 Destroy(c.gameObject);
 
-            // °ÔÀÓ ¸Å´ÏÀúÀÇ ÀÎ½ºÅÏ½º¿¡¼­ À¯¹°À» °¡Á®¿Í¼­ UI¿¡ Ç¥½ÃÇÕ´Ï´Ù.
+            // ê²Œì„ ë§¤ë‹ˆì €ì˜ ì¸ìŠ¤í„´ìŠ¤ì—ì„œ ìœ ë¬¼ì„ ê°€ì ¸ì™€ì„œ UIì— í‘œì‹œí•©ë‹ˆë‹¤.
             foreach (Relic r in GameManager.Instance.relics)
             {
                 GameObject relicObject = Instantiate(relicPrefab, relicParent);

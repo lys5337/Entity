@@ -1,47 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Button Å¸ÀÔÀ» À§ÇÑ using Áö½Ã¹® Ãß°¡
+using UnityEngine.UI; // Button íƒ€ì…ì„ ìœ„í•œ using ì§€ì‹œë¬¸ ì¶”ê°€
 
 namespace TJ
 {
     public class CardManagementUI : MonoBehaviour
     {
-        public GameObject cardListPanel; // Ä«µå ¸®½ºÆ®¸¦ ´ãÀ» ÆĞ³Î (È°¼ºÈ­/ºñÈ°¼ºÈ­ ¿ëµµ)
-        public Transform cardListContainer; // Ä«µå ¸®½ºÆ®¸¦ ´ãÀ» ºÎ¸ğ °´Ã¼
-        public GameObject cardItemPrefab; // Ä«µå ¸®½ºÆ® ¾ÆÀÌÅÛ ÇÁ¸®ÆÕ
+        public GameObject cardListPanel; // ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë‹´ì„ íŒ¨ë„ (í™œì„±í™”/ë¹„í™œì„±í™” ìš©ë„)
+        public Transform cardListContainer; // ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë‹´ì„ ë¶€ëª¨ ê°ì²´
+        public GameObject cardItemPrefab; // ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ ì•„ì´í…œ í”„ë¦¬íŒ¹
 
         private Shop shop;
 
         private void Start()
         {
             shop = FindObjectOfType<Shop>();
-            cardListPanel.SetActive(false); // ÃÊ±â¿¡´Â Ä«µå ¸®½ºÆ® ÆĞ³Î ºñÈ°¼ºÈ­
+            cardListPanel.SetActive(false); // ì´ˆê¸°ì—ëŠ” ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ íŒ¨ë„ ë¹„í™œì„±í™”
         }
 
-        // Ä«µå ¸®½ºÆ®¸¦ º¸¿©ÁÖ´Â ¸Ş¼­µå
+        // ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë³´ì—¬ì£¼ëŠ” ë©”ì„œë“œ
         public void ShowCardList(bool isRemoving)
         {
             cardListPanel.SetActive(true);
             PopulateCardList(isRemoving);
         }
 
-        // Ä«µå ¸®½ºÆ®¸¦ Ã¤¿ì´Â ¸Ş¼­µå
+        // ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ì±„ìš°ëŠ” ë©”ì„œë“œ
         private void PopulateCardList(bool isRemoving)
         {
-            // ±âÁ¸ Ä«µå ¸®½ºÆ® Á¦°Å
+            // ê¸°ì¡´ ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ ì œê±°
             foreach (Transform child in cardListContainer)
             {
                 Destroy(child.gameObject);
             }
 
-            // ÇÃ·¹ÀÌ¾î µ¦¿¡¼­ Ä«µå ¸®½ºÆ® »ı¼º
+            // í”Œë ˆì´ì–´ ë±ì—ì„œ ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ ìƒì„±
             foreach (Card card in shop.gameManager.playerDeck)
             {
                 GameObject cardItemGO = Instantiate(cardItemPrefab, cardListContainer);
                 CardUI cardUI = cardItemGO.GetComponent<CardUI>();
                 cardUI.LoadCard(card);
 
-                // Ä«µå Å¬¸¯ ½Ã Ã³¸®
+                // ì¹´ë“œ í´ë¦­ ì‹œ ì²˜ë¦¬
                 cardItemGO.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     if (isRemoving)

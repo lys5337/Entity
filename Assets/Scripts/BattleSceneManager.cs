@@ -39,9 +39,9 @@ namespace TJ
         List<Fighter> enemyFighters = new List<Fighter>();
         public GameObject[] possibleEnemies;
         public GameObject[] possibleElites;
-        public GameObject[] possibleBosses; // º¸½º ÀüÅõ¸¦ À§ÇÑ »õ·Î¿î ¹è¿­ Ãß°¡
+        public GameObject[] possibleBosses; // ë³´ìŠ¤ ì „íˆ¬ë¥¼ ìœ„í•œ ìƒˆë¡œìš´ ë°°ì—´ ì¶”ê°€
         bool eliteFight;
-        bool bossFight; // º¸½º ÀüÅõ ¿©ºÎ¸¦ ÃßÀûÇÏ´Â º¯¼ö Ãß°¡
+        bool bossFight; // ë³´ìŠ¤ ì „íˆ¬ ì—¬ë¶€ë¥¼ ì¶”ì í•˜ëŠ” ë³€ìˆ˜ ì¶”ê°€
         public GameObject birdIcon;
         CardActions cardActions;
         GameManager gameManager;
@@ -67,7 +67,7 @@ namespace TJ
             BeginBattle(possibleElites);
         }
 
-        public void StartBossFight() // »õ·Î¿î ¸Ş¼­µå Ãß°¡
+        public void StartBossFight() // ìƒˆë¡œìš´ ë©”ì„œë“œ ì¶”ê°€
         {
             bossFight = true;
             BeginBattle(possibleBosses);
@@ -134,13 +134,13 @@ namespace TJ
             if (gameManager.PlayerHasRelic("Varja"))
                 player.AddBuff(Buff.Type.strength, 1);
 
-            if (bossFight && gameManager.PlayerHasRelic("BurningBlood")) // º¸½º ÀüÅõ¿¡¼­¸¸ ¹ßµ¿µÇ´Â À¯¹° Ã³¸®
+            if (bossFight && gameManager.PlayerHasRelic("BurningBlood")) // ë³´ìŠ¤ ì „íˆ¬ì—ì„œë§Œ ë°œë™ë˜ëŠ” ìœ ë¬¼ ì²˜ë¦¬
                 player.currentHealth += 10;
 
             #endregion
 
-            if (enemies[0].bird)
-                birdIcon.SetActive(true);
+            //if (enemies[0].bird)
+            //    birdIcon.SetActive(true);
         }
         public void ShuffleCards()
         {
@@ -289,7 +289,7 @@ namespace TJ
 
             gameManager.UpdateFloorNumber();
 
-            // º¸»óÀ» ¿©±â¼­ Ãß°¡ÇÕ´Ï´Ù.
+            // ë³´ìƒì„ ì—¬ê¸°ì„œ ì¶”ê°€í•©ë‹ˆë‹¤.
             int goldReward = enemies[0].goldDrop;
             gameManager.UpdateGoldNumber(goldReward);
 
@@ -306,7 +306,7 @@ namespace TJ
             endScreen.goldReward.gameObject.SetActive(true);
             endScreen.cardRewardButton.gameObject.SetActive(true);
 
-            // ¿©±â¿¡¼­´Â UI ¾÷µ¥ÀÌÆ®¸¸ ¼öÇàÇÕ´Ï´Ù.
+            // ì—¬ê¸°ì—ì„œëŠ” UI ì—…ë°ì´íŠ¸ë§Œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
             endScreen.goldReward.relicName.text = enemies[0].goldDrop.ToString() + " Gold";
 
             //relics

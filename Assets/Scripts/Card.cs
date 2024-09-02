@@ -21,13 +21,13 @@ namespace TJ
         public CardTargetType cardTargetType;
         public enum CardTargetType { self, enemy };
 
-        // ±âº» °ªÀ» ÃÊ±âÈ­ÇÏ´Â ¸Ş¼­µå
+        // ê¸°ë³¸ ê°’ì„ ì´ˆê¸°í™”í•˜ëŠ” ë©”ì„œë“œ
         public void Initialize()
         {
             isUpgraded = false;
 
-            // ÃÊ±âÈ­ ½Ã baseAmount¸¦ ±âº»À¸·Î »ç¿ëÇÏ°Ô ¼³Á¤
-            // ÇÊ¿äÇÑ °æ¿ì ´Ù¸¥ ÇÊµå¸¦ ÃÊ±âÈ­ÇÒ ¼öµµ ÀÖ½À´Ï´Ù.
+            // ì´ˆê¸°í™” ì‹œ baseAmountë¥¼ ê¸°ë³¸ìœ¼ë¡œ ì‚¬ìš©í•˜ê²Œ ì„¤ì •
+            // í•„ìš”í•œ ê²½ìš° ë‹¤ë¥¸ í•„ë“œë¥¼ ì´ˆê¸°í™”í•  ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤.
         }
 
         public int GetCardCostAmount()
@@ -62,16 +62,16 @@ namespace TJ
                 return buffAmount.upgradedAmount;
         }
 
-        // Ä«µå °­È­ ¸Ş¼­µå
+        // ì¹´ë“œ ê°•í™” ë©”ì„œë“œ
         public void Upgrade()
         {
             if (!isUpgraded)
             {
                 isUpgraded = true;
 
-                // °­È­ ·ÎÁ÷ Ãß°¡
-                // ¿©±â¼­ Ä«µå¸¦ °­È­ÇÒ ¶§ Ãß°¡ÀûÀÎ º¯È­°¡ ÇÊ¿äÇÏ¸é ÄÚµå¸¦ Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-                // ¿¹: cardEffect.upgradedAmount += 10;
+                // ê°•í™” ë¡œì§ ì¶”ê°€
+                // ì—¬ê¸°ì„œ ì¹´ë“œë¥¼ ê°•í™”í•  ë•Œ ì¶”ê°€ì ì¸ ë³€í™”ê°€ í•„ìš”í•˜ë©´ ì½”ë“œë¥¼ ì¶”ê°€í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+                // ì˜ˆ: cardEffect.upgradedAmount += 10;
             }
         }
     }

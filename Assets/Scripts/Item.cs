@@ -5,13 +5,13 @@ namespace TJ
     [System.Serializable]
     public class Item
     {
-        public string itemName; // ¾ÆÀÌÅÛ ÀÌ¸§ (Ä«µå ¶Ç´Â ·¼¸¯ÀÇ ÀÌ¸§)
-        public int price; // ¾ÆÀÌÅÛ °¡°İ
-        public Sprite itemSprite; // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö¸¦ À§ÇÑ ÇÊµå (Ä«µå ¶Ç´Â ·¼¸¯ÀÇ ÀÌ¹ÌÁö)
-        public Card card; // Ä«µå ¾ÆÀÌÅÛ
-        public Relic relic; // ·¼¸¯ ¾ÆÀÌÅÛ
+        public string itemName; // ì•„ì´í…œ ì´ë¦„ (ì¹´ë“œ ë˜ëŠ” ë ë¦­ì˜ ì´ë¦„)
+        public int price; // ì•„ì´í…œ ê°€ê²©
+        public Sprite itemSprite; // ì•„ì´í…œ ì´ë¯¸ì§€ë¥¼ ìœ„í•œ í•„ë“œ (ì¹´ë“œ ë˜ëŠ” ë ë¦­ì˜ ì´ë¯¸ì§€)
+        public Card card; // ì¹´ë“œ ì•„ì´í…œ
+        public Relic relic; // ë ë¦­ ì•„ì´í…œ
 
-        public bool isRelic; // trueÀÏ °æ¿ì ·¼¸¯, falseÀÏ °æ¿ì Ä«µå
+        public bool isRelic; // trueì¼ ê²½ìš° ë ë¦­, falseì¼ ê²½ìš° ì¹´ë“œ
 
         public void SetItemDetails(string name, int itemPrice, Sprite sprite, Card cardItem)
         {
@@ -19,7 +19,7 @@ namespace TJ
             price = itemPrice;
             itemSprite = sprite;
             card = cardItem;
-            isRelic = false; // Ä«µå ¾ÆÀÌÅÛÀÏ °æ¿ì false
+            isRelic = false; // ì¹´ë“œ ì•„ì´í…œì¼ ê²½ìš° false
         }
 
         public void SetRelicDetails(string name, int relicPrice, Sprite sprite, Relic relicItem)
@@ -28,7 +28,7 @@ namespace TJ
             price = relicPrice;
             itemSprite = sprite;
             relic = relicItem;
-            isRelic = true; // ·¼¸¯ ¾ÆÀÌÅÛÀÏ °æ¿ì true
+            isRelic = true; // ë ë¦­ ì•„ì´í…œì¼ ê²½ìš° true
         }
     }
 }

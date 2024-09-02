@@ -15,7 +15,7 @@ MonoBehaviour:
   cardTitle: Bodyslam
   isUpgraded: 0
   cardDescription:
-    baseAmount: Deal Damage equal to block
+    baseAmount: "\uBC29\uC5B4\uB825 \uB9CC\uD07C \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
     upgradedAmount: Deal 9 Damage
   cardCost:
     baseAmount: 1

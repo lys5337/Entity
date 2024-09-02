@@ -104,11 +104,12 @@ namespace TJ
             StartCoroutine(sceneFader.UI_Fade());
             yield return new WaitForSeconds(1);
 
+            shopScene.SetActive(false);
             mapScene.SetActive(false);
             chestScene.SetActive(false);
             restScene.SetActive(false);
             nextStageScreen.SetActive(false);
-            playerIcon.SetActive(true);
+            //playerIcon.SetActive(true);
 
             if (e == "enemy")
                 battleSceneManager.StartHallwayFight();
@@ -143,17 +144,20 @@ namespace TJ
                 mapScene.SetActive(true);
                 chestScene.SetActive(false);
                 restScene.SetActive(false);
+                shopScene.SetActive(false);
             }
             else if (sceneToLoad == "Battle")
             {
                 mapScene.SetActive(false);
                 chestScene.SetActive(false);
                 restScene.SetActive(false);
+                shopScene.SetActive(false);
             }
             else if (sceneToLoad == "Chest")
             {
                 restScene.SetActive(false);
                 mapScene.SetActive(false);
+                shopScene.SetActive(false);
                 chestScene.SetActive(true);
             }
             else if (sceneToLoad == "Rest")
@@ -161,8 +165,16 @@ namespace TJ
                 chestScene.SetActive(false);
                 mapScene.SetActive(false);
                 restScene.SetActive(true);
+                shopScene.SetActive(false);
             }
-
+            else if (sceneToLoad == "Shop")
+            {
+                shopScene.SetActive(true);
+                restScene.SetActive(false);
+                chestScene.SetActive(false);
+                mapScene.SetActive(false);
+                playerIcon.SetActive(false);
+            }
             //fade from black
             yield return new WaitForSeconds(1);
             //Cursor.lockState=CursorLockMode.None;
