@@ -13,11 +13,11 @@ namespace TJ
         public Text optionText1;
         public Text optionText2;
 
-        public Button resultButton; // ê²°ê³¼ë¥¼ í‘œì‹œí•  ë²„íŠ¼
-        public Text resultText; // ê²°ê³¼ í…ìŠ¤íŠ¸
+        public Button resultButton; // °á°ú¸¦ Ç¥½ÃÇÒ ¹öÆ°
+        public Text resultText; // °á°ú ÅØ½ºÆ®
 
         public int hpLossAmount = 10;
-        public List<Card> possibleCardsToGain = new List<Card>(); // ì–»ì„ ìˆ˜ ìˆëŠ” ì¹´ë“œ ëª©ë¡
+        public List<Card> possibleCardsToGain = new List<Card>(); // ¾òÀ» ¼ö ÀÖ´Â Ä«µå ¸ñ·Ï
 
         private GameManager gameManager;
         private List<string> optionDescriptions = new List<string>();
@@ -30,17 +30,17 @@ namespace TJ
             optionButton1.onClick.AddListener(() => ExecuteRandomEvent(optionText1.text));
             optionButton2.onClick.AddListener(() => ExecuteRandomEvent(optionText2.text));
 
-            // ê²°ê³¼ ë²„íŠ¼ì„ ì´ˆê¸°ì—ëŠ” ë¹„í™œì„±í™”
+            // °á°ú ¹öÆ°À» ÃÊ±â¿¡´Â ºñÈ°¼ºÈ­
             resultButton.gameObject.SetActive(false);
         }
 
         private void InitializeOptions()
         {
-            optionDescriptions.Add("ë³´ë¬¼ ìƒìë¥¼ ì—°ë‹¤ (50% í™•ë¥ ë¡œ ì¹´ë“œë¥¼ ì–»ê±°ë‚˜ HPë¥¼ ìƒìŒ)");
-            optionDescriptions.Add("ìˆ˜ìƒí•œ ì¸ë¬¼ì˜ ì œì•ˆì„ ë°›ì•„ë“¤ì¸ë‹¤ (50% í™•ë¥ ë¡œ ì¹´ë“œë¥¼ ì–»ê±°ë‚˜ ì¹´ë“œë¥¼ ìƒìŒ)");
-            optionDescriptions.Add("ê·¸ëƒ¥ ì§€ë‚˜ê°„ë‹¤");
-            optionDescriptions.Add("ì „íˆ¬ë¥¼ ì¤€ë¹„í•œë‹¤ (50% í™•ë¥ ë¡œ ì¹´ë“œë¥¼ ì–»ìŒ)");
-            optionDescriptions.Add("ì‹ ë¹„í•œ ì¥ì†Œë¥¼ ì¡°ì‚¬í•œë‹¤ (50% í™•ë¥ ë¡œ ì¹´ë“œë¥¼ ì–»ê±°ë‚˜ HPë¥¼ ìƒìŒ)");
+            optionDescriptions.Add("º¸¹° »óÀÚ¸¦ ¿¬´Ù (50% È®·ü·Î Ä«µå¸¦ ¾ò°Å³ª HP¸¦ ÀÒÀ½)");
+            optionDescriptions.Add("¼ö»óÇÑ ÀÎ¹°ÀÇ Á¦¾ÈÀ» ¹Ş¾ÆµéÀÎ´Ù (50% È®·ü·Î Ä«µå¸¦ ¾ò°Å³ª Ä«µå¸¦ ÀÒÀ½)");
+            optionDescriptions.Add("±×³É Áö³ª°£´Ù");
+            optionDescriptions.Add("ÀüÅõ¸¦ ÁØºñÇÑ´Ù (50% È®·ü·Î Ä«µå¸¦ ¾òÀ½)");
+            optionDescriptions.Add("½ÅºñÇÑ Àå¼Ò¸¦ Á¶»çÇÑ´Ù (50% È®·ü·Î Ä«µå¸¦ ¾ò°Å³ª HP¸¦ ÀÒÀ½)");
         }
 
         private void SetRandomOptions()
@@ -57,65 +57,65 @@ namespace TJ
             int randomOutcome = Random.Range(0, 2);
             string resultMessage = "";
 
-            if (selectedOption.Contains("ë³´ë¬¼ ìƒì"))
+            if (selectedOption.Contains("º¸¹° »óÀÚ"))
             {
                 if (randomOutcome == 0)
                 {
                     Card cardGained = GetRandomCardFromList(possibleCardsToGain);
                     gameManager.playerDeck.Add(cardGained);
-                    resultMessage = $"{cardGained.cardTitle} ì¹´ë“œë¥¼ ì–»ì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{cardGained.cardTitle} Ä«µå¸¦ ¾ò¾ú½À´Ï´Ù!";
                 }
                 else
                 {
                     player.currentHealth -= hpLossAmount;
                     gameManager.DisplayHealth(player.currentHealth, player.maxHealth);
-                    resultMessage = $"{hpLossAmount} HPë¥¼ ìƒì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{hpLossAmount} HP¸¦ ÀÒ¾ú½À´Ï´Ù!";
                 }
             }
-            else if (selectedOption.Contains("ìˆ˜ìƒí•œ ì¸ë¬¼"))
+            else if (selectedOption.Contains("¼ö»óÇÑ ÀÎ¹°"))
             {
                 if (randomOutcome == 0)
                 {
                     Card cardGained = GetRandomCardFromList(possibleCardsToGain);
                     gameManager.playerDeck.Add(cardGained);
-                    resultMessage = $"{cardGained.cardTitle} ì¹´ë“œë¥¼ ì–»ì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{cardGained.cardTitle} Ä«µå¸¦ ¾ò¾ú½À´Ï´Ù!";
                 }
                 else
                 {
                     Card cardLost = RemoveRandomCardFromDeck();
-                    resultMessage = $"{cardLost.cardTitle} ì¹´ë“œë¥¼ ìƒì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{cardLost.cardTitle} Ä«µå¸¦ ÀÒ¾ú½À´Ï´Ù!";
                 }
             }
-            else if (selectedOption.Contains("ê·¸ëƒ¥ ì§€ë‚˜ê°„ë‹¤"))
+            else if (selectedOption.Contains("±×³É Áö³ª°£´Ù"))
             {
-                resultMessage = "ì•„ë¬´ ì¼ë„ ì¼ì–´ë‚˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.";
+                resultMessage = "¾Æ¹« ÀÏµµ ÀÏ¾î³ªÁö ¾Ê¾Ò½À´Ï´Ù.";
             }
-            else if (selectedOption.Contains("ì „íˆ¬ë¥¼ ì¤€ë¹„í•œë‹¤"))
+            else if (selectedOption.Contains("ÀüÅõ¸¦ ÁØºñÇÑ´Ù"))
             {
                 if (randomOutcome == 0)
                 {
                     Card cardGained = GetRandomCardFromList(possibleCardsToGain);
                     gameManager.playerDeck.Add(cardGained);
-                    resultMessage = $"{cardGained.cardTitle} ì¹´ë“œë¥¼ ì–»ì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{cardGained.cardTitle} Ä«µå¸¦ ¾ò¾ú½À´Ï´Ù!";
                 }
             }
-            else if (selectedOption.Contains("ì‹ ë¹„í•œ ì¥ì†Œë¥¼ ì¡°ì‚¬í•œë‹¤"))
+            else if (selectedOption.Contains("½ÅºñÇÑ Àå¼Ò¸¦ Á¶»çÇÑ´Ù"))
             {
                 if (randomOutcome == 0)
                 {
                     Card cardGained = GetRandomCardFromList(possibleCardsToGain);
                     gameManager.playerDeck.Add(cardGained);
-                    resultMessage = $"{cardGained.cardTitle} ì¹´ë“œë¥¼ ì–»ì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{cardGained.cardTitle} Ä«µå¸¦ ¾ò¾ú½À´Ï´Ù!";
                 }
                 else
                 {
                     player.currentHealth -= hpLossAmount;
                     gameManager.DisplayHealth(player.currentHealth, player.maxHealth);
-                    resultMessage = $"{hpLossAmount} HPë¥¼ ìƒì—ˆìŠµë‹ˆë‹¤!";
+                    resultMessage = $"{hpLossAmount} HP¸¦ ÀÒ¾ú½À´Ï´Ù!";
                 }
             }
 
-            // ì˜µì…˜ ë²„íŠ¼ì„ ìˆ¨ê¸°ê³  ê²°ê³¼ ë²„íŠ¼ì„ í™œì„±í™”í•˜ì—¬ ê²°ê³¼ ë©”ì‹œì§€ë¥¼ í‘œì‹œ
+            // ¿É¼Ç ¹öÆ°À» ¼û±â°í °á°ú ¹öÆ°À» È°¼ºÈ­ÇÏ¿© °á°ú ¸Ş½ÃÁö¸¦ Ç¥½Ã
             optionButton1.gameObject.SetActive(false);
             optionButton2.gameObject.SetActive(false);
 
@@ -135,7 +135,7 @@ namespace TJ
         {
             if (gameManager.playerDeck.Count == 0)
             {
-                Debug.Log("í”Œë ˆì´ì–´ ë±ì— ì¹´ë“œê°€ ì—†ìŠµë‹ˆë‹¤.");
+                Debug.Log("ÇÃ·¹ÀÌ¾î µ¦¿¡ Ä«µå°¡ ¾ø½À´Ï´Ù.");
                 return null;
             }
 
