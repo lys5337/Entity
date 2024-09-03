@@ -46,7 +46,7 @@ namespace TJ
             if (currentBlock > 0)
                 amount = BlockDamage(amount);
 
-            if (enemy != null && enemy.wiggler && currentHealth == maxHealth)
+            if (enemy != null && enemy.wiggler && currentHealth == maxHealth) //wigger의 체력이 가득 있을경우(wigger 전용 이벤트)
                 enemy.CurlUP();
 
             Debug.Log($"dealt {amount} damage");
@@ -78,7 +78,7 @@ namespace TJ
             }
         }
 
-        public void UpdateHealthUI(int newAmount)
+        public void UpdateHealthUI(int newAmount) //newAmount: 변경된 체력량
         {
             currentHealth = newAmount;
             fighterHealthBar.DisplayHealth(newAmount);
@@ -98,7 +98,7 @@ namespace TJ
             this.gameObject.SetActive(false);
         }
 
-        private int BlockDamage(int amount)
+        private int BlockDamage(int amount) //amount: 데미지량
         {
             if (currentBlock >= amount)
             {
@@ -117,7 +117,7 @@ namespace TJ
             return amount;
         }
 
-        public void AddBuff(Buff.Type type, int amount)
+        public void AddBuff(Buff.Type type, int amount) //amount: 버프 값 
         {
             if (type == Buff.Type.vulnerable)
             {

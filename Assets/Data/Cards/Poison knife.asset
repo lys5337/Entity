@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
   m_Name: Poison knife
   m_EditorClassIdentifier: 
-  cardTitle: Poisonknife
+  cardTitle: PoisonKnife
   isUpgraded: 0
   cardDescription:
     baseAmount: "4\uC758 \uB370\uBBF8\uC9C0, \uC911\uB3C5 +3"

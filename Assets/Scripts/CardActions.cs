@@ -63,7 +63,7 @@ namespace TJ
                     break;
                 case "PoisonKnife":
                     AttackEnemy();
-                    ApplyBuff(Buff.Type.poison, 3); // 여기서는 독 3을 전달
+                    ApplyBuff(Buff.Type.poison, card.GetBuffAmount());
                     break;
                 default:
                     Debug.Log("theres an issue");
@@ -85,11 +85,11 @@ namespace TJ
 
         private void PoisonKnife()
         {
-            // 5의 즉시 대미지
-            target.TakeDamage(5);
+            // 5의 피해
+            target.TakeDamage(card.GetCardEffectAmount());
 
-            // 3의 독 효과 적용
-            ApplyBuff(Buff.Type.poison, 3);
+            // 4의 독 중첩 적용
+            ApplyBuff(Buff.Type.poison, card.GetBuffAmount());
         }
 
         private void DoubleStrike()
@@ -122,7 +122,7 @@ namespace TJ
         {
             target.AddBuff(t, amount);
         }
-
+        
         private void ApplyBuffToSelf(Buff.Type t)
         {
             player.AddBuff(t, card.GetBuffAmount());
