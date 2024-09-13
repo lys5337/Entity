@@ -50,6 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyUI: {fileID: 11400000, guid: e442ff4a9844e294995216c2a1c03a1a, type: 2}
+  enemyNameUI: 
+  maxHealthUI: 0
+  baseStrengthUI: 0
+  currentBlockUI: 0
   currentHealth: 0
   maxHealth: 0
   currentBlock: 0
@@ -79,10 +84,26 @@ MonoBehaviour:
     buffIcon: {fileID: 0}
     buffValue: 0
     buffGO: {fileID: 0}
+  poison:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  bleeding:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  deathMark:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
   buffPrefab: {fileID: 0}
   buffParent: {fileID: 0}
   isPlayer: 0
   damageIndicator: {fileID: 0}
+  buffs: []
 --- !u!1 &2115127034313868059
 GameObject:
   m_ObjectHideFlags: 0

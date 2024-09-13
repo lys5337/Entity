@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
-  m_Name: Sharp blunt instrument
+  m_Name: "\uC5F0\uC18D \uBCA0\uAE30"
   m_EditorClassIdentifier: 
-  cardTitle: 'SharpBluntInstrument '
+  cardTitle: "\uC5F0\uC18D \uBCA0\uAE30"
   isUpgraded: 0
   cardDescription:
-    baseAmount: 
-    upgradedAmount: 
+    baseAmount: "6\uC758 \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."
+    upgradedAmount: "9\uC758 \uD53C\uD574\uB97C 2\uBC88 \uC785\uD78C\uB2E4."
   cardCost:
-    baseAmount: 0
-    upgradedAmount: 0
+    baseAmount: 1
+    upgradedAmount: 1
   cardEffect:
-    baseAmount: 0
-    upgradedAmount: 0
+    baseAmount: 6
+    upgradedAmount: 9
   buffAmount:
     baseAmount: 0
     upgradedAmount: 0
-  cardIcon: {fileID: 0}
+  cardIcon: {fileID: 21300000, guid: ce046a7a7f0db474dbdf6a32603083e0, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 0
+  cardTargetType: 1
+  cardRarity: 1
+  cardAttribute: 0

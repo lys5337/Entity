@@ -18,56 +18,14 @@ namespace TJ
             weak,
             ritual,
             enrage,
-            poison,
-            bleeding,
-            deathMark,
-            target,
-            counterattack,
-            oiled,
-            wet,
-            grilled
+            poison, //독 디버프, 매 턴이 끝날때마다 수치만큼 피해를 주고, -1를 한다. 0이 되면 제거
+            bleeding, //출혈 디버스, 매턴이 끝날때마다 1의 피해를 준다. -1를 한다. 0이 되면 제거
+            deathMark //5중첩이 되면 적 체력 1로 변경, 감소 없음
         }
 
         public Sprite buffIcon;
         [Range(0, 999)]
         public int buffValue;
         public BuffUI buffGO;
-
-        // 버프 로직 구현 파트
-        public void ApplyBuff(Fighter target)
-        {
-            switch (type)
-            {
-                case Type.poison:
-                    target.TakeDamage(buffValue); // 독 피해 적용
-                    buffValue--; // 독 수치 감소
-                    if (buffValue <= 0)
-                    {
-                        target.RemoveBuff(this); // 독 수치가 0이 되면 버프 제거
-                    }
-                    break;
-
-                case Type.bleeding:
-                    target.TakeDamage(buffValue);
-                    buffValue--;
-                    if (buffValue <= 0)
-                    {
-                        target.RemoveBuff(this); // Bleeding 버프 제거
-                    }
-                    break;
-
-                case Type.deathMark:
-                    target.TakeDamage(buffValue);
-                    buffValue--;
-                    if (buffValue <= 0)
-                    {
-                        target.RemoveBuff(this); // DeathMark 버프 제거
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
     }
 }

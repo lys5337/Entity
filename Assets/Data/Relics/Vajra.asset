@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Vajra
   m_EditorClassIdentifier: 
   relicName: Varja
-  relicDescription: 
+  relicDescription: "\uC804\uD22C \uC2DC\uC791\uC2DC 1\uC758 \uD798\uC744 \uC5BB\uB294\uB2E4."
   relicIcon: {fileID: 21300000, guid: 613c22816dcf7844cbf2898fe1fc2f37, type: 3}

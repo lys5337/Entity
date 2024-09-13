@@ -8,7 +8,7 @@ namespace TJ
 public class Character : ScriptableObject
 {
 	public CharacterClass characterClass;
-    public enum CharacterClass{ironChad,silent}
+    public enum CharacterClass{Swordman, Archer}
     public GameObject characterPrefab;
     public Relic startingRelic;
     public Sprite splashArt;

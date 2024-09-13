@@ -10,23 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
-  m_Name: Clothesline
+  m_Name: "\uC57D\uC810 \uACF5\uB7B5"
   m_EditorClassIdentifier: 
-  cardTitle: Clothesline
+  cardTitle: "\uC57D\uC810 \uACF5\uB7B5"
   isUpgraded: 0
   cardDescription:
-    baseAmount: Deal 12 damage. Apply 2 Weak.
-    upgradedAmount: Deal 14 damage. Apply 3 Weak.
+    baseAmount: "8\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0 2\uC758 \uC57D\uD654\uB97C
+      \uBD80\uC5EC"
+    upgradedAmount: "10\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0 3\uC758 \uC57D\uD654\uB97C
+      \uBD80\uC5EC"
   cardCost:
     baseAmount: 2
-    upgradedAmount: 2
+    upgradedAmount: 1
   cardEffect:
-    baseAmount: 12
-    upgradedAmount: 14
+    baseAmount: 8
+    upgradedAmount: 10
   buffAmount:
     baseAmount: 2
     upgradedAmount: 3
-  cardIcon: {fileID: 21300000, guid: db221ac2c7d5652458648131047c965c, type: 3}
+  cardIcon: {fileID: 21300000, guid: 83c60bdfa4a3aa9498632006348d977f, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 1
+  cardTargetType: 0
+  cardRarity: 0
+  cardAttribute: 0

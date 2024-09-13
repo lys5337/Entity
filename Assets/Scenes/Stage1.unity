@@ -2085,16 +2085,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 11400000, guid: bfd3e5f59c4c690468f1c3cf1e665eb2, type: 2}
   playerDeck:
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 8f780233b74f11649bf47ef5e0e03dab, type: 2}
-  - {fileID: 11400000, guid: 758d4c8ea821ba144aaad1469681e130, type: 2}
-  - {fileID: 11400000, guid: 8f780233b74f11649bf47ef5e0e03dab, type: 2}
-  - {fileID: 11400000, guid: 8f780233b74f11649bf47ef5e0e03dab, type: 2}
-  - {fileID: 11400000, guid: 8f780233b74f11649bf47ef5e0e03dab, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
+  - {fileID: 11400000, guid: 57d7ab4e580df6c4b857647c4d4f55b4, type: 2}
+  - {fileID: 11400000, guid: 57d7ab4e580df6c4b857647c4d4f55b4, type: 2}
+  - {fileID: 11400000, guid: 3d65c09fe93c76c4cb2577cb4c1d7eaf, type: 2}
+  - {fileID: 11400000, guid: 3d65c09fe93c76c4cb2577cb4c1d7eaf, type: 2}
+  - {fileID: 11400000, guid: 5f972129fa629654da6c70c350078c91, type: 2}
+  - {fileID: 11400000, guid: dbbda64b0513b584f9bd2cd7444a112e, type: 2}
+  - {fileID: 11400000, guid: dbbda64b0513b584f9bd2cd7444a112e, type: 2}
+  - {fileID: 11400000, guid: 15866c79b8e49aa44ac88f4703364169, type: 2}
+  - {fileID: 11400000, guid: 5128e2a90ee0d35498dbbaf8ff76a114, type: 2}
+  - {fileID: 11400000, guid: 5128e2a90ee0d35498dbbaf8ff76a114, type: 2}
   cardLibrary:
   - {fileID: 11400000, guid: 57d7ab4e580df6c4b857647c4d4f55b4, type: 2}
   - {fileID: 11400000, guid: 57d7ab4e580df6c4b857647c4d4f55b4, type: 2}
@@ -12165,7 +12165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.9741821, y: -8.499939}
+  m_AnchoredPosition: {x: 8.499268, y: -8.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1089785917
@@ -13982,10 +13982,26 @@ MonoBehaviour:
     buffIcon: {fileID: 0}
     buffValue: 0
     buffGO: {fileID: 0}
+  poison:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  bleeding:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  deathMark:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
   buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 1907727511}
   isPlayer: 1
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  buffs: []
 --- !u!224 &1237340136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17023,7 +17039,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115800021}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99934906
+  m_Size: 0.9951133
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

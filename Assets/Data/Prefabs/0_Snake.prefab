@@ -635,6 +635,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyUI: {fileID: 11400000, guid: c21147f6d7c404a4e9849970d8d0b327, type: 2}
+  enemyNameUI: 
+  maxHealthUI: 0
+  baseStrengthUI: 0
+  currentBlockUI: 0
   currentHealth: 0
   maxHealth: 10
   currentBlock: 0
@@ -664,10 +669,26 @@ MonoBehaviour:
     buffIcon: {fileID: 0}
     buffValue: 0
     buffGO: {fileID: 0}
+  poison:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  bleeding:
+    type: 7
+    buffIcon: {fileID: 21300000, guid: 18fb6f3e5494ad24da623910be0c3480, type: 3}
+    buffValue: 0
+    buffGO: {fileID: 0}
+  deathMark:
+    type: 0
+    buffIcon: {fileID: 0}
+    buffValue: 0
+    buffGO: {fileID: 0}
   buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 7431347834467510255}
   isPlayer: 0
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  buffs: []
 --- !u!114 &7431347834741472719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,6 +701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08184a27ab0231446b726d6e0cbab959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clearGoldMinUI: 0
+  clearGoldMaxUI: 0
+  enemyUI: {fileID: 11400000, guid: c21147f6d7c404a4e9849970d8d0b327, type: 2}
   enemyActions:
   - intentType: 0
     amount: 6
@@ -697,6 +721,7 @@ MonoBehaviour:
   turnNumber: 0
   shuffleActions: 1
   thisEnemy: {fileID: 0}
+  enemyObject: {fileID: 0}
   intentIcon: {fileID: 7431347834695106148}
   intentAmount: {fileID: 7431347834537184322}
   intentUI: {fileID: 7431347834833905506}

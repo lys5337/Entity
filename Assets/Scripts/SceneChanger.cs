@@ -18,6 +18,8 @@ namespace TJ
         public GameObject mapScene;
         public GameObject nextStageScreen;
         public GameObject shopScene;
+        public GameObject randomnodeScene;
+        public GameObject menuScene;
 
         [Header("UI")]
         public Image splashArt;
@@ -33,7 +35,7 @@ namespace TJ
         SceneFader sceneFader;
         private void Awake()
         {
-            // "GameData" ø¿∫Í¡ß∆Æ∏¶ √£æ∆º≠ GameManager ƒƒ∆˜≥Õ∆Æ∏¶ ∞°¡Æø»
+            // "GameData" Ïò§Î∏åÏ†ùÌä∏Î•º Ï∞æÏïÑÏÑú GameManager Ïª¥Ìè¨ÎÑåÌä∏Î•º Í∞ÄÏ†∏Ïò¥
             GameObject gameDataObject = GameObject.Find("GameData");
             if (gameDataObject != null)
             {
@@ -41,12 +43,13 @@ namespace TJ
             }
             else
             {
-                Debug.LogError("GameData ø¿∫Í¡ß∆Æ∏¶ √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ.");
+                Debug.LogError("GameData Ïò§Î∏åÏ†ùÌä∏Î•º Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§.");
             }
 
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
             endScreen = FindObjectOfType<EndScreen>();
             sceneFader = FindObjectOfType<SceneFader>();
+            menuScene.SetActive(false);
         }
         public void PlayButton()
         {
@@ -90,6 +93,44 @@ namespace TJ
             if (SceneManager.GetActiveScene().name == "Stage0")
                 SceneManager.LoadScene("Stage1");
         }
+        public void Menuopen()
+        {
+            menuScene.SetActive(true);
+            GameObject Savebtn = GameObject.Find("Savebtn");
+            Savebtn.SetActive(false);
+            GameObject Loadbtn = GameObject.Find("Loadbtn");
+            Loadbtn.SetActive(false);
+            GameObject Save = GameObject.Find("Save");
+            Save.SetActive(true);
+            GameObject Load = GameObject.Find("Load");
+            Load.SetActive(true);
+        }
+        public void Menuclose()
+        {
+            menuScene.SetActive(false);
+        }
+        public void Save()
+        {
+            GameObject Savebtn = GameObject.Find("Savebtn");
+            Savebtn.SetActive(true);
+            GameObject Loadbtn = GameObject.Find("Loadbtn");
+            Loadbtn.SetActive(false);
+            GameObject Save = GameObject.Find("Save");
+            Save.SetActive(false);
+            GameObject Load = GameObject.Find("Load");
+            Load.SetActive(false);
+        }
+        public void Load()
+        {
+            GameObject Savebtn = GameObject.Find("Savebtn");
+            Savebtn.SetActive(false);
+            GameObject Loadbtn = GameObject.Find("Loadbtn");
+            Loadbtn.SetActive(true);
+            GameObject Save = GameObject.Find("Save");
+            Save.SetActive(false);
+            GameObject Load = GameObject.Find("Load");
+            Load.SetActive(false);
+        }
         public void SelectScreen(string sceneName)
         {
             StartCoroutine(LoadScene(sceneName));
@@ -109,6 +150,7 @@ namespace TJ
             chestScene.SetActive(false);
             restScene.SetActive(false);
             nextStageScreen.SetActive(false);
+            randomnodeScene.SetActive(false);
             //playerIcon.SetActive(true);
 
             if (e == "enemy")
@@ -145,6 +187,7 @@ namespace TJ
                 chestScene.SetActive(false);
                 restScene.SetActive(false);
                 shopScene.SetActive(false);
+                randomnodeScene.SetActive(false);
             }
             else if (sceneToLoad == "Battle")
             {
@@ -152,6 +195,7 @@ namespace TJ
                 chestScene.SetActive(false);
                 restScene.SetActive(false);
                 shopScene.SetActive(false);
+                randomnodeScene.SetActive(false);
             }
             else if (sceneToLoad == "Chest")
             {
@@ -159,6 +203,7 @@ namespace TJ
                 mapScene.SetActive(false);
                 shopScene.SetActive(false);
                 chestScene.SetActive(true);
+                randomnodeScene.SetActive(false);
             }
             else if (sceneToLoad == "Rest")
             {
@@ -166,6 +211,7 @@ namespace TJ
                 mapScene.SetActive(false);
                 restScene.SetActive(true);
                 shopScene.SetActive(false);
+                randomnodeScene.SetActive(false);
             }
             else if (sceneToLoad == "Shop")
             {
@@ -174,7 +220,18 @@ namespace TJ
                 chestScene.SetActive(false);
                 mapScene.SetActive(false);
                 playerIcon.SetActive(false);
+                randomnodeScene.SetActive(false);
             }
+            else if (sceneToLoad == "Random")
+            {
+                shopScene.SetActive(false);
+                restScene.SetActive(false);
+                chestScene.SetActive(false);
+                mapScene.SetActive(false);
+                playerIcon.SetActive(false);
+                randomnodeScene.SetActive(true);
+            }
+
             //fade from black
             yield return new WaitForSeconds(1);
             //Cursor.lockState=CursorLockMode.None;

@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
-  m_Name: BloodLetting
+  m_Name: "\uB099\uC778"
   m_EditorClassIdentifier: 
-  cardTitle: Bloodletting
+  cardTitle: "\uB099\uC778"
   isUpgraded: 0
   cardDescription:
-    baseAmount: "3\uC758 \uD53C\uD574, 2\uC758 \uC5D0\uB108\uC9C0\uB97C \uC5BB\uC74C"
-    upgradedAmount: "2\uC758 \uD53C\uD574, 3\uC758 \uC5D0\uB108\uC9C0\uB97C \uC5BB\uC74C"
+    baseAmount: "\uC801\uC5D0\uAC8C \uB099\uC778\uC744 1\uBD80\uC5EC"
+    upgradedAmount: "\uC801\uC5D0\uAC8C \uB099\uC778\uC744 1\uBD80\uC5EC"
   cardCost:
-    baseAmount: 0
+    baseAmount: 1
     upgradedAmount: 0
   cardEffect:
-    baseAmount: 8
-    upgradedAmount: 8
+    baseAmount: 0
+    upgradedAmount: 0
   buffAmount:
-    baseAmount: 5
-    upgradedAmount: 5
-  cardIcon: {fileID: 21300000, guid: 5fc3b4442fc2c7a4aad1e7731138722f, type: 3}
-  cardType: 1
+    baseAmount: 1
+    upgradedAmount: 1
+  cardIcon: {fileID: 21300000, guid: 540344e624e2d5e468c332d876b35c05, type: 3}
+  cardType: 0
   cardClass: 0
-  cardTargetType: 0
+  cardTargetType: 1
+  cardRarity: 5
+  cardAttribute: 1

@@ -20,8 +20,25 @@ namespace TJ
         // 버프 표시
         public void DisplayBuff(Buff b)
         {
-            animator.Play("IntentSpawn");
-            buffImage.sprite = b.buffIcon;
+            // Animator가 존재하는지 확인하고, 파괴되지 않았다면 애니메이션 실행
+            if (animator != null && animator.gameObject != null)
+            {
+                animator.Play("IntentSpawn");
+            }
+            else
+            {
+                Debug.LogWarning("Animator가 파괴되었거나 존재하지 않습니다.");
+            }
+
+            if (b.buffIcon != null)
+            {
+                buffImage.sprite = b.buffIcon;
+            }
+            else
+            {
+                Debug.LogError("버프 아이콘이 설정되지 않았습니다.");
+            }
+
             buffAmountText.text = b.buffValue.ToString();
         }
 
@@ -34,7 +51,10 @@ namespace TJ
         // 버프 제거
         public void RemoveBuff()
         {
-            Destroy(gameObject); // 버프 UI 제거
+            if (gameObject != null)
+            {
+                Destroy(gameObject); // 버프 UI 제거
+            }
         }
     }
 }

@@ -7,31 +7,31 @@ namespace TJ
     public class Shop : MonoBehaviour
     {
         [Header("UI Elements")]
-        public Transform itemContainer; // ¾ÆÀÌÅÛ UI¸¦ ´ãÀ» ºÎ¸ğ °´Ã¼
-        public Transform relicContainer; // ·¼¸¯ UI¸¦ ´ãÀ» ºÎ¸ğ °´Ã¼
-        public GameObject itemPrefab; // ¾ÆÀÌÅÛ UI ÇÁ¸®ÆÕ
-        public GameObject relicPrefab; // ·¼¸¯ UI ÇÁ¸®ÆÕ
-        public Button refreshButton; // »õ·Î°íÄ§ ¹öÆ°
-        public Text refreshButtonText; // »õ·Î°íÄ§ ¹öÆ° ³»ÀÇ ÅØ½ºÆ®
+        public Transform itemContainer; // ì•„ì´í…œ UIë¥¼ ë‹´ì„ ë¶€ëª¨ ê°ì²´
+        public Transform relicContainer; // ë ë¦­ UIë¥¼ ë‹´ì„ ë¶€ëª¨ ê°ì²´
+        public GameObject itemPrefab; // ì•„ì´í…œ UI í”„ë¦¬íŒ¹
+        public GameObject relicPrefab; // ë ë¦­ UI í”„ë¦¬íŒ¹
+        public Button refreshButton; // ìƒˆë¡œê³ ì¹¨ ë²„íŠ¼
+        public Text refreshButtonText; // ìƒˆë¡œê³ ì¹¨ ë²„íŠ¼ ë‚´ì˜ í…ìŠ¤íŠ¸
 
         [Header("Card Management")]
-        public Button removeCardButton; // Ä«µå Á¦°Å ¹öÆ°
-        public Button upgradeCardButton; // Ä«µå °­È­ ¹öÆ°
-        public Text removeCardButtonText; // Ä«µå Á¦°Å ¹öÆ° ÅØ½ºÆ®
-        public Text upgradeCardButtonText; // Ä«µå °­È­ ¹öÆ° ÅØ½ºÆ®
-        public int removeCardCost = 75; // Ä«µå Á¦°Å ºñ¿ë
-        public int upgradeCardCost = 100; // Ä«µå °­È­ ºñ¿ë
+        public Button removeCardButton; // ì¹´ë“œ ì œê±° ë²„íŠ¼
+        public Button upgradeCardButton; // ì¹´ë“œ ê°•í™” ë²„íŠ¼
+        public Text removeCardButtonText; // ì¹´ë“œ ì œê±° ë²„íŠ¼ í…ìŠ¤íŠ¸
+        public Text upgradeCardButtonText; // ì¹´ë“œ ê°•í™” ë²„íŠ¼ í…ìŠ¤íŠ¸
+        public int removeCardCost = 75; // ì¹´ë“œ ì œê±° ë¹„ìš©
+        public int upgradeCardCost = 100; // ì¹´ë“œ ê°•í™” ë¹„ìš©
 
         [Header("Items")]
-        public List<Item> itemsForSale = new List<Item>(); // »óÁ¡¿¡¼­ ÆÇ¸ÅÇÒ ¾ÆÀÌÅÛ ¸ñ·Ï
-        public List<Item> relicsForSale = new List<Item>(); // »óÁ¡¿¡¼­ ÆÇ¸ÅÇÒ ·¼¸¯ ¸ñ·Ï
-        public int itemsToDisplay = 5; // ³ëÃâÇÒ ¾ÆÀÌÅÛ ¼ö
-        public int relicsToDisplay = 3; // ³ëÃâÇÒ ·¼¸¯ ¼ö
+        public List<Item> itemsForSale = new List<Item>(); // ìƒì ì—ì„œ íŒë§¤í•  ì•„ì´í…œ ëª©ë¡
+        public List<Item> relicsForSale = new List<Item>(); // ìƒì ì—ì„œ íŒë§¤í•  ë ë¦­ ëª©ë¡
+        public int itemsToDisplay = 5; // ë…¸ì¶œí•  ì•„ì´í…œ ìˆ˜
+        public int relicsToDisplay = 3; // ë…¸ì¶œí•  ë ë¦­ ìˆ˜
 
         public GameManager gameManager;
-        public CardManagementUI cardManagementUI; // Ä«µå °ü¸® UI¿Í ¿¬µ¿
+        public CardManagementUI cardManagementUI; // ì¹´ë“œ ê´€ë¦¬ UIì™€ ì—°ë™
 
-        private int refreshPrice = 50; // ÃÊ±â »õ·Î°íÄ§ °¡°İ
+        private int refreshPrice = 50; // ì´ˆê¸° ìƒˆë¡œê³ ì¹¨ ê°€ê²©
 
         private void Start()
         {
@@ -40,13 +40,13 @@ namespace TJ
 
             if (gameManager == null)
             {
-                Debug.LogError("GameManager¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogError("GameManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 
             if (cardManagementUI == null)
             {
-                Debug.LogError("CardManagementUI¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogError("CardManagementUIë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 
@@ -62,17 +62,17 @@ namespace TJ
             if (removeCardButton != null)
             {
                 removeCardButton.onClick.AddListener(() => cardManagementUI.ShowCardList(true));
-                removeCardButtonText.text = $"Ä«µå Á¦°Å : {removeCardCost} °ñµå";
+                removeCardButtonText.text = $"ì¹´ë“œ ì œê±° : {removeCardCost} ê³¨ë“œ";
             }
 
             if (upgradeCardButton != null)
             {
                 upgradeCardButton.onClick.AddListener(() => cardManagementUI.ShowCardList(false));
-                upgradeCardButtonText.text = $"Ä«µå °­È­ : {upgradeCardCost} °ñµå";
+                upgradeCardButtonText.text = $"ì¹´ë“œ ê°•í™” : {upgradeCardCost} ê³¨ë“œ";
             }
         }
 
-        // »óÁ¡¿¡ ¾ÆÀÌÅÛ ¸ñ·ÏÀ» Ç¥½Ã
+        // ìƒì ì— ì•„ì´í…œ ëª©ë¡ì„ í‘œì‹œ
         private void PopulateShop()
         {
             if (itemPrefab == null || itemContainer == null)
@@ -104,12 +104,12 @@ namespace TJ
                 if (itemUI != null)
                 {
                     itemUI.SetItem(item, this);
-                    itemUI.buyButton.interactable = true; // ±¸¸Å ¹öÆ° È°¼ºÈ­
+                    itemUI.buyButton.interactable = true; // êµ¬ë§¤ ë²„íŠ¼ í™œì„±í™”
                 }
             }
         }
 
-        // »óÁ¡¿¡ ·¼¸¯ ¸ñ·ÏÀ» Ç¥½Ã
+        // ìƒì ì— ë ë¦­ ëª©ë¡ì„ í‘œì‹œ
         private void PopulateRelics()
         {
             if (relicPrefab == null || relicContainer == null)
@@ -141,22 +141,22 @@ namespace TJ
                 if (relicUI != null)
                 {
                     relicUI.SetItem(relic, this);
-                    relicUI.buyButton.interactable = true; // ±¸¸Å ¹öÆ° È°¼ºÈ­
+                    relicUI.buyButton.interactable = true; // êµ¬ë§¤ ë²„íŠ¼ í™œì„±í™”
                 }
             }
         }
 
-        // »óÁ¡ »õ·Î°íÄ§ ±â´É
+        // ìƒì  ìƒˆë¡œê³ ì¹¨ ê¸°ëŠ¥
         private void RefreshShop()
         {
             if (gameManager.goldAmount >= refreshPrice)
             {
                 gameManager.goldAmount -= refreshPrice;
-                refreshPrice *= 2; // »õ·Î°íÄ§ °¡°İ µÎ ¹è·Î Áõ°¡
+                refreshPrice *= 2; // ìƒˆë¡œê³ ì¹¨ ê°€ê²© ë‘ ë°°ë¡œ ì¦ê°€
                 PopulateShop();
                 PopulateRelics();
-                UpdateRefreshButtonText(); // »õ·Î°íÄ§ ¹öÆ° ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
-                gameManager.UpdateGoldNumber(0); // UI ¾÷µ¥ÀÌÆ®
+                UpdateRefreshButtonText(); // ìƒˆë¡œê³ ì¹¨ ë²„íŠ¼ í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
+                gameManager.UpdateGoldNumber(0); // UI ì—…ë°ì´íŠ¸
             }
         }
 
@@ -164,7 +164,7 @@ namespace TJ
         {
             if (refreshButtonText != null)
             {
-                refreshButtonText.text = $"»õ·Î°íÄ§ : {refreshPrice} °ñµå";
+                refreshButtonText.text = $"ìƒˆë¡œê³ ì¹¨ : {refreshPrice} ê³¨ë“œ";
             }
         }
 
@@ -175,7 +175,7 @@ namespace TJ
                 gameManager.goldAmount -= item.price;
                 if (item.isRelic)
                 {
-                    gameManager.AddRelic(item.relic); // ·¼¸¯ Ãß°¡
+                    gameManager.AddRelic(item.relic); // ë ë¦­ ì¶”ê°€
                     relicsForSale.Remove(item);
                     Destroy(buyButton.gameObject);
                 }
@@ -203,7 +203,7 @@ namespace TJ
         {
             if (gameManager != null && gameManager.goldAmount >= upgradeCardCost)
             {
-                // Ä«µå°¡ ÀÌ¹Ì °­È­µÈ »óÅÂÀÎÁö È®ÀÎ
+                // ì¹´ë“œê°€ ì´ë¯¸ ê°•í™”ëœ ìƒíƒœì¸ì§€ í™•ì¸
                 if (!card.isUpgraded)
                 {
                     gameManager.goldAmount -= upgradeCardCost;
@@ -211,17 +211,17 @@ namespace TJ
                     gameManager.UpdateGoldNumber(0);
                     cardManagementUI.HideCardList();
 
-                    // ¿©±â¼­ ÇÏ³ªÀÇ Ä«µå¸¸ °­È­µÇµµ·Ï Ã³¸®
-                    Debug.Log($"{card.cardTitle} Ä«µå°¡ °­È­µÇ¾ú½À´Ï´Ù.");
+                    // ì—¬ê¸°ì„œ í•˜ë‚˜ì˜ ì¹´ë“œë§Œ ê°•í™”ë˜ë„ë¡ ì²˜ë¦¬
+                    Debug.Log($"{card.cardTitle} ì¹´ë“œê°€ ê°•í™”ë˜ì—ˆìŠµë‹ˆë‹¤.");
                 }
                 else
                 {
-                    Debug.Log($"{card.cardTitle} Ä«µå´Â ÀÌ¹Ì °­È­µÈ »óÅÂÀÔ´Ï´Ù.");
+                    Debug.Log($"{card.cardTitle} ì¹´ë“œëŠ” ì´ë¯¸ ê°•í™”ëœ ìƒíƒœì…ë‹ˆë‹¤.");
                 }
             }
             else
             {
-                Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                Debug.Log("ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             }
         }
 

@@ -8,11 +8,17 @@ namespace TJ
 {
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Data")]
+    [HideInInspector]public int clearGoldMinUI;
+    [HideInInspector]public int clearGoldMaxUI;
+    public EnemyUI enemyUI;
+
 	public List<EnemyAction> enemyActions;
 	public List<EnemyAction> turns = new List<EnemyAction>();
     public int turnNumber;
     public bool shuffleActions;
     public Fighter thisEnemy;
+    public GameObject enemyObject;
     
     [Header("UI")]
     public Image intentIcon;
@@ -37,10 +43,18 @@ public class Enemy : MonoBehaviour
         player = battleSceneManager.player;
         thisEnemy = GetComponent<Fighter>();
         animator = GetComponent<Animator>();
-
+        InitializeStatsFromEnemyUI();
         if(shuffleActions)
             GenerateTurns();
     }
+
+    private void InitializeStatsFromEnemyUI()
+    {
+        clearGoldMinUI = enemyUI.enemyInfo.enemyClearGoldMinUI;
+        clearGoldMaxUI = enemyUI.enemyInfo.enemyClearGoldMaxUI;
+        goldDrop = Random.Range(clearGoldMinUI, clearGoldMaxUI);
+    }
+
     private void LoadEnemy()
     {
         battleSceneManager = FindObjectOfType<BattleSceneManager>();
@@ -76,7 +90,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(AttackPlayer());
                 break;
             default:
-                Debug.Log("lmao how did you fuck this up");
+                Debug.Log("GET AWAY FROM ME");
                 break;
         }
     }
@@ -98,12 +112,20 @@ public class Enemy : MonoBehaviour
             battleSceneManager.birdIcon.GetComponent<Animator>().Play("Attack");
 
         int totalDamage = turns[turnNumber].amount+thisEnemy.strength.buffValue;
-        if(player.vulnerable.buffValue>0)
+        if(player.vulnerable.buffValue>0)// 플레이어 약화 여부 판단
         {
             float a = totalDamage*1.5f;
             //Debug.Log("incrased damage from "+totalDamage+" to "+(int)a);
             totalDamage = (int)a;
         }
+        
+        if (thisEnemy.weak.buffValue > 0) //만약 적이 약화 상태라면 피해량 -25%
+        {
+            float a = totalDamage * 0.75f;
+            Debug.Log("incrased damage from " + totalDamage + " to " + (int)a);
+            totalDamage = (int)a;
+        }
+
         yield return new WaitForSeconds(0.5f);
         player.TakeDamage(totalDamage);
         yield return new WaitForSeconds(0.5f);
@@ -144,7 +166,7 @@ public class Enemy : MonoBehaviour
     {
         thisEnemy.AddBlock(turns[turnNumber].amount);
     }
-    public void DisplayIntent()
+    public void DisplayIntent() //적 의도 표시 if문으로 공격일 경우, 피해량을 표시하고, 그 외의 경우엔 효과를 표시
     {
         if(turns.Count==0)
             LoadEnemy();
@@ -153,12 +175,18 @@ public class Enemy : MonoBehaviour
 
         if(turns[turnNumber].intentType==EnemyAction.IntentType.Attack)
         {
-            //add strength to attack value
             int totalDamage = turns[turnNumber].amount+thisEnemy.strength.buffValue;
             if(player.vulnerable.buffValue>0)
             {
                 totalDamage = (int)(totalDamage*1.5f);
             }
+            
+            if (thisEnemy.weak.buffValue > 0) //만약 적이 약화 상태라면 피해량 -25%
+            {
+                float a = totalDamage * 0.75f;
+                totalDamage = (int)a;
+            }
+
             intentAmount.text = totalDamage.ToString();
         }
         else
@@ -166,6 +194,7 @@ public class Enemy : MonoBehaviour
 
         intentUI.animator.Play("IntentSpawn");
     }
+
     public void CurlUP()
     {
         wigglerBuff.SetActive(false);

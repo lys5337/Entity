@@ -20,6 +20,10 @@ namespace TJ
         // CardManagementUI를 인스펙터에서 직접 할당할 수 있도록 public으로 선언
         public CardManagementUI cardManagementUI;
 
+        // 카드를 원래 위치로 복구하는데 필요한 변수
+        private Vector3 originalPosition;
+        private RectTransform rectTransform;
+
         private void Awake()
         {
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
@@ -29,6 +33,9 @@ namespace TJ
             {
                 cardManagementUI = FindObjectOfType<CardManagementUI>();
             }
+
+            rectTransform = GetComponent<RectTransform>();
+            originalPosition = rectTransform.position; // 카드의 초기 위치 저장
         }
 
         private void OnEnable()
@@ -38,13 +45,29 @@ namespace TJ
 
         public void LoadCard(Card _card)
         {
+            if (_card == null)
+            {
+                Debug.LogError("카드가 null입니다. LoadCard를 실행할 수 없습니다.");
+                return;
+            }
+
+            // 카드 데이터 설정
             card = _card;
-            gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+            // UI 컴포넌트 null 확인
+            if (cardTitleText == null || cardDescriptionText == null || cardCostText == null || cardImage == null)
+            {
+                Debug.LogError("카드 UI 컴포넌트가 설정되지 않았습니다. LoadCard를 실행할 수 없습니다.");
+                return;
+            }
+
+            // 카드 정보를 UI에 로드
             cardTitleText.text = card.cardTitle;
             cardDescriptionText.text = card.GetCardDescriptionAmount();
             cardCostText.text = card.GetCardCostAmount().ToString();
             cardImage.sprite = card.cardIcon;
         }
+
 
         public void SelectCard()
         {
@@ -53,10 +76,6 @@ namespace TJ
             if (cardManagementUI != null)
             {
                 cardManagementUI.gameObject.SetActive(true); // 카드 관리 UI 패널 활성화
-            }
-            else
-            {
-                //Debug.LogError("CardManagementUI를 찾을 수 없습니다.");
             }
         }
 
@@ -85,19 +104,50 @@ namespace TJ
 
         public void HandleEndDrag()
         {
+            // 에너지가 부족하면 카드 사용 불가
             if (battleSceneManager.energy < card.GetCardCostAmount())
+            {
+                Debug.Log("에너지가 부족합니다. 카드를 사용할 수 없습니다.");
+                ResetCardPosition();  // 카드 원래 위치로 복귀
                 return;
+            }
 
+            // 타겟이 없으면 공격 카드를 사용할 수 없게 설정
+            if (card.cardType == Card.CardType.Attack && battleSceneManager.cardTarget == null)
+            {
+                Debug.LogError("타겟이 설정되지 않았습니다. 공격 카드를 사용할 수 없습니다.");
+                ResetCardPosition();  // 카드 원래 위치로 복귀
+                return;
+            }
+
+            // 카드 타입에 따른 처리
             if (card.cardType == Card.CardType.Attack)
             {
+                // 공격 카드 처리
+                Debug.Log("공격 카드 사용: " + card.cardTitle);
                 battleSceneManager.PlayCard(this);
-                animator.Play("HoverOffCard");
             }
-            else if (card.cardType != Card.CardType.Attack)
+            else if (card.cardType == Card.CardType.Skill)
             {
-                animator.Play("HoverOffCard");
+                // 스킬 카드 처리
+                Debug.Log("스킬 카드 사용: " + card.cardTitle);
                 battleSceneManager.PlayCard(this);
             }
+            else if (card.cardType == Card.CardType.Power)
+            {
+                // 파워 카드 처리
+                Debug.Log("파워 카드 사용: " + card.cardTitle);
+                battleSceneManager.PlayCard(this);
+            }
+
+            animator.Play("HoverOffCard");
+        }
+
+
+        // 카드를 원래 위치로 되돌리는 메서드
+        public void ResetCardPosition()
+        {
+            rectTransform.position = originalPosition;
         }
     }
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Bag of Preparation
   m_EditorClassIdentifier: 
   relicName: Preparation
-  relicDescription: 
+  relicDescription: "\uCD5C\uCD08 \uD134\uC774 \uC2DC\uC791\uD560\uB54C, \uCEE4\uB4DC
+    2\uC7A5\uC744 \uC5BB\uB294\uB2E4."
   relicIcon: {fileID: 21300000, guid: 6b40e527465ccca46b5fe64cc93d4940, type: 3}

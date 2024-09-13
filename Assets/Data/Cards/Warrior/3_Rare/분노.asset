@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
-  m_Name: Poison knife
+  m_Name: "\uBD84\uB178"
   m_EditorClassIdentifier: 
-  cardTitle: PoisonKnife
+  cardTitle: "\uBD84\uB178"
   isUpgraded: 0
   cardDescription:
-    baseAmount: "4\uC758 \uB370\uBBF8\uC9C0, \uC911\uB3C5 +3"
-    upgradedAmount: "5\uC758 \uB370\uBBF8\uC9C0, \uC911\uB3C5 +4"
+    baseAmount: "\uD798\uC744 2 \uC5BB\uB294\uB2E4."
+    upgradedAmount: "\uD798\uC744 2 \uC5BB\uB294\uB2E4."
   cardCost:
     baseAmount: 1
     upgradedAmount: 1
   cardEffect:
-    baseAmount: 4
-    upgradedAmount: 5
+    baseAmount: 0
+    upgradedAmount: 0
   buffAmount:
-    baseAmount: 3
-    upgradedAmount: 4
-  cardIcon: {fileID: 21300000, guid: b9db052b2c009f848b71205f5a1312ad, type: 3}
-  cardType: 0
+    baseAmount: 2
+    upgradedAmount: 3
+  cardIcon: {fileID: 21300000, guid: 39a42289a28d17f48afdba649ec5453e, type: 3}
+  cardType: 2
   cardClass: 0
-  cardTargetType: 1
+  cardTargetType: 0
+  cardRarity: 2
+  cardAttribute: 0

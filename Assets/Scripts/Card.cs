@@ -17,9 +17,13 @@ namespace TJ
         public CardType cardType;
         public enum CardType { Attack, Skill, Power }
         public CardClass cardClass;
-        public enum CardClass { ironChad, silent, colorless, curse, status }
+        public enum CardClass { Warrior, Archer }
         public CardTargetType cardTargetType;
         public enum CardTargetType { self, enemy };
+        public CardRarity cardRarity;
+        public enum CardRarity { Common, Uncommon, Rare, Epic, Legendary, Hidden_Card } // 카드 레어도 설정
+        public CardAttribute cardAttribute;
+        public enum CardAttribute { Non, Darkest, Divine } // 카드 속성 설정
 
         // 기본 값을 초기화하는 메서드
         public void Initialize()
@@ -29,6 +33,7 @@ namespace TJ
             // 초기화 시 baseAmount를 기본으로 사용하게 설정
             // 필요한 경우 다른 필드를 초기화할 수도 있습니다.
         }
+
 
         public int GetCardCostAmount()
         {
@@ -45,6 +50,29 @@ namespace TJ
             else
                 return cardEffect.upgradedAmount;
         }
+
+        public string GetCardRarity()
+        {
+            return cardRarity.ToString();
+        }
+
+        /* 임시 사용 예시 및 테스트 코드
+        Card card = new Card();
+        string rarity = card.GetCardRarity();
+        Debug.Log(rarity);
+        */
+
+        public string GetCardType()
+        {
+            return cardType.ToString();
+        }
+
+        /* 
+        Card card = new Card();
+        string rarity = card.cardType();
+        Debug.Log(rarity);
+        */
+
 
         public string GetCardDescriptionAmount()
         {
