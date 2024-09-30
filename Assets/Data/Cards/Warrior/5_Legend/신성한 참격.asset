@@ -15,22 +15,26 @@ MonoBehaviour:
   cardTitle: "\uC2E0\uC131\uD55C \uCC38\uACA9"
   isUpgraded: 0
   cardDescription:
-    baseAmount: "\uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0 8\uC758 \uD53C\uD574
-      3\uBC88\uB97C \uC900\uB2E4."
-    upgradedAmount: "\uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0 12\uC758 \uD53C\uD574\uB97C
-      3\uBC88 \uC900\uB2E4."
+    baseAmount: "\uC561\uC158 \uCE74\uB4DC. \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0
+      20\uC758 \uD53C\uD574 3\uBC88\uB97C \uC900\uB2E4."
+    upgradedAmount: "\uC561\uC158 \uCE74\uB4DC. \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0
+      30\uC758 \uD53C\uD574 3\uBC88\uB97C \uC900\uB2E4."
   cardCost:
     baseAmount: 1
     upgradedAmount: 1
   cardEffect:
-    baseAmount: 8
-    upgradedAmount: 12
+    baseAmount: 20
+    upgradedAmount: 30
   buffAmount:
     baseAmount: 0
     upgradedAmount: 0
+  cardPrice:
+    CardShopPrice: 0
+    CardEnhancePrice: 0
   cardIcon: {fileID: 21300000, guid: 18566f8084e24ba4493124675a178188, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 1
+  cardTargetType: 0
   cardRarity: 4
   cardAttribute: 2
+  CardUniqueCode: 

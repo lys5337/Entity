@@ -30,6 +30,7 @@ namespace TJ
 
         public GameManager gameManager;
         public CardManagementUI cardManagementUI; // 카드 관리 UI와 연동
+        PlayerStatsUI playerStatsUI;
 
         private int refreshPrice = 50; // 초기 새로고침 가격
 
@@ -37,6 +38,7 @@ namespace TJ
         {
             gameManager = FindObjectOfType<GameManager>();
             cardManagementUI = FindObjectOfType<CardManagementUI>();
+            playerStatsUI = FindObjectOfType<PlayerStatsUI>();
 
             if (gameManager == null)
             {
@@ -73,7 +75,7 @@ namespace TJ
         }
 
         // 상점에 아이템 목록을 표시
-        private void PopulateShop()
+        public void PopulateShop()
         {
             if (itemPrefab == null || itemContainer == null)
             {
@@ -110,7 +112,7 @@ namespace TJ
         }
 
         // 상점에 렐릭 목록을 표시
-        private void PopulateRelics()
+        public void PopulateRelics()
         {
             if (relicPrefab == null || relicContainer == null)
             {
@@ -176,6 +178,7 @@ namespace TJ
                 if (item.isRelic)
                 {
                     gameManager.AddRelic(item.relic); // 렐릭 추가
+                    playerStatsUI.DisplayRelics();
                     relicsForSale.Remove(item);
                     Destroy(buyButton.gameObject);
                 }
@@ -223,6 +226,11 @@ namespace TJ
             {
                 Debug.Log("골드가 부족합니다.");
             }
+        }
+        public void ResetRefreshPrice()
+        {
+            refreshPrice = 50; // 초기 새로고침 가격으로 되돌림
+            UpdateRefreshButtonText(); // 새로고침 버튼의 텍스트 업데이트
         }
 
     }

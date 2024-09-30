@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public int maxHealth;
     public int gold;
+    public int playerPower;
+    public int playerDefense;
+    public int playerLuck;
+    public int playerMana;
     public List<Potion> potions;
     public int currentFloor;
     public List<Card> cards;

@@ -12,7 +12,7 @@ namespace QTEPack
 
         public virtual bool CheckIfDone()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); 
         }
     }
 
@@ -34,7 +34,12 @@ namespace QTEPack
 
         public override bool CheckIfDone()
         {
-            return Input.GetKeyDown(Key);
+            if (Input.GetKeyDown(Key))
+            {
+                Debug.Log($"키가 눌렸습니다: {Key}");
+                return true;
+            }
+            return false;
         }
     }
 

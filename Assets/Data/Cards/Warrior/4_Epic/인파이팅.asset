@@ -17,22 +17,22 @@ MonoBehaviour:
   cardDescription:
     baseAmount: "\uC801\uC5D0\uAC8C \uAC00\uAE4C\uC774 \uB2E4\uAC00\uAC04 \uD6C4
       \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0, 1\uC758 \uD53C\uD574\uB97C
-      4\uBC88 \uC785\uD78C\uB2E4."
+      6\uBC88 \uC785\uD78C\uB2E4."
     upgradedAmount: "\uC801\uC5D0\uAC8C \uAC00\uAE4C\uC774 \uB2E4\uAC00\uAC04 \uD6C4
-      \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0, 2\uC758 \uD53C\uD574\uB97C
-      4\uBC88 \uC785\uD78C\uB2E4."
+      \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0, 1\uC758 \uD53C\uD574\uB97C
+      7\uBC88 \uC785\uD78C\uB2E4."
   cardCost:
     baseAmount: 1
     upgradedAmount: 1
   cardEffect:
     baseAmount: 1
-    upgradedAmount: 2
+    upgradedAmount: 1
   buffAmount:
     baseAmount: 0
     upgradedAmount: 0
   cardIcon: {fileID: 21300000, guid: 269eb60207016c94b84f63d312fa3834, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 0
+  cardTargetType: 1
   cardRarity: 3
   cardAttribute: 0

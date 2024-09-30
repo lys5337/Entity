@@ -29,5 +29,6 @@ MonoBehaviour:
   cardIcon: {fileID: 21300000, guid: f12c744743930854a87d4821b88a9d27, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 0
+  cardTargetType: 1
   cardRarity: 0
+  cardAttribute: 0

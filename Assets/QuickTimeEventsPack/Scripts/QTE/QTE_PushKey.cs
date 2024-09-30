@@ -20,13 +20,19 @@ namespace QTEPack
         protected override void Initialize()
         {
             base.Initialize();
-
             KeysByDifficulty = new List<QTEEVent>[5];
-            KeysByDifficulty[0] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.D), new QTEEvent_MouseLeftClick() };
-            KeysByDifficulty[1] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.D), new QTEEvent_MouseLeftClick() };
-            KeysByDifficulty[2] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_MouseLeftClick() };
-            KeysByDifficulty[3] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_MouseLeftClick(), new QTEEvent_MouseRightClick() };
-            KeysByDifficulty[4] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_MouseLeftClick(), new QTEEvent_MouseRightClick() };
+
+            KeysByDifficulty[0] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.Q), new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.E), new QTEEvent_Key(KeyCode.R),
+                                                        new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_Key(KeyCode.F) };
+            KeysByDifficulty[1] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.Q), new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.E), new QTEEvent_Key(KeyCode.R),
+                                                        new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_Key(KeyCode.F) };
+            KeysByDifficulty[2] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.Q), new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.E), new QTEEvent_Key(KeyCode.R),
+                                                        new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_Key(KeyCode.F) };
+            KeysByDifficulty[3] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.Q), new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.E), new QTEEvent_Key(KeyCode.R),
+                                                        new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_Key(KeyCode.F) };
+            KeysByDifficulty[4] = new List<QTEEVent> { new QTEEvent_Key(KeyCode.Q), new QTEEvent_Key(KeyCode.W), new QTEEvent_Key(KeyCode.E), new QTEEvent_Key(KeyCode.R),
+                                                        new QTEEvent_Key(KeyCode.A), new QTEEvent_Key(KeyCode.S), new QTEEvent_Key(KeyCode.D), new QTEEvent_Key(KeyCode.F) };
+
         }
 
         public override void ShowQTE(Vector2 position, float scale, int difficulty)
@@ -47,27 +53,27 @@ namespace QTEPack
         public IEnumerator RunQTE(int difficulty)
         {
             float timeByDifficulty = TimeByDifficulty[difficulty];
-
             float elapsedTime = 0;
 
             while (elapsedTime < timeByDifficulty && !done)
             {
                 elapsedTime += Time.fixedDeltaTime;
-
                 fillCircle.fillAmount = elapsedTime / timeByDifficulty;
 
                 yield return new WaitForEndOfFrame();
             }
 
-            if (done)
+            if (!done)
             {
-                resultText.text = "Success!!!";
-                OnSuccess.Invoke();
+                Debug.Log("시간 초과로 실패하였습니다.");
+                resultText.text = "실패...";
+                OnFail.Invoke();
             }
             else
             {
-                resultText.text = "Ups...";
-                OnFail.Invoke();
+                Debug.Log("성공!");
+                resultText.text = "성공!!!";
+                OnSuccess.Invoke();
             }
         }
 

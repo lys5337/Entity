@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using QTEPack;
+using UnityEngine.Events;
 namespace TJ
 {
     public class BattleSceneManager : MonoBehaviour
@@ -50,6 +52,12 @@ namespace TJ
         public TMP_Text turnText;
         public GameObject gameover;
 
+        [Header("QTEAction")]
+        public QTE_SmashButton qteSmashButtonPrefab;
+        public QTE_Ring qteRingPrefab;
+
+        private bool isBattleOver = false;
+
         private void Awake()
         {
             gameManager = FindObjectOfType<GameManager>();
@@ -71,6 +79,110 @@ namespace TJ
         {
             bossFight = true;
             BeginBattle(possibleBosses);
+        }
+
+        private IEnumerator DeactivateAfterDelay(GameObject obj, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            obj.SetActive(false);
+        }
+
+        public void StartQTESmash(Vector2 position, float scale, int difficulty, UnityEngine.Events.UnityAction onSuccess, UnityEngine.Events.UnityAction onFail)
+        {
+            if (qteSmashButtonPrefab != null)
+            {
+                QTE_SmashButton qteInstance = Instantiate(qteSmashButtonPrefab, transform);
+                
+                qteInstance.OnSuccess.RemoveAllListeners();
+                qteInstance.OnFail.RemoveAllListeners();
+
+                qteInstance.OnSuccess.AddListener(() =>
+                {
+                    onSuccess.Invoke();
+                    Destroy(qteInstance.gameObject, 0.7f);
+                });
+
+                qteInstance.OnFail.AddListener(() =>
+                {
+                    onFail.Invoke();
+                    Destroy(qteInstance.gameObject, 0.7f);
+                });
+
+                // QTE 시작
+                qteInstance.ShowQTE(position, scale, difficulty);
+            }
+            else
+            {
+                Debug.LogError("QTE_SmashButton 프리팹이 설정되지 않았습니다.");
+            }
+        }
+
+        public void StartQTERing(Vector2 position, float scale, float difficulty, UnityAction onPerfect, UnityAction onSuccess, UnityAction onFail)
+        {
+            if (qteRingPrefab != null)
+            {
+                QTE_Ring qteInstance = Instantiate(qteRingPrefab, transform);
+
+                qteInstance.OnPerfect.RemoveAllListeners();
+                qteInstance.OnSuccess.RemoveAllListeners();
+                qteInstance.OnFail.RemoveAllListeners();
+
+                qteInstance.OnPerfect.AddListener(() =>
+                {
+                    onPerfect.Invoke(); 
+                    Destroy(qteInstance.gameObject, 0.7f); 
+                });
+
+                qteInstance.OnSuccess.AddListener(() =>
+                {
+                    onSuccess.Invoke();
+                    Destroy(qteInstance.gameObject, 0.7f);
+                });
+
+                qteInstance.OnFail.AddListener(() =>
+                {
+                    onFail.Invoke();
+                    Destroy(qteInstance.gameObject, 0.7f);
+                });
+
+                int difficultyIndex = Mathf.RoundToInt(difficulty);
+
+                qteInstance.ShowQTE(position, scale, difficultyIndex);
+            }
+            else
+            {
+                Debug.LogError("QTE_Ring 프리팹이 설정되지 않았습니다.");
+            }
+        }
+
+        private IEnumerator DisableAfterDelay(GameObject obj, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            obj.SetActive(false);
+        }
+
+        public bool MaxHealthCheck()
+        {
+            Debug.Log("현재 체력"+player.maxHealth);
+            Debug.Log("현재 체력"+player.currentHealth);
+            if (player.maxHealth == player.currentHealth)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public int PlayerMaxHealthReturn()
+        {
+            return player.maxHealth;
+        }
+
+        public int PlayerCurrnetHealthReturn()
+        {
+            return player.currentHealth;
         }
 
         public void BeginBattle(GameObject[] prefabsArray)
@@ -208,7 +320,7 @@ namespace TJ
 
         public void PlayCard(CardUI cardUI)
         {
-            // 공격 카드의 경우 타겟이 필요함
+            // 타겟이 없는 공격 카드 처리
             if (cardUI.card.cardType == Card.CardType.Attack && cardTarget == null)
             {
                 Debug.LogError("타겟이 설정되지 않았습니다. 공격 카드를 사용할 수 없습니다.");
@@ -216,7 +328,7 @@ namespace TJ
                 return;
             }
 
-            // GoblinNob이 분노 상태일 때 처리
+            // 적의 분노 상태 처리
             if (cardUI.card.cardType != Card.CardType.Attack && enemies[0].GetComponent<Fighter>().enrage.buffValue > 0)
             {
                 enemies[0].GetComponent<Fighter>().AddBuff(Buff.Type.strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
@@ -229,12 +341,21 @@ namespace TJ
             energy -= cardUI.card.GetCardCostAmount();
             energyText.text = energy.ToString();
 
-            // 카드 효과 및 처리
+            // 카드 소멸 처리
+            if (cardUI.card.expiring)
+            {
+                gameManager.expiredCards.Add(cardUI.card);  // 소멸 리스트에 추가
+            }
+            else
+            {
+                DiscardCard(cardUI.card);  // 일반적인 카드 처리 (버리기)
+            }
+
+            // 카드 비활성화 및 효과 처리
             Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
             selectedCard = null;
-            cardUI.gameObject.SetActive(false); // 카드 비활성화
-            cardsInHand.Remove(cardUI.card);    // 카드 손에서 제거
-            DiscardCard(cardUI.card);           // 카드 버리기
+            cardUI.gameObject.SetActive(false);  // 카드 비활성화
+            cardsInHand.Remove(cardUI.card);     // 카드 손에서 제거
         }
 
 
@@ -316,9 +437,9 @@ namespace TJ
             Debug.Log("Turn Over");
             ChangeTurn();
         }
+
         public void EndFight(bool win)
-        {
-            // 승리 여부에 따른 게임오버 UI 설정
+        {   
             if (!win && gameover != null)
             {
                 gameover.SetActive(true);
@@ -327,6 +448,9 @@ namespace TJ
             // gameManager와 player가 null이 아닌지 확인
             if (gameManager != null && player != null)
             {
+                // 전투 종료 시 해당 변수를 true로 설정하여 카드와 버튼 동작을 막음
+                isBattleOver = true;
+
                 // BurningBlood 유물 체크 후 체력 회복 처리
                 if (gameManager.PlayerHasRelic("BurningBlood"))
                 {
@@ -341,21 +465,19 @@ namespace TJ
 
                 // 버프 초기화
                 player.ResetBuffs();
- 
+
                 // 엔드 스크린 처리
                 HandleEndScreen();
 
                 // 층수 업데이트
                 gameManager.UpdateFloorNumber();
 
-                // enemies 배열이 null인지, 첫 번째 적이 있는지 확인
+                // 골드 보상 및 적 정보 확인
                 if (enemies != null && enemies.Count > 0 && enemies[0] != null)
                 {
-                    // 골드 보상 처리
                     int goldReward = enemies[0].goldDrop;
                     gameManager.UpdateGoldNumber(goldReward);
 
-                    // birdIcon이 null이 아닌지 확인 후 처리
                     if (enemies[0].bird && birdIcon != null)
                     {
                         birdIcon.SetActive(false);
@@ -370,7 +492,26 @@ namespace TJ
             {
                 Debug.LogError("gameManager 또는 player가 null입니다.");
             }
+
+            // 모든 카드와 EndTurn 버튼 비활성화
+            DisableAllCardsAndButtons();
         }
+
+        private void DisableAllCardsAndButtons()
+        {
+            // 모든 카드를 비활성화
+            foreach (CardUI cardUI in cardsInHandGameObjects)
+            {
+                if (cardUI != null)
+                {
+                    cardUI.gameObject.SetActive(false);
+                }
+            }
+
+            // 만약 필요한 경우, 다른 버튼이나 UI 요소도 비활성화
+            Debug.Log("모든 카드와 버튼이 비활성화되었습니다.");
+        }
+
 
 
         public void HandleEndScreen()
@@ -424,6 +565,19 @@ namespace TJ
             {
                 Debug.LogError("적 정보(enemies)가 null이거나 적 목록이 비어 있습니다.");
             }
+        }
+
+        public void OnEndTurnButtonClick()
+        {
+            // 전투가 종료되었으면 버튼이 동작하지 않도록 함
+            if (isBattleOver)
+            {
+                Debug.Log("전투가 종료되어 턴을 종료할 수 없습니다.");
+                return;
+            }
+
+            // 기존의 턴 종료 처리
+            ChangeTurn();
         }
     }
 }

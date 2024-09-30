@@ -17,9 +17,9 @@ MonoBehaviour:
   enemyAttribute: 0
   enemyRace: 0
   enemyInfo:
-    enemyNameUI: WOlf
-    enemyMaxHealthUI: 30
+    enemyNameUI: "\uB3D9\uAD74\uC758 \uC791\uC740 \uB291\uB300"
+    enemyMaxHealthUI: 45
     enemyBaseStrengthUI: 20
     enemyBaseBlockUI: 0
-    enemyClearGoldMaxUI: 800
+    enemyClearGoldMaxUI: 200
     enemyClearGoldMinUI: 100

@@ -19,13 +19,13 @@ namespace TJ
 
         private void Start()
         {
-            saveSlot1Button.onClick.AddListener(() => saveDataManager.SaveGame(gameManager, fighter, 1));
-            saveSlot2Button.onClick.AddListener(() => saveDataManager.SaveGame(gameManager, fighter, 2));
-            saveSlot3Button.onClick.AddListener(() => saveDataManager.SaveGame(gameManager, fighter, 3));
+            saveSlot1Button.onClick.AddListener(() => saveDataManager.SaveGame(1));
+            saveSlot2Button.onClick.AddListener(() => saveDataManager.SaveGame(2));
+            saveSlot3Button.onClick.AddListener(() => saveDataManager.SaveGame(3));
 
-            loadSlot1Button.onClick.AddListener(() => loadDataManager.LoadGame(gameManager, fighter, 1));
-            loadSlot2Button.onClick.AddListener(() => loadDataManager.LoadGame(gameManager, fighter, 2));
-            loadSlot3Button.onClick.AddListener(() => loadDataManager.LoadGame(gameManager, fighter, 3));
+            loadSlot1Button.onClick.AddListener(() => loadDataManager.LoadGame(1));
+            loadSlot2Button.onClick.AddListener(() => loadDataManager.LoadGame(2));
+            loadSlot3Button.onClick.AddListener(() => loadDataManager.LoadGame(3));
         }
     }
 }

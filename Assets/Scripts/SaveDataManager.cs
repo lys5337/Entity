@@ -1,104 +1,73 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;  // 씬 관리를 위해 추가
+using UnityEngine.SceneManagement;
 
 namespace TJ
 {
     public class SaveDataManager : MonoBehaviour
     {
-        private string saveFilePath;
-
         // 슬롯 번호에 따른 경로 설정
         private string GetSaveFilePath(int slot)
         {
-            return Application.persistentDataPath + $"/savefile_slot{slot}.json";
+            return Application.persistentDataPath + $"/objectStates_slot{slot}.json";
         }
 
-        // 슬롯에 맞는 저장 함수
-        public void SaveGame(GameManager gameManager, Fighter fighter, int slot)
+        // 슬롯에 맞게 모든 오브젝트 상태를 저장 (비활성화된 오브젝트도 포함)
+        public void SaveGame(int slot)
         {
-            SaveData saveData = new SaveData
+            List<ObjectState> allObjectStates = new List<ObjectState>();
+
+            // 모든 루트 오브젝트를 가져옴
+            GameObject[] rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+            foreach (GameObject rootObj in rootObjects)
             {
-                playerDeck = new List<CardData>(),
-                relics = new List<RelicData>(),
-                floorNumber = gameManager.floorNumber,
-                goldAmount = gameManager.goldAmount,
-                fighterData = new FighterData
-                {
-                    currentHealth = fighter.currentHealth,
-                    maxHealth = fighter.maxHealth
-                },
-                character = new CharacterData
-                {
-                    name = gameManager.character.name
-                },
-                currentSceneName = SceneManager.GetActiveScene().name  // 현재 씬 이름 저장
+                // 루트 오브젝트와 자식 오브젝트까지 모두 포함하여 상태 저장
+                SaveObjectStateRecursive(rootObj.transform, allObjectStates);
+            }
+
+            // JSON으로 변환 후 슬롯 번호에 맞는 파일로 저장
+            string json = JsonUtility.ToJson(new ObjectStateList { objectStates = allObjectStates }, true);
+            File.WriteAllText(GetSaveFilePath(slot), json);
+            Debug.Log($"모든 오브젝트 상태가 슬롯 {slot}에 저장되었습니다.");
+        }
+
+        // 재귀적으로 오브젝트 상태 저장 (비활성화된 오브젝트 포함)
+        private void SaveObjectStateRecursive(Transform obj, List<ObjectState> allObjectStates)
+        {
+            ObjectState objectState = new ObjectState
+            {
+                objectName = obj.name,
+                position = obj.position, // 월드 위치를 사용
+                rotation = obj.eulerAngles,
+                scale = obj.localScale,
+                isActive = obj.gameObject.activeSelf // 활성화 상태 저장
             };
 
-            // 카드 덱 저장
-            foreach (Card card in gameManager.playerDeck)
-            {
-                saveData.playerDeck.Add(new CardData
-                {
-                    cardName = card.cardTitle,
-                    isUpgraded = card.isUpgraded
-                });
-            }
+            allObjectStates.Add(objectState);
 
-            // 유물 저장
-            foreach (Relic relic in gameManager.relics)
+            // 자식 오브젝트들도 재귀적으로 저장
+            foreach (Transform child in obj)
             {
-                saveData.relics.Add(new RelicData
-                {
-                    relicName = relic.relicName,
-                    description = relic.relicDescription
-                });
+                SaveObjectStateRecursive(child, allObjectStates);
             }
-
-            // JSON으로 변환 후 파일로 저장
-            string json = JsonUtility.ToJson(saveData, true);
-            File.WriteAllText(GetSaveFilePath(slot), json);
-            Debug.Log($"게임이 저장되었습니다: 슬롯 {slot} - 경로: " + GetSaveFilePath(slot));
         }
     }
 
     [System.Serializable]
-    public class SaveData
+    public class ObjectStateList
     {
-        public List<CardData> playerDeck;
-        public List<RelicData> relics;
-        public int floorNumber;
-        public int goldAmount;
-        public FighterData fighterData;
-        public CharacterData character;
-        public string currentSceneName;  // 씬 이름 저장 추가
+        public List<ObjectState> objectStates;
     }
 
     [System.Serializable]
-    public class CardData
+    public class ObjectState
     {
-        public string cardName;
-        public bool isUpgraded;
-    }
-
-    [System.Serializable]
-    public class RelicData
-    {
-        public string relicName;
-        public string description;
-    }
-
-    [System.Serializable]
-    public class FighterData
-    {
-        public int currentHealth;
-        public int maxHealth;
-    }
-
-    [System.Serializable]
-    public class CharacterData
-    {
-        public string name;
+        public string objectName;
+        public Vector3 position;
+        public Vector3 rotation;
+        public Vector3 scale;
+        public bool isActive;
     }
 }

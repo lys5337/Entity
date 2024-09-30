@@ -11,6 +11,7 @@ public class QTEDemoRunner : MonoBehaviour
     {
         QTE.OnFail.AddListener(OnFinishQTE);
         QTE.OnSuccess.AddListener(OnFinishQTE);
+        QTE.OnPerfect.AddListener(OnFinishQTE);
 
         QTE.ShowQTE(new Vector2(200f, 200f), 1, 2);
 
@@ -20,6 +21,7 @@ public class QTEDemoRunner : MonoBehaviour
     {
         QTE.OnFail.RemoveAllListeners();
         QTE.OnSuccess.RemoveAllListeners();
+        QTE.OnPerfect.RemoveAllListeners();
 
         QTE.Hide();
         StopAllCoroutines();

@@ -54,12 +54,12 @@ namespace QTEPack
 
             if (done == QTEHitResult.Win)
             {
-                resultText.text = "Success!!!";
+                resultText.text = "성공!";
                 OnSuccess.Invoke();
             }
             else
             {
-                resultText.text = "Ups...";
+                resultText.text = "실패..";
                 OnFail.Invoke();
             }
         }

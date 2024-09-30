@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardTitle: "\uBD84\uB178"
   isUpgraded: 0
+  expiring: 1
   cardDescription:
     baseAmount: "\uD798\uC744 2 \uC5BB\uB294\uB2E4."
-    upgradedAmount: "\uD798\uC744 2 \uC5BB\uB294\uB2E4."
+    upgradedAmount: "\uD798\uC744 3 \uC5BB\uB294\uB2E4."
   cardCost:
     baseAmount: 1
     upgradedAmount: 1
@@ -26,9 +27,13 @@ MonoBehaviour:
   buffAmount:
     baseAmount: 2
     upgradedAmount: 3
+  cardPrice:
+    CardShopPrice: 0
+    CardEnhancePrice: 0
   cardIcon: {fileID: 21300000, guid: 39a42289a28d17f48afdba649ec5453e, type: 3}
   cardType: 2
   cardClass: 0
   cardTargetType: 0
   cardRarity: 2
   cardAttribute: 0
+  CardUniqueCode: 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace TJ
 {
@@ -52,6 +53,30 @@ namespace TJ
             
             else if (encounter.encounterType == Encounter.Type.enemy)
                 SceneChanger.SelectBattleType("enemy");
+
+            else if (encounter.encounterType == Encounter.Type.random)
+                SceneChanger.SelectScreen("Random");
+
+            else if (encounter.encounterType == Encounter.Type.event1)
+                SceneChanger.SelectScreen("event1");
+            else if (encounter.encounterType == Encounter.Type.event2)
+                SceneChanger.SelectScreen("event2");
+            else if (encounter.encounterType == Encounter.Type.event3)
+                SceneChanger.SelectScreen("event3");
+            else if (encounter.encounterType == Encounter.Type.event4)
+                SceneChanger.SelectScreen("event4");
+            else if (encounter.encounterType == Encounter.Type.event5)
+                SceneChanger.SelectScreen("event5");
+            else if (encounter.encounterType == Encounter.Type.event6)
+                SceneChanger.SelectScreen("event6");
+            else if (encounter.encounterType == Encounter.Type.event7)
+                SceneChanger.SelectScreen("event7");
+            else if (encounter.encounterType == Encounter.Type.event8)
+                SceneChanger.SelectScreen("event8");
+            else if (encounter.encounterType == Encounter.Type.event9)
+                SceneChanger.SelectScreen("event9");
+            else if (encounter.encounterType == Encounter.Type.event10)
+                SceneChanger.SelectScreen("event10");
         }
         public void SetNodesActive(Encounter _encounter)
         {
@@ -70,9 +95,12 @@ namespace TJ
                 n.GetComponent<Node>().clickedIcon.enabled=false;
                 n.GetComponent<Node>().floor=this;
             }
-
-            verticalLayoutGroup.spacing= Random.Range(25f,125f);
-            verticalLayoutGroup.padding.top= Random.Range(0,125);
+            if (SceneManager.GetActiveScene().name != "Stage0")
+            {
+                verticalLayoutGroup.spacing = Random.Range(25f, 125f);
+                verticalLayoutGroup.padding.top = Random.Range(0, 125);
+            }
+                
             //this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2 (600, Random.Range(80,120));
             activeNodes.Clear();
             nodes.Shuffle();
@@ -104,9 +132,38 @@ namespace TJ
                 else if (encounter.encounterType == Encounter.Type.boss)
                     continue;
 
+                else if (encounter.encounterType == Encounter.Type.event1)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event2)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event3)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event4)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event5)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event6)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event7)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event8)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event9)
+                    continue;
+                else if (encounter.encounterType == Encounter.Type.event10)
+                    continue;
+
+                else if (SceneManager.GetActiveScene().name == "Stage0")
+                {
+                    if (encounter.encounterType == Encounter.Type.enemy)
+                        continue;
+                    else if (encounter.encounterType == Encounter.Type.random)
+                        continue;
+                }
+
                 //Debug.Log(nodes.Count);
                 //Debug.Log($"Is {Random.Range(0,1f)} >= {i*(1f/(nodes.Count))}?");
-                else if(Random.Range(0,1f)>=i*(1f/(nodes.Count)))
+                        else if(Random.Range(0,1f)>=i*(1f/(nodes.Count)))
                     EnableNode(nodes[i]);
             }
         }

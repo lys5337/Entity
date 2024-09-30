@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TJ
 {
-[CreateAssetMenu]
-public class Relic : ScriptableObject
-{
-	public string relicName;
-    public string relicDescription;
-    public Sprite relicIcon;
+    [CreateAssetMenu(fileName = "New Relic", menuName = "Relic")]
+    public class Relic : ScriptableObject
+    {
+        public string relicName;       // 유물 이름
+        public string relicDescription; // 유물 설명
+        public Sprite relicIcon;       // 유물 아이콘 (필요시)
+    }
 }
-}
-//배틀씬 메니져에 소속된 스크립트

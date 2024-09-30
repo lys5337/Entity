@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace TJ
 {
     public class Fighter : MonoBehaviour
     {
+        private CameraController cameraController;
         [Header("Enemy Data")]
         public EnemyUI enemyUI;
         [HideInInspector]public string enemyNameUI;
@@ -36,69 +38,51 @@ namespace TJ
         GameManager gameManager;
         public GameObject damageIndicator;
         public List<Buff> buffs;
+        private Animator animator;
 
         private void Awake()
         {
-            // 적과 플레이어를 구분해서 체력 초기화
+            cameraController = FindObjectOfType<CameraController>();
+            animator = GetComponent<Animator>();
             if (isPlayer)
             {
-                // 플레이어의 체력 초기화
-                maxHealth = 100;
+                maxHealth = 60;
                 currentHealth = maxHealth;
-                Debug.Log($"플레이어의 최대 체력이 설정되었습니다: {maxHealth}");
+                Debug.Log($"플레이어의 초기 체력이 설정되었습니다: {maxHealth}");
             }
             else
             {
-                // 적의 데이터를 초기화
                 InitializeStatsFromEnemyUI_Fighter();
                 maxHealth = maxHealthUI;
                 currentHealth = maxHealthUI;
+                
                 Debug.Log($"적의 최대 체력이 설정되었습니다: {maxHealth}");
             }
-
-            // 체력바 업데이트
             fighterHealthBar.healthSlider.maxValue = maxHealth;
             fighterHealthBar.DisplayHealth(currentHealth);
         }
 
         private void Start()
         {
-            // 객체 및 게임 매니저 참조
             enemy = GetComponent<Enemy>();
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
             gameManager = FindObjectOfType<GameManager>();
 
-            /*
-            // enemyUI가 null일 경우 자동으로 할당 
-            if (enemyUI == null)
-            {
-                enemyUI = GetComponent<EnemyUI>();  // EnemyUI가 같은 GameObject에 있는 경우
-                if (enemyUI == null)
-                {
-                    Debug.Log("EnemyUI가 할당되지 않았습니다. 수동으로 할당해야 합니다.");
-                }
-            }
-            */
-
-            // 플레이어의 체력 UI 초기화
             if (isPlayer)
             {
-                // 게임 매니저에 플레이어의 체력 표시 
                 gameManager.DisplayHealth(currentHealth, maxHealth);
             }
 
-            // 적의 체력 UI 초기화
             fighterHealthBar.healthSlider.maxValue = maxHealth;
             fighterHealthBar.DisplayHealth(currentHealth);
         }
 
         private void InitializeStatsFromEnemyUI_Fighter()
         {
-            // 방어 코드 추가: enemyUI가 null인지 확인
             if (enemyUI == null)
             {
                 Debug.LogError("enemyUI가 null입니다. EnemyUI가 할당되지 않았습니다.");
-                return; // enemyUI가 null일 경우 이후 코드를 실행하지 않음
+                return;
             }
 
             enemyNameUI = enemyUI.enemyInfo.enemyNameUI;
@@ -106,10 +90,10 @@ namespace TJ
             baseStrengthUI = enemyUI.enemyInfo.enemyBaseStrengthUI;
             currentBlockUI = enemyUI.enemyInfo.enemyBaseBlockUI;
 
-            Debug.Log("Enemy Name: " + enemyNameUI);
-            Debug.Log("Enemy Base Strength: " + baseStrengthUI);
-            Debug.Log("Enemy Max Health: " + maxHealthUI);
-            Debug.Log("Enemy Base Block: " + currentBlockUI);
+            Debug.Log("Fighter Enemy Name: " + enemyNameUI);
+            Debug.Log("Fighter Enemy Base Strength: " + baseStrengthUI);
+            Debug.Log("Fighter Enemy Max Health: " + maxHealthUI);
+            Debug.Log("Fighter Enemy Base Block: " + currentBlockUI);
         }
 
         public void clear_monster() //Invoke()를 사용하기 위해 제작한 메소드
@@ -123,21 +107,31 @@ namespace TJ
 
                 Destroy(gameObject);
             }
+            ResetCamera();
         }
-
 
         public void TrueDamage(int amount)
         {
-            // Fighter가 이미 파괴된 상태인지 확인
-            if (this == null)
-            {
-                Debug.LogWarning("Fighter 오브젝트가 이미 파괴되었습니다. TrueDamage를 처리할 수 없습니다.");
-                return;
-            }
+            Debug.Log("Fighter Max Health: " + enemyNameUI);
 
-            DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
-            di.DisplayDamage(amount);
-            Destroy(di, 2f);
+            if (enemy != null && enemy.wiggler && currentHealth == maxHealth)
+                enemy.CurlUP();
+
+            Debug.Log($"dealt {amount} damage");
+
+            if (amount > 0)
+            {
+                DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
+                di.DisplayDamage(amount);
+                Destroy(di, 2f);
+            }
+            else
+            {
+                int Tempamount = -amount;
+                DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
+                di.DisplayDamage(Tempamount);
+                Destroy(di, 2f);
+            }
 
             currentHealth -= amount;
 
@@ -148,13 +142,112 @@ namespace TJ
 
             UpdateHealthUI(currentHealth);
 
-            Invoke("clear_monster", 1.0f); // 체력이 0 이하로 떨어지면 1초 후에 몬스터를 제거
+            Vector3 targetPosition;
+
+            if (transform.position.x <= -100)
+            {
+                targetPosition = new Vector3(transform.position.x + 500, transform.position.y, transform.position.z - 40);
+            }
+            else if (transform.position.x >= 100)
+            {
+                targetPosition = new Vector3(transform.position.x - 500, transform.position.y, transform.position.z - 40);
+            }
+            else
+            {
+                targetPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 40);
+            }
+
+            Debug.Log($"Target camera position for zoom: {targetPosition}");
+
+            StartCoroutine(HandleDamageAndCamera(targetPosition, amount));
         }
 
-
+        private void ResetCamera()
+        {
+            cameraController.ZoomOut(0.2f);  // 원래 위치로 돌아가기 (지속 시간 설정)
+        }
         
 
         public void TakeDamage(int amount)
+        {
+            Debug.Log("Fighter Max Health: " + enemyNameUI);
+
+            if (currentBlock > 0)
+                amount = BlockDamage(amount);
+
+            if (enemy != null && enemy.wiggler && currentHealth == maxHealth)
+                enemy.CurlUP();
+
+            Debug.Log($"dealt {amount} damage");
+
+            if (amount > 0)
+            {
+                DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
+                di.DisplayDamage(amount);
+                Destroy(di, 2f);
+            }
+            else
+            {
+                int Tempamount = -amount;
+                DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
+                di.DisplayDamage(Tempamount);
+                Destroy(di, 2f);
+            }
+
+            currentHealth -= amount;
+
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+            }
+
+            UpdateHealthUI(currentHealth);
+
+            Vector3 targetPosition;
+
+            if (transform.position.x <= -100)
+            {
+                targetPosition = new Vector3(transform.position.x + 120, transform.position.y, transform.position.z - 22);
+            }
+            else if (transform.position.x >= 100)
+            {
+                targetPosition = new Vector3(transform.position.x - 120, transform.position.y, transform.position.z - 22);
+            }
+            else
+            {
+                targetPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 22);
+            }
+
+            Debug.Log($"Target camera position for zoom: {targetPosition}");
+
+            StartCoroutine(HandleDamageAndCamera(targetPosition, amount));
+        }
+
+        private IEnumerator HandleDamageAndCamera(Vector3 targetPosition, int amount)
+        {
+            cameraController.ZoomInTo(targetPosition, 330.0f, 0.1f);
+
+            yield return new WaitForSeconds(0.1f);
+
+            if (currentHealth == 0)
+            {
+                Debug.Log("적의 체력이 0이 되었습니다. 카메라를 원래 위치로 복귀하고 적 처리.");
+                ResetCamera();
+
+                yield return new WaitForSeconds(0.5f);
+
+                clear_monster();
+            }
+            else
+            {
+                Invoke("ResetCamera", 1.3f);
+            }
+        }
+
+// cameraController.RotateCamera(0.5f, 10f);                 // 동시에 10도 회전
+// cameraController.ShakeCamera(0.4f, 0.5f);                 // 0.4초 동안 약간의 진동 추가
+
+        public int TakeDamageReturn(int amount)
         {
             Debug.Log("Fighter Max Health: " + enemyNameUI);
 
@@ -180,8 +273,9 @@ namespace TJ
 
             UpdateHealthUI(currentHealth);
 
-            Invoke("clear_monster",1.0f); //Invoke는 대문자임
-            
+            Invoke("clear_monster",2.0f); //Invoke는 대문자임
+
+            return amount;
         }
 
 
@@ -318,6 +412,118 @@ namespace TJ
                 enemy.DisplayIntent();
             }
         }
+
+        public void ReductBuff(Buff.Type type, int amount)
+        {
+            switch (type)
+            {
+                case Buff.Type.vulnerable:
+                    if (vulnerable.buffValue > 0)
+                    {
+                        vulnerable.buffValue -= amount;
+                        vulnerable.buffGO.DisplayBuff(vulnerable);
+                        Debug.Log($"취약 버프 감소: {vulnerable.buffValue}");
+
+                        if (vulnerable.buffValue <= 0)
+                        {
+                            Destroy(vulnerable.buffGO.gameObject);
+                            vulnerable.buffGO = null;
+                            Debug.Log("취약 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                case Buff.Type.weak:
+                    if (weak.buffValue > 0)
+                    {
+                        weak.buffValue -= amount;
+                        weak.buffGO.DisplayBuff(weak);
+                        Debug.Log($"약화 버프 감소: {weak.buffValue}");
+
+                        if (weak.buffValue <= 0)
+                        {
+                            Destroy(weak.buffGO.gameObject);
+                            weak.buffGO = null;
+                            Debug.Log("약화 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                case Buff.Type.strength:
+                    if (strength.buffValue > 0)
+                    {
+                        strength.buffValue -= amount;
+                        strength.buffGO.DisplayBuff(strength);
+                        Debug.Log($"힘 버프 감소: {strength.buffValue}");
+
+                        if (strength.buffValue <= 0)
+                        {
+                            Destroy(strength.buffGO.gameObject);
+                            strength.buffGO = null;
+                            Debug.Log("힘 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                case Buff.Type.poison:
+                    if (poison.buffValue > 0)
+                    {
+                        poison.buffValue -= amount;
+                        poison.buffGO.DisplayBuff(poison);
+                        Debug.Log($"독 버프 감소: {poison.buffValue}");
+
+                        if (poison.buffValue <= 0)
+                        {
+                            Destroy(poison.buffGO.gameObject);
+                            poison.buffGO = null;
+                            Debug.Log("독 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                case Buff.Type.bleeding:
+                    if (bleeding.buffValue > 0)
+                    {
+                        bleeding.buffValue -= amount;
+                        bleeding.buffGO.DisplayBuff(bleeding);
+                        Debug.Log($"출혈 버프 감소: {bleeding.buffValue}");
+
+                        if (bleeding.buffValue <= 0)
+                        {
+                            Destroy(bleeding.buffGO.gameObject);
+                            bleeding.buffGO = null;
+                            Debug.Log("출혈 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                case Buff.Type.deathMark:
+                    if (deathMark.buffValue > 0)
+                    {
+                        deathMark.buffValue -= amount;
+                        deathMark.buffGO.DisplayBuff(deathMark);
+                        Debug.Log($"데스마크 버프 감소: {deathMark.buffValue}");
+
+                        if (deathMark.buffValue <= 0)
+                        {
+                            Destroy(deathMark.buffGO.gameObject);
+                            deathMark.buffGO = null;
+                            Debug.Log("데스마크 버프 제거됨");
+                        }
+                    }
+                    break;
+
+                default:
+                    Debug.LogWarning("알 수 없는 버프 타입입니다.");
+                    break;
+            }
+
+            if (enemy != null)
+            {
+                enemy.DisplayIntent();
+            }
+        }
+
 
 
 

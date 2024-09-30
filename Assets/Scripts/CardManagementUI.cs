@@ -9,6 +9,7 @@ namespace TJ
         public GameObject cardListPanel; // 카드 리스트를 담을 패널 (활성화/비활성화 용도)
         public Transform cardListContainer; // 카드 리스트를 담을 부모 객체
         public GameObject cardItemPrefab; // 카드 리스트 아이템 프리팹
+        public Button closeButton; // 카드 리스트 패널을 끄는 버튼
 
         private Shop shop;
 
@@ -16,6 +17,16 @@ namespace TJ
         {
             shop = FindObjectOfType<Shop>();
             cardListPanel.SetActive(false); // 초기에는 카드 리스트 패널 비활성화
+
+            // 닫기 버튼에 HideCardList 함수 연결
+            if (closeButton != null)
+            {
+                closeButton.onClick.AddListener(HideCardList);
+            }
+            else
+            {
+                Debug.LogError("닫기 버튼이 설정되지 않았습니다.");
+            }
         }
 
         // 카드 리스트를 보여주는 메서드
@@ -54,7 +65,7 @@ namespace TJ
 
         public void HideCardList()
         {
-            cardListPanel.SetActive(false);
+            cardListPanel.SetActive(false); // 카드 리스트 패널 비활성화
         }
     }
 }

@@ -5,7 +5,7 @@ namespace QTEPack
 {
     enum QTEHitResult
     {
-        Playing, Win, Fail
+        Playing, Win, Fail, Perfect
     }
 
     public class QuickTimeEvent : MonoBehaviour
@@ -15,6 +15,7 @@ namespace QTEPack
 
         public UnityEvent OnFail;
         public UnityEvent OnSuccess;
+        public UnityEvent OnPerfect;
 
         private bool initialized = false;
 

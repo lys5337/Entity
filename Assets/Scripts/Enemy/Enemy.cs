@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Data")]
     [HideInInspector]public int clearGoldMinUI;
     [HideInInspector]public int clearGoldMaxUI;
+    [HideInInspector]public string nameUI;
     public EnemyUI enemyUI;
+    public TextMeshProUGUI enemyNameText; 
 
 	public List<EnemyAction> enemyActions;
 	public List<EnemyAction> turns = new List<EnemyAction>();
@@ -26,12 +28,12 @@ public class Enemy : MonoBehaviour
     public BuffUI intentUI;
 
     [Header("Specifics")]
-    public int goldDrop;
-    public bool bird;
-    public bool nob;
-    public bool wiggler;
-    public GameObject wigglerBuff;
-    public GameObject nobBuff;
+    [HideInInspector]public int goldDrop;
+    [HideInInspector]public bool bird;
+    [HideInInspector]public bool nob;
+    [HideInInspector]public bool wiggler;
+    [HideInInspector]public GameObject wigglerBuff;
+    [HideInInspector]public GameObject nobBuff;
     BattleSceneManager battleSceneManager;
     Fighter player;
     Animator animator;
@@ -43,8 +45,11 @@ public class Enemy : MonoBehaviour
         player = battleSceneManager.player;
         thisEnemy = GetComponent<Fighter>();
         animator = GetComponent<Animator>();
-        InitializeStatsFromEnemyUI();
-        if(shuffleActions)
+
+        InitializeStatsFromEnemyUI(); // 적의 정보를 enemyUI에서 가져오는 함수
+        DisplayEnemyName();           // 적의 이름을 화면에 표시하는 함수
+        
+        if (shuffleActions)
             GenerateTurns();
     }
 
@@ -52,6 +57,7 @@ public class Enemy : MonoBehaviour
     {
         clearGoldMinUI = enemyUI.enemyInfo.enemyClearGoldMinUI;
         clearGoldMaxUI = enemyUI.enemyInfo.enemyClearGoldMaxUI;
+        nameUI = enemyUI.enemyInfo.enemyNameUI;
         goldDrop = Random.Range(clearGoldMinUI, clearGoldMaxUI);
     }
 
@@ -64,6 +70,21 @@ public class Enemy : MonoBehaviour
         if(shuffleActions)
             GenerateTurns();
     }
+
+    private void DisplayEnemyName()
+    {
+        if (enemyNameText != null)
+        {
+            enemyNameText.text = nameUI;
+            Debug.Log($"적의 이름이 설정되었습니다: {nameUI}");
+        }
+        else
+        {
+            Debug.LogWarning("Enemy Name Text가 설정되지 않았습니다.");
+            Debug.Log($"적의 이름이 설정되지 않았습니다: {nameUI}");
+        }
+    }
+
     public void TakeTurn()
     {
         intentUI.animator.Play("IntentFade");

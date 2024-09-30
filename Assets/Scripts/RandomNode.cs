@@ -22,6 +22,19 @@ namespace TJ
         private GameManager gameManager;
         private List<string> optionDescriptions = new List<string>();
 
+        // 딜레이 후 초기화하는 코루틴
+        private IEnumerator ResetAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            // 초기화: 버튼과 텍스트를 초기 상태로 복구
+            resultButton.gameObject.SetActive(false);
+            optionButton1.gameObject.SetActive(true);
+            optionButton2.gameObject.SetActive(true);
+            SetRandomOptions(); // 새로운 랜덤 옵션 설정
+            resultText.text = ""; // 결과 텍스트 초기화
+        }
+
         private void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
@@ -32,6 +45,7 @@ namespace TJ
 
             // 결과 버튼을 초기에는 비활성화
             resultButton.gameObject.SetActive(false);
+            resultButton.onClick.AddListener(() => StartCoroutine(ResetAfterDelay(0.99f)));
         }
 
         private void InitializeOptions()
@@ -39,7 +53,7 @@ namespace TJ
             optionDescriptions.Add("보물 상자를 연다 (50% 확률로 카드를 얻거나 HP를 잃음)");
             optionDescriptions.Add("수상한 인물의 제안을 받아들인다 (50% 확률로 카드를 얻거나 카드를 잃음)");
             optionDescriptions.Add("그냥 지나간다");
-            optionDescriptions.Add("전투를 준비한다 (50% 확률로 카드를 얻음)");
+            optionDescriptions.Add("전투를 준비한다 (50% 확률로 카드를 얻거나 HP를 잃음)");
             optionDescriptions.Add("신비한 장소를 조사한다 (50% 확률로 카드를 얻거나 HP를 잃음)");
         }
 
@@ -97,6 +111,12 @@ namespace TJ
                     Card cardGained = GetRandomCardFromList(possibleCardsToGain);
                     gameManager.playerDeck.Add(cardGained);
                     resultMessage = $"{cardGained.cardTitle} 카드를 얻었습니다!";
+                }
+                else
+                {
+                    player.currentHealth -= hpLossAmount;
+                    gameManager.DisplayHealth(player.currentHealth, player.maxHealth);
+                    resultMessage = $"{hpLossAmount} HP를 잃었습니다!";
                 }
             }
             else if (selectedOption.Contains("신비한 장소를 조사한다"))

@@ -15,9 +15,9 @@ MonoBehaviour:
   cardTitle: "\uC57D\uC810 \uACF5\uB7B5"
   isUpgraded: 0
   cardDescription:
-    baseAmount: "8\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0 2\uC758 \uC57D\uD654\uB97C
+    baseAmount: "8\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0, 2\uC758 \uCDE8\uC57D\uC744
       \uBD80\uC5EC"
-    upgradedAmount: "10\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0 3\uC758 \uC57D\uD654\uB97C
+    upgradedAmount: "10\uC758 \uD53C\uD574\uB97C \uC8FC\uACE0, 3\uC758 \uCDE8\uC57D\uC744
       \uBD80\uC5EC"
   cardCost:
     baseAmount: 2
@@ -31,6 +31,6 @@ MonoBehaviour:
   cardIcon: {fileID: 21300000, guid: 83c60bdfa4a3aa9498632006348d977f, type: 3}
   cardType: 0
   cardClass: 0
-  cardTargetType: 0
+  cardTargetType: 1
   cardRarity: 0
   cardAttribute: 0

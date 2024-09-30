@@ -26,7 +26,7 @@ namespace QTEPack
 
             done = false;
             clicksCount = 0;
-            resultText.text = "";
+            resultText.text = "빠르게 연타!!";
             StartCoroutine(RunQTE(difficulty));
         }
 
@@ -47,12 +47,12 @@ namespace QTEPack
 
             if (clicksCount >= clicksToCompleteByDifficulty[difficulty])
             {
-                resultText.text = "Success!!!";
+                resultText.text = "성공!!!";
                 OnSuccess.Invoke();
             }
             else
             {
-                resultText.text = "Ups...";
+                resultText.text = "실패...";
                 OnFail.Invoke();
             }
         }
@@ -80,7 +80,7 @@ namespace QTEPack
         {
             if (!done)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) // 0은 왼쪽
                 {
                     clicksCount++;
                 }

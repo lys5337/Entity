@@ -1,64 +1,48 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TJ
 {
     public class LoadDataManager : MonoBehaviour
     {
+        // 슬롯 번호에 따른 파일 경로를 가져오는 함수
         private string GetSaveFilePath(int slot)
         {
-            return Application.persistentDataPath + $"/savefile_slot{slot}.json";
+            return Application.persistentDataPath + $"/objectStates_slot{slot}.json";
         }
 
-        public void LoadGame(GameManager gameManager, Fighter fighter, int slot)
+        // 슬롯에 맞게 오브젝트 상태를 불러오기
+        public void LoadGame(int slot)
         {
             string saveFilePath = GetSaveFilePath(slot);
 
             if (File.Exists(saveFilePath))
             {
                 string json = File.ReadAllText(saveFilePath);
-                SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+                ObjectStateList objectStateList = JsonUtility.FromJson<ObjectStateList>(json);
 
-                gameManager.floorNumber = saveData.floorNumber;
-                gameManager.goldAmount = saveData.goldAmount;
-
-                // Fighter의 체력 정보 로드
-                fighter.currentHealth = saveData.fighterData.currentHealth;
-                fighter.maxHealth = saveData.fighterData.maxHealth;
-                fighter.UpdateHealthUI(fighter.currentHealth);
-
-                // 캐릭터 정보 로드
-                gameManager.character.name = saveData.character.name;
-
-                // 카드 덱 로드
-                gameManager.playerDeck.Clear();
-                foreach (CardData cardData in saveData.playerDeck)
+                foreach (ObjectState state in objectStateList.objectStates)
                 {
-                    Card card = new Card { cardTitle = cardData.cardName, isUpgraded = cardData.isUpgraded };
-                    gameManager.playerDeck.Add(card);
+                    GameObject obj = GameObject.Find(state.objectName);
+                    if (obj != null)
+                    {
+                        // 오브젝트 상태 복원
+                        Transform objTransform = obj.transform;
+                        objTransform.position = state.position; // 월드 위치 사용
+                        objTransform.eulerAngles = state.rotation;
+                        objTransform.localScale = state.scale; // 월드 스케일 적용
+                        obj.SetActive(state.isActive); // 활성화/비활성화 상태 복원
+                    }
                 }
 
-                // 유물 로드
-                gameManager.relics.Clear();
-                foreach (RelicData relicData in saveData.relics)
-                {
-                    Relic relic = new Relic { relicName = relicData.relicName, relicDescription = relicData.description };
-                    gameManager.relics.Add(relic);
-                }
-
-                if (!string.IsNullOrEmpty(saveData.currentSceneName))
-                {
-                    SceneManager.LoadScene(saveData.currentSceneName);
-                }
-
-                Debug.Log($"게임이 로드되었습니다: 슬롯 {slot} - 경로: " + GetSaveFilePath(slot));
+                Debug.Log($"모든 오브젝트 상태가 슬롯 {slot}에서 불러와졌습니다.");
             }
             else
             {
-                Debug.LogWarning("세이브 파일이 존재하지 않습니다.");
+                Debug.LogWarning($"슬롯 {slot}에 저장된 오브젝트 상태가 없습니다.");
             }
         }
+
     }
 }
