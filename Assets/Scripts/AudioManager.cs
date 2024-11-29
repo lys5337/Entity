@@ -40,11 +40,48 @@ public class AudioManager : MonoBehaviour
     {
         if (soundDictionary.ContainsKey(soundName))
         {
-            audioSource.PlayOneShot(soundDictionary[soundName]);
+            // 현재 재생 중인 사운드가 같으면 재생 중단 방지
+            if (audioSource.isPlaying && audioSource.clip == soundDictionary[soundName])
+            {
+                Debug.Log($"'{soundName}' 사운드가 이미 재생 중입니다.");
+                return;
+            }
+
+            audioSource.Stop(); // 이전에 재생 중인 사운드 중지
+            audioSource.clip = soundDictionary[soundName];
+            audioSource.loop = false; // 필요 시 설정
+            audioSource.Play(); // 새로운 사운드 재생
         }
         else
         {
             Debug.LogWarning($"'{soundName}'이라는 사운드를 찾을 수 없습니다.");
         }
     }
+
+    public void PlaySoundFromTime(string soundName, float startTime = 0f)
+    {
+        if (soundDictionary.ContainsKey(soundName))
+        {
+            audioSource.Stop(); // 이전 사운드 중지
+            audioSource.clip = soundDictionary[soundName];
+
+            if (startTime > 0f && startTime < audioSource.clip.length)
+            {
+                audioSource.time = startTime; // 지정된 시작 지점 설정
+            }
+            else
+            {
+                audioSource.time = 0f; // 범위 외일 경우 0초부터 재생
+            }
+
+            audioSource.loop = true; // 필요 시 설정
+            audioSource.Play(); // 새로운 사운드 재생
+        }
+        else
+        {
+            Debug.LogWarning($"'{soundName}'이라는 사운드를 찾을 수 없습니다.");
+        }
+    }
+
+
 }

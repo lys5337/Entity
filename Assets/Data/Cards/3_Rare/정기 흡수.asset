@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
+  m_Name: "\uC815\uAE30 \uD761\uC218"
+  m_EditorClassIdentifier: 
+  cardTitle: "\uC815\uAE30 \uD761\uC218"
+  isUpgraded: 0
+  expiring: 0
+  cardDescription:
+    baseAmount: "4\uC758 \uD53C\uD574\uB97C \uC785\uD788\uACE0, \uC785\uD78C \uD53C\uD574
+      4\uB2F9 1\uC758 \uC5D0\uB108\uC9C0 \uD68C\uBCF5"
+    upgradedAmount: "6\uC758 \uD53C\uD574\uB97C \uC785\uD788\uACE0, \uC785\uD78C
+      \uD53C\uD574 3\uB2F9 1\uC758 \uC5D0\uB108\uC9C0 \uD68C\uBCF5"
+  cardCost:
+    baseAmount: 3
+    upgradedAmount: 3
+  cardEffect:
+    baseAmount: 4
+    upgradedAmount: 6
+  buffAmount:
+    baseAmount: 0
+    upgradedAmount: 0
+  aditionalValue:
+    aditionalValueAmount: 4
+    upgradeAditionalValueAmount: 3
+  aditionalValueFloat:
+    aditionalValueAmountFloat: 0
+    upgradeAditionalValueAmountFloat: 0
+  aditionalValueFloat_ADD:
+    aditionalValueAmountFloat_Add: 0
+    upgradeAditionalValueAmountFloat_Add: 0
+  cardPrice:
+    cardShopPrice: 300
+    cardEnhancePrice: 600
+  cardIcon: {fileID: 21300000, guid: a3ae402296a7ac944ac4ab6f3cf664af, type: 3}
+  cardType: 0
+  cardTargetType: 1
+  cardRarity: 2
+  cardDetailDescription:
+    cardDetailDescription: 

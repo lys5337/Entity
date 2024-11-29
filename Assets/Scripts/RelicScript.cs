@@ -4,11 +4,16 @@ using TMPro;
 
 namespace TJ
 {
-    public class RelicScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class RelicScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public TMP_Text tooltipText; // 툴팁 설명을 표시할 TextMeshPro 텍스트
         public GameObject tooltipObject; // 툴팁 오브젝트
+        private RectTransform tooltipRectTransform; // 툴팁의 RectTransform
+        private Canvas parentCanvas; // UI 캔버스
         private Relic relicData; // 유물 데이터 (ScriptableObject)
+
+        public delegate void RelicClickedHandler(Relic relic);
+        public event RelicClickedHandler OnRelicClicked; // Relic 클릭 이벤트
 
         private bool isPointerOver = false; // 마우스가 오브젝트 위에 있는지 여부
 
@@ -18,14 +23,24 @@ namespace TJ
             relicData = relic;
         }
 
+        private void Start()
+        {
+            if (tooltipObject != null)
+            {
+                tooltipRectTransform = tooltipObject.GetComponent<RectTransform>();
+                parentCanvas = tooltipObject.GetComponentInParent<Canvas>();
+            }
+        }
+
         // 마우스를 유물 위에 올렸을 때 툴팁 표시
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (tooltipObject != null && tooltipText != null && relicData != null)
             {
-                tooltipText.text = $"{relicData.relicDescription}";
+                tooltipText.text = relicData.relicDescription;
                 tooltipObject.SetActive(true); // 툴팁 오브젝트 활성화
                 isPointerOver = true; // 마우스가 오브젝트 위에 있음
+                UpdateTooltipPosition();
             }
         }
 
@@ -39,15 +54,38 @@ namespace TJ
             }
         }
 
+        // 유물을 클릭했을 때 이벤트 호출
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            OnRelicClicked?.Invoke(relicData); // 클릭 이벤트 발생
+        }
+
         private void Update()
         {
-            // 마우스가 오브젝트 위에 있을 때만 툴팁 위치를 업데이트
             if (isPointerOver && tooltipObject != null)
             {
-                // 마우스 포인터 위치를 기준으로 툴팁 오브젝트 위치 설정
-                Vector3 mousePosition = Input.mousePosition;
-                tooltipObject.transform.position = mousePosition + new Vector3(220, -140, 0); // 마우스 위치 기준으로 오프셋 적용
+                UpdateTooltipPosition();
             }
+        }
+
+        // 툴팁의 위치를 업데이트
+        private void UpdateTooltipPosition()
+        {
+            if (parentCanvas == null || tooltipRectTransform == null)
+                return;
+
+            Vector2 mousePosition = Input.mousePosition;
+
+            // 월드 좌표에서 로컬 캔버스 좌표로 변환
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentCanvas.transform as RectTransform,
+                mousePosition,
+                parentCanvas.worldCamera,
+                out Vector2 localPoint
+            );
+
+            // 툴팁의 위치를 캔버스 로컬 좌표에 맞춰 설정
+            tooltipRectTransform.localPosition = localPoint + new Vector2(200, -150); // 오프셋 추가
         }
     }
 }

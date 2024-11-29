@@ -42,43 +42,70 @@ namespace TJ
         public GameObject[] possibleEnemies;
         public GameObject[] possibleElites;
         public GameObject[] possibleBosses; // 보스 전투를 위한 새로운 배열 추가
-        bool eliteFight;
-        bool bossFight; // 보스 전투 여부를 추적하는 변수 추가
-        public GameObject birdIcon;
+        public GameObject[] possibleEvents;
+
+        public bool normalFight; // 일반 전투 여부를 추적하는 변수 추가
+        public bool eliteFight;
+        public bool bossFight; // 보스 전투 여부를 추적하는 변수 추가
+        public bool eventFight;
+        
         CardActions cardActions;
         GameManager gameManager;
         PlayerStatsUI playerStatsUI;
         public Animator banner;
         public TMP_Text turnText;
         public GameObject gameover;
+        public float nextCardDamageMultiplier = 1.0f; //역할을 모르겠음
 
         [Header("QTEAction")]
         public QTE_SmashButton qteSmashButtonPrefab;
         public QTE_Ring qteRingPrefab;
 
+        private int currentEliteIndex = 0; // 현재 엘리트 인덱스
+
         private bool isBattleOver = false;
+        [HideInInspector]public bool defenseStanceJudge; //광기 버프 온 오프 용
 
         private void Awake()
         {
             gameManager = FindObjectOfType<GameManager>();
             cardActions = GetComponent<CardActions>();
             playerStatsUI = FindObjectOfType<PlayerStatsUI>();
-            //endScreen = FindObjectOfType<EndScreen>();
         }
-        public void StartHallwayFight()
+
+        public void StartNormalFight()
         {
             BeginBattle(possibleEnemies);
+            
+            normalFight = true;
+
+            BGMManager.Instance.StopBGM();
+            BGMManager.Instance.PlaySound("BattleBGM");
         }
         public void StartEliteFight()
         {
             eliteFight = true;
-            BeginBattle(possibleElites);
+
+            GameObject currentElite = possibleElites[currentEliteIndex];
+            BeginBattle(new GameObject[] { currentElite });
+
+            // 다음 인덱스로 이동 (순환하도록 설정)
+            currentEliteIndex = (currentEliteIndex + 1) % possibleElites.Length;
         }
+
+
 
         public void StartBossFight() // 새로운 메서드 추가
         {
             bossFight = true;
             BeginBattle(possibleBosses);
+        }
+
+        public void ResetFight()
+        {
+            normalFight = false;
+            eliteFight = false;
+            bossFight = false;
         }
 
         private IEnumerator DeactivateAfterDelay(GameObject obj, float delay)
@@ -187,13 +214,10 @@ namespace TJ
 
         public void BeginBattle(GameObject[] prefabsArray)
         {
-            turnText.text = "Player's Turn";
+            turnText.text = "플레이어의 차례";
             banner.Play("bannerOut");
 
-            //playerIcon.SetActive(true);
-
             GameObject newEnemy = Instantiate(prefabsArray[Random.Range(0, prefabsArray.Length)], enemyParent);
-            //endScreen = FindObjectOfType<EndScreen>();
             if (endScreen != null)
                 endScreen.gameObject.SetActive(false);
 
@@ -218,41 +242,57 @@ namespace TJ
 
             foreach (Enemy e in eArr) { enemies.Add(e); }
             foreach (Enemy e in eArr) { enemyFighters.Add(e.GetComponent<Fighter>()); }
-            foreach (Enemy e in enemies) e.DisplayIntent();
+            
 
-            discardPile.AddRange(gameManager.playerDeck);
+            discardPile.AddRange(gameManager.playerBattleDeck);
             ShuffleCards();
             DrawCards(drawAmount);
             energy = maxEnergy;
+            if (gameManager.PlayerHasRelic("산삼")) energy +=1;
             energyText.text = energy.ToString();
 
             #region relic checks
+            
+            if(gameManager.PlayerHasRelic("침이 없는 시계"))
+            {
+                player.AddBuff(Buff.Type.strength, 3);
+                player.AddBuff(Buff.Type.solidity, 3);
+                player.AddBuff(Buff.Type.vulnerable, 2);
+                player.AddBuff(Buff.Type.weak, 2);
+            }
 
-            if (gameManager.PlayerHasRelic("PreservedInsect") && eliteFight)
-                enemyFighters[0].currentHealth = (int)(enemyFighters[0].currentHealth * 0.25);
+            if(gameManager.PlayerHasRelic("피가 담긴 병")) player.HealEntity(2);
 
-            if (gameManager.PlayerHasRelic("Anchor"))
-                player.AddBlock(10);
+            if(gameManager.PlayerHasRelic("뱀의 허물")) enemyFighters[0].AddBuff(Buff.Type.poison, 5);
 
-            if (gameManager.PlayerHasRelic("Lantern"))
-                energy += 1;
+            if (gameManager.PlayerHasRelic("닻"))player.AddBlock(10);
 
-            if (gameManager.PlayerHasRelic("Marbles"))
-                enemyFighters[0].AddBuff(Buff.Type.vulnerable, 1);
+            if (gameManager.PlayerHasRelic("랜턴"))energy += 1;
 
-            if (gameManager.PlayerHasRelic("Bag of Preparation"))
-                DrawCards(2);
+            if (gameManager.PlayerHasRelic("작은 구슬")) enemyFighters[0].AddBuff(Buff.Type.vulnerable, 1);
 
-            if (gameManager.PlayerHasRelic("Varja"))
-                player.AddBuff(Buff.Type.strength, 1);
+            if (gameManager.PlayerHasRelic("준비된 가방"))DrawCards(2);
 
-            if (bossFight && gameManager.PlayerHasRelic("BurningBlood")) // 보스 전투에서만 발동되는 유물 처리
-                player.currentHealth += 10;
+            if (gameManager.PlayerHasRelic("금강저"))player.AddBuff(Buff.Type.strength, 1);
+
+            if (gameManager.PlayerHasRelic("별의 부적"))player.AddBuff(Buff.Type.solidity, 2);
+
+            if (bossFight && gameManager.PlayerHasRelic("타오르는 피")) // 보스 전투에서만 발동되는 유물 처리
+            {
+                int currentHealth = player.currentHealth;
+                int maxHealth = player.maxHealth;
+                int healingAmount = 10;
+
+                int expectedHealthAfterHeal = currentHealth + healingAmount;
+
+                if (expectedHealthAfterHeal > maxHealth)
+                {
+                    healingAmount = maxHealth - currentHealth;
+                }
+                player.HealEntity(healingAmount);
+            }
 
             #endregion
-
-            //if (enemies[0].bird)
-            //    birdIcon.SetActive(true);
         }
         public void ShuffleCards()
         {
@@ -364,12 +404,35 @@ namespace TJ
             discardPile.Add(card);
             discardPileCountText.text = discardPile.Count.ToString();
         }
+
         public void ChangeTurn()
         {
             if (turn == Turn.Player)
             {
                 turn = Turn.Enemy;
                 endTurnButton.enabled = false;
+
+                if(gameManager.PlayerHasRelic("생명의 비약")) player.HealEntity(3);
+                
+
+                if(gameManager.PlayerHasRelic("별의 부적"))
+                {
+                    player.AddBlock(10);
+                }
+                else if(gameManager.PlayerHasRelic("수호의 부적"))
+                {
+                    player.AddBlock(5);
+                }
+
+                if(gameManager.PlayerHasRelic("별의 화살"))
+                {
+                    enemyFighters[0].AddBuff(Buff.Type.poison, 3);
+                    player.AddBuff(Buff.Type.strength, 1);
+                }
+                else if(gameManager.PlayerHasRelic("독화살"))
+                {
+                    enemyFighters[0].AddBuff(Buff.Type.poison, 2);
+                }
 
                 #region discard hand
                 foreach (Card card in cardsInHand)
@@ -408,21 +471,28 @@ namespace TJ
                 turn = Turn.Player;
 
                 //reset block
-                player.currentBlock = 0;
-                player.fighterHealthBar.DisplayBlock(0);
+
+                if(!defenseStanceJudge)
+                {
+                    player.currentBlock = 0;
+                    player.fighterHealthBar.DisplayBlock(0);
+                }
+                
                 energy = maxEnergy;
+                if (gameManager.PlayerHasRelic("산삼")) energy +=1;
                 energyText.text = energy.ToString();
 
                 endTurnButton.enabled = true;
                 DrawCards(drawAmount);
 
-                turnText.text = "Player's Turn";
+                turnText.text = "플레이어의 차례";
                 banner.Play("bannerOut");
             }
         }
+
         private IEnumerator HandleEnemyTurn()
         {
-            turnText.text = "Enemy's Turn";
+            turnText.text = "적의 차례";
             banner.Play("bannerIn");
 
             yield return new WaitForSeconds(1.5f);
@@ -439,20 +509,17 @@ namespace TJ
         }
 
         public void EndFight(bool win)
-        {   
+        {
             if (!win && gameover != null)
             {
                 gameover.SetActive(true);
             }
 
-            // gameManager와 player가 null이 아닌지 확인
             if (gameManager != null && player != null)
             {
-                // 전투 종료 시 해당 변수를 true로 설정하여 카드와 버튼 동작을 막음
                 isBattleOver = true;
 
-                // BurningBlood 유물 체크 후 체력 회복 처리
-                if (gameManager.PlayerHasRelic("BurningBlood"))
+                if (gameManager.PlayerHasRelic("타오르는 피") && player.currentHealth <= player.maxHealth / 2)
                 {
                     player.currentHealth += 6;
                     if (player.currentHealth > player.maxHealth)
@@ -463,43 +530,61 @@ namespace TJ
                     player.UpdateHealthUI(player.currentHealth);
                 }
 
-                // 버프 초기화
+                if (gameManager.PlayerHasRelic("은 목걸이"))
+                {
+                    player.currentHealth += 20;
+                    if (player.currentHealth > player.maxHealth)
+                    {
+                        player.currentHealth = player.maxHealth;
+                    }
+
+                    player.UpdateHealthUI(player.currentHealth);
+                }
+
                 player.ResetBuffs();
 
-                // 엔드 스크린 처리
                 HandleEndScreen();
 
-                // 층수 업데이트
                 gameManager.UpdateFloorNumber();
 
-                // 골드 보상 및 적 정보 확인
                 if (enemies != null && enemies.Count > 0 && enemies[0] != null)
                 {
                     int goldReward = enemies[0].goldDrop;
                     gameManager.UpdateGoldNumber(goldReward);
-
-                    if (enemies[0].bird && birdIcon != null)
-                    {
-                        birdIcon.SetActive(false);
-                    }
                 }
                 else
                 {
                     Debug.LogError("적 정보(enemies)가 null이거나 적 목록이 비어 있습니다.");
                 }
+
+                // 적 관련 데이터 초기화
+                enemies.Clear(); // enemies 리스트 비우기
+                enemyFighters.Clear(); // enemyFighters 리스트 비우기
             }
             else
             {
                 Debug.LogError("gameManager 또는 player가 null입니다.");
             }
 
-            // 모든 카드와 EndTurn 버튼 비활성화
             DisableAllCardsAndButtons();
         }
 
+
+        public void UpdateCardUI()
+        {
+            for (int i = 0; i < cardsInHandGameObjects.Count; i++)
+            {
+                CardUI cardUI = cardsInHandGameObjects[i].GetComponent<CardUI>();
+                if (cardUI != null)
+                {
+                    cardUI.LoadCard(cardUI.card);
+                }
+            }
+        }
+
+
         private void DisableAllCardsAndButtons()
         {
-            // 모든 카드를 비활성화
             foreach (CardUI cardUI in cardsInHandGameObjects)
             {
                 if (cardUI != null)
@@ -508,75 +593,90 @@ namespace TJ
                 }
             }
 
-            // 만약 필요한 경우, 다른 버튼이나 UI 요소도 비활성화
             Debug.Log("모든 카드와 버튼이 비활성화되었습니다.");
         }
 
 
-
         public void HandleEndScreen()
         {
-            // endScreen과 관련된 UI 요소가 null인지 확인
             if (endScreen == null || endScreen.goldReward == null || endScreen.relicReward == null)
             {
                 Debug.LogError("EndScreen 또는 관련 UI 요소가 null입니다.");
                 return;
             }
 
-            // gold 관련 UI 활성화
             endScreen.gameObject.SetActive(true);
             endScreen.goldReward.gameObject.SetActive(true);
             endScreen.cardRewardButton.gameObject.SetActive(true);
+            endScreen.goldReward.relicName.text = enemies[0].goldDrop.ToString() + " Gold";
 
-            // enemies 배열이 null이 아니고, 첫 번째 적이 있는지 확인
-            if (enemies != null && enemies.Count > 0 && enemies[0] != null)
+            // checkTravel 계산
+            int travelChance = 25 + gameManager.playerLuck / 5;
+            bool checkTravel = Random.Range(0, 100) < travelChance;
+
+            // 확률 Debug.Log로 출력
+            Debug.Log($"checkTravel 확률: {travelChance}%, 결과: {checkTravel}");
+
+            List<Relic> currentRelicPool = null;
+
+            if (enemies[0].normalCheck && gameManager != null && checkTravel)
             {
-                // 골드 정보 업데이트
-                endScreen.goldReward.relicName.text = enemies[0].goldDrop.ToString() + " Gold";
+                currentRelicPool = gameManager.nowStageRelics.normalRelics;
+            }
+            else if (enemies[0].eliteCheck && gameManager != null)
+            {
+                currentRelicPool = gameManager.nowStageRelics.eliteRelics;
+            }
+            else if (enemies[0].bossCheck && gameManager != null)
+            {
+                currentRelicPool = gameManager.nowStageRelics.bossRelics;
+            }
 
-                // 유물 처리 (nob 확인)
-                if (enemies[0].nob && gameManager != null && gameManager.relicLibrary != null && gameManager.relicLibrary.Count > 0)
+            if (currentRelicPool != null && currentRelicPool.Count > 0)
+            {
+                currentRelicPool.Shuffle();
+                Relic selectedRelic = currentRelicPool[0];
+
+                endScreen.relicReward.gameObject.SetActive(true);
+                endScreen.relicReward.DisplayRelic(selectedRelic);
+
+                gameManager.relics.Add(selectedRelic);
+                currentRelicPool.RemoveAt(0);
+
+                if (playerStatsUI != null)
                 {
-                    gameManager.relicLibrary.Shuffle();
-                    endScreen.relicReward.gameObject.SetActive(true);
-                    endScreen.relicReward.DisplayRelic(gameManager.relicLibrary[0]);
-
-                    // 유물을 playerStatsUI에 추가하고 표시
-                    gameManager.relics.Add(gameManager.relicLibrary[0]);
-                    gameManager.relicLibrary.Remove(gameManager.relicLibrary[0]);
-
-                    // playerStatsUI가 null이 아닌지 확인 후 호출
-                    if (playerStatsUI != null)
-                    {
-                        playerStatsUI.DisplayRelics();
-                    }
-                    else
-                    {
-                        Debug.LogError("PlayerStatsUI가 null입니다.");
-                    }
+                    playerStatsUI.DisplayRelics();
                 }
                 else
                 {
-                    // nob이 없을 경우 relicReward 비활성화
-                    endScreen.relicReward.gameObject.SetActive(false);
+                    Debug.LogError("PlayerStatsUI가 null입니다.");
                 }
+
+                if(gameManager.PlayerHasRelic("웅담") && gameManager.bearBile == true)
+                {
+                    gameManager.playerMaxHealth += 15;
+                    gameManager.bearBile = false;
+                }
+
+                gameManager.TransformRelics();
             }
             else
             {
-                Debug.LogError("적 정보(enemies)가 null이거나 적 목록이 비어 있습니다.");
+                endScreen.relicReward.gameObject.SetActive(false);
             }
         }
 
+
+
+
         public void OnEndTurnButtonClick()
         {
-            // 전투가 종료되었으면 버튼이 동작하지 않도록 함
             if (isBattleOver)
             {
                 Debug.Log("전투가 종료되어 턴을 종료할 수 없습니다.");
                 return;
             }
 
-            // 기존의 턴 종료 처리
             ChangeTurn();
         }
     }

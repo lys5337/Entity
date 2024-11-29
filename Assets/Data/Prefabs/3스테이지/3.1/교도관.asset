@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: "\uAD50\uB3C4\uAD00"
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uAD50\uB3C4\uAD00"
+    enemyMaxHealthUI: 180
+    enemyBaseStrengthUI: 30
+    enemyBaseAmorUI: 20
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 3000
+    enemyClearGoldMinUI: 1000
+  enemyActions: []
+  turns:
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 25
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 0}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 25
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 0}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 3
+    intentType2: 0
+    enemyEffectName: 
+    amount: 25
+    debuffAmount: 6
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 0}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 10
+    intentType2: 0
+    enemyEffectName: 
+    amount: 0
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 0}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 12
+    intentType2: 0
+    enemyEffectName: 
+    amount: 30
+    debuffAmount: 3
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 0}
+    triggerOnLowHealth: 0
+    healthThreshold: 0

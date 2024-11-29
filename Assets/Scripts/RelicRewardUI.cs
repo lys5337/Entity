@@ -8,6 +8,14 @@ namespace TJ
 {
     public class RelicRewardUI : MonoBehaviour
     {
+        Card card;
+        public GameObject common;
+        public GameObject uncommon;
+        public GameObject rare;
+        public GameObject epic;
+        public GameObject legendary;
+        public GameObject hidden;
+
         public Image relicImage;
         public TMP_Text relicName;
         public TMP_Text relicDescription;

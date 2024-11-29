@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: "\uC232\uC758 \uBC15\uC950 \uB54C"
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uC232\uC758 \uBC15\uC950 \uB54C"
+    enemyMaxHealthUI: 120
+    enemyBaseStrengthUI: 15
+    enemyBaseAmorUI: 5
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 900
+    enemyClearGoldMinUI: 300
+  enemyActions: []
+  turns:
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: e61410870b069d741afa2761e0a90b68, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: eae95f83c05714241bc6e059027c0248, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0

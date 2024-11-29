@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
+  m_Name: "\uC2ED\uC790 \uBCA0\uAE30"
+  m_EditorClassIdentifier: 
+  cardTitle: "\uC2ED\uC790 \uBCA0\uAE30"
+  isUpgraded: 0
+  expiring: 0
+  cardDescription:
+    baseAmount: "\uAC00\uB85C \uC138\uB85C\uB85C \uBCA0\uC5B4 \uAC01\uAC01 10\uC758
+      \uD53C\uD574\uB97C \uC900\uB2E4."
+    upgradedAmount: "\uAC00\uB85C \uC138\uB85C\uB85C \uBCA0\uC5B4 \uAC01\uAC01 15\uC758
+      \uD53C\uD574\uB97C \uC900\uB2E4."
+  cardCost:
+    baseAmount: 10
+    upgradedAmount: 15
+  cardEffect:
+    baseAmount: 1
+    upgradedAmount: 1
+  buffAmount:
+    baseAmount: 0
+    upgradedAmount: 0
+  aditionalValue:
+    aditionalValueAmount: 0
+    upgradeAditionalValueAmount: 0
+  aditionalValueFloat:
+    aditionalValueAmountFloat: 0
+    upgradeAditionalValueAmountFloat: 0
+  aditionalValueFloat_ADD:
+    aditionalValueAmountFloat_Add: 0
+    upgradeAditionalValueAmountFloat_Add: 0
+  cardPrice:
+    cardShopPrice: 0
+    cardEnhancePrice: 0
+  cardIcon: {fileID: 0}
+  cardType: 0
+  cardTargetType: 0
+  cardRarity: 1
+  cardDetailDescription:
+    cardDetailDescription: 

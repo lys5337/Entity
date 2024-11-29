@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: "\uC21C\uCC30\uC744 \uB3C4\uB294 \uBCD1\uC0AC"
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uC21C\uCC30\uC744 \uB3C4\uB294 \uBCD1\uC0AC"
+    enemyMaxHealthUI: 150
+    enemyBaseStrengthUI: 20
+    enemyBaseAmorUI: 15
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 1000
+    enemyClearGoldMinUI: 500
+  enemyActions: []
+  turns:
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: c058a37556b675c4aba73550727d39e2, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 5c8b85a1dd40aaf42a9155e889397aba, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 5
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 5
+    buffType: 2
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 2caeb17fba08cf44196e6505555b57f9, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 3
+    intentType2: 0
+    enemyEffectName: 
+    amount: 3
+    debuffAmount: 3
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 243dc38f5f3b845448c5da14329bb602, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0

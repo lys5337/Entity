@@ -7,32 +7,33 @@ namespace TJ
     public class Shop : MonoBehaviour
     {
         [Header("UI Elements")]
-        public Transform itemContainer; // 아이템 UI를 담을 부모 객체
-        public Transform relicContainer; // 렐릭 UI를 담을 부모 객체
-        public GameObject itemPrefab; // 아이템 UI 프리팹
-        public GameObject relicPrefab; // 렐릭 UI 프리팹
-        public Button refreshButton; // 새로고침 버튼
-        public Text refreshButtonText; // 새로고침 버튼 내의 텍스트
+        public Transform itemContainer;
+        public Transform relicContainer;
+        public GameObject itemPrefab;
+        public GameObject relicPrefab;
+        public Button refreshButton;
+        public Text refreshButtonText;
 
         [Header("Card Management")]
-        public Button removeCardButton; // 카드 제거 버튼
-        public Button upgradeCardButton; // 카드 강화 버튼
-        public Text removeCardButtonText; // 카드 제거 버튼 텍스트
-        public Text upgradeCardButtonText; // 카드 강화 버튼 텍스트
-        public int removeCardCost = 75; // 카드 제거 비용
-        public int upgradeCardCost = 100; // 카드 강화 비용
+        public Button removeCardButton;
+        public Button upgradeCardButton;
+        public Text removeCardButtonText;
+        public Text upgradeCardButtonText;
+        public int removeCardCost = 75;
 
         [Header("Items")]
-        public List<Item> itemsForSale = new List<Item>(); // 상점에서 판매할 아이템 목록
-        public List<Item> relicsForSale = new List<Item>(); // 상점에서 판매할 렐릭 목록
-        public int itemsToDisplay = 5; // 노출할 아이템 수
-        public int relicsToDisplay = 3; // 노출할 렐릭 수
+        public List<Item> itemsForSale = new List<Item>();
+        public List<Item> relicsForSale = new List<Item>();
+        public int itemsToDisplay = 5;
+        public int relicsToDisplay = 3;
 
         public GameManager gameManager;
-        public CardManagementUI cardManagementUI; // 카드 관리 UI와 연동
+        public CardManagementUI cardManagementUI;
         PlayerStatsUI playerStatsUI;
 
-        private int refreshPrice = 50; // 초기 새로고침 가격
+        private int baseRefreshPrice = 50;
+        private int refreshPrice;
+        private int freeRefreshesRemaining = 3;
 
         private void Start()
         {
@@ -52,9 +53,12 @@ namespace TJ
                 return;
             }
 
+            refreshPrice = baseRefreshPrice;
             PopulateShop();
             PopulateRelics();
             UpdateRefreshButtonText();
+            UpdateRemoveCardButtonText();
+            UpdateUpgradeCardButtonText();
 
             if (refreshButton != null)
             {
@@ -64,14 +68,19 @@ namespace TJ
             if (removeCardButton != null)
             {
                 removeCardButton.onClick.AddListener(() => cardManagementUI.ShowCardList(true));
-                removeCardButtonText.text = $"카드 제거 : {removeCardCost} 골드";
             }
 
             if (upgradeCardButton != null)
             {
                 upgradeCardButton.onClick.AddListener(() => cardManagementUI.ShowCardList(false));
-                upgradeCardButtonText.text = $"카드 강화 : {upgradeCardCost} 골드";
             }
+        }
+
+        private void Update()
+        {
+            UpdateRefreshButtonText();
+            UpdateRemoveCardButtonText();
+            UpdateUpgradeCardButtonText();
         }
 
         // 상점에 아이템 목록을 표시
@@ -101,12 +110,16 @@ namespace TJ
             {
                 Item item = shuffledItems[i];
                 GameObject itemGO = Instantiate(itemPrefab, itemContainer);
-                ItemUI itemUI = itemGO.GetComponent<ItemUI>();
+                CardItemUI itemUI = itemGO.GetComponent<CardItemUI>();
 
-                if (itemUI != null)
+                if (itemUI != null && !item.isRelic)
                 {
-                    itemUI.SetItem(item, this);
+                    itemUI.SetItem(item, this); // 아이템이 카드일 경우 설정
                     itemUI.buyButton.interactable = true; // 구매 버튼 활성화
+                }
+                else
+                {
+                    Debug.LogWarning("ItemUI가 null이거나 아이템이 카드가 아닙니다.");
                 }
             }
         }
@@ -151,71 +164,214 @@ namespace TJ
         // 상점 새로고침 기능
         private void RefreshShop()
         {
-            if (gameManager.goldAmount >= refreshPrice)
+            int currentRefreshPrice = refreshPrice;
+
+            // "블랙 카드" 렐릭 효과: 3회 무료 새로고침
+            if (gameManager.PlayerHasRelic("블랙 카드") && freeRefreshesRemaining > 0)
             {
-                gameManager.goldAmount -= refreshPrice;
-                refreshPrice *= 2; // 새로고침 가격 두 배로 증가
+                currentRefreshPrice = 0;
+                freeRefreshesRemaining--;
+            }
+
+            if (gameManager.goldAmount >= currentRefreshPrice)
+            {
+                gameManager.goldAmount -= currentRefreshPrice;
+                if (currentRefreshPrice > 0) // 비용이 발생할 경우에만 증가
+                {
+                    refreshPrice *= 2;
+                }
                 PopulateShop();
                 PopulateRelics();
-                UpdateRefreshButtonText(); // 새로고침 버튼 텍스트 업데이트
-                gameManager.UpdateGoldNumber(0); // UI 업데이트
+                UpdateRefreshButtonText();
+                gameManager.UpdateGoldNumber(0);
             }
         }
 
         private void UpdateRefreshButtonText()
         {
-            if (refreshButtonText != null)
+            if (gameManager.PlayerHasRelic("블랙 카드") && freeRefreshesRemaining > 0)
+            {
+                refreshButtonText.text = $"새로고침 : 무료 ({freeRefreshesRemaining}회)";
+            }
+            else
             {
                 refreshButtonText.text = $"새로고침 : {refreshPrice} 골드";
             }
         }
 
+        private void UpdateRemoveCardButtonText()
+        {
+            int currentRemoveCardCost = gameManager.PlayerHasRelic("마스터카드") ? 10 : removeCardCost;
+            if (removeCardButtonText != null)
+            {
+                removeCardButtonText.text = $"카드 제거 : {currentRemoveCardCost} 골드";
+            }
+        }
+
+        public void RemoveCard(Card card, bool isInPlayerDeck)
+        {
+            int cardRemoveCost = removeCardCost;
+            UpdateRemoveCardButtonText();
+
+            if (gameManager.PlayerHasRelic("마스터카드"))
+            {
+                cardRemoveCost = 10;
+            }
+
+            if (gameManager != null && gameManager.goldAmount >= cardRemoveCost)
+            {
+                gameManager.goldAmount -= cardRemoveCost;
+
+                if (isInPlayerDeck && gameManager.playerDeck.Contains(card))
+                {
+                    gameManager.playerDeck.Remove(card);
+                    Debug.Log($"{card.cardTitle} has been removed from the playerDeck.");
+                }
+                else if (!isInPlayerDeck && gameManager.playerBattleDeck.Contains(card))
+                {
+                    gameManager.playerBattleDeck.Remove(card);
+                    Debug.Log($"{card.cardTitle} has been removed from the playerBattleDeck.");
+                }
+
+                gameManager.UpdateGoldNumber(0);
+                cardManagementUI.HideCardList();
+            }
+            else
+            {
+                Debug.Log("골드가 부족하거나 GameManager가 없습니다.");
+            }
+        }
+
+        private void UpdateUpgradeCardButtonText()
+        {
+            int upgradeCost = 100;
+
+            if (gameManager.PlayerHasRelic("넷플릭스 구독권"))
+            {
+                upgradeCost = Mathf.CeilToInt(upgradeCost * 0.75f);
+            }
+
+            if (upgradeCardButtonText != null)
+            {
+                upgradeCardButtonText.text = $"카드 강화 : {upgradeCost} 골드";
+            }
+        }
+
+        
+
         public void BuyItem(Item item, Button buyButton)
         {
-            if (gameManager != null && gameManager.goldAmount >= item.price)
+            if (!item.isRelic && gameManager.playerDeck.Count >= 30)
             {
-                gameManager.goldAmount -= item.price;
+                Debug.LogWarning("Cannot buy item. The playerDeck already has 30 cards.");
+                return;
+            }
+
+            int itemPrice = item.isRelic ? item.price : item.card.cardPrice.cardShopPrice;
+
+            if (!item.isRelic && gameManager.PlayerHasRelic("Chat-GPT 구독권"))
+            {
+                itemPrice = Mathf.CeilToInt(itemPrice * 0.75f);
+            }
+
+            if (gameManager.goldAmount >= itemPrice)
+            {
+                gameManager.goldAmount -= itemPrice;
+
                 if (item.isRelic)
                 {
-                    gameManager.AddRelic(item.relic); // 렐릭 추가
+                    gameManager.AddRelic(item.relic);
                     playerStatsUI.DisplayRelics();
                     relicsForSale.Remove(item);
-                    Destroy(buyButton.gameObject);
+                    if(gameManager.PlayerHasRelic("딸기")&&gameManager.strawberryUse==true)
+                    {
+                        gameManager.playerMaxHealth+=10;
+                        gameManager.strawberryUse=false;
+                    }
+
+                    if(gameManager.PlayerHasRelic("사과")&&gameManager.appleUse==true)
+                    {
+                        gameManager.playerMaxHealth+=7;
+                        gameManager.appleUse=false;
+                    }
+
+                    if(gameManager.PlayerHasRelic("샤인머스캣")&&gameManager.shinemuscatUse==true)
+                    {
+                        gameManager.playerMaxHealth+=15;
+                        gameManager.shinemuscatUse=false;
+                    }
+
+                    if(gameManager.PlayerHasRelic("생명의 비약")&&gameManager.elixirUse==true)
+                    {
+                        gameManager.playerMaxHealth+=25;
+                        gameManager.elixirUse=false;
+                    }
                 }
                 else
                 {
                     gameManager.playerDeck.Add(item.card);
                 }
+
                 gameManager.UpdateGoldNumber(0);
+                gameManager.TransformRelics();
+
                 buyButton.interactable = false;
+                buyButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("골드가 부족합니다.");
             }
         }
 
-        public void RemoveCard(Card card)
-        {
-            if (gameManager != null && gameManager.goldAmount >= removeCardCost)
-            {
-                gameManager.goldAmount -= removeCardCost;
-                gameManager.playerDeck.Remove(card);
-                gameManager.UpdateGoldNumber(0);
-                cardManagementUI.HideCardList();
-            }
-        }
+        
 
         public void UpgradeCard(Card card)
         {
-            if (gameManager != null && gameManager.goldAmount >= upgradeCardCost)
+            int cardUpgradeCost = card.cardPrice.cardEnhancePrice;
+
+            // "넷플릭스 구독권" 렐릭이 있는지 확인하여 카드 강화 비용 25% 할인
+            if (gameManager.PlayerHasRelic("넷플릭스 구독권"))
+            {
+                cardUpgradeCost = Mathf.CeilToInt(cardUpgradeCost * 0.75f); // 비용을 25% 감소
+            }
+
+            if (gameManager != null && gameManager.goldAmount >= cardUpgradeCost)
             {
                 // 카드가 이미 강화된 상태인지 확인
                 if (!card.isUpgraded)
                 {
-                    gameManager.goldAmount -= upgradeCardCost;
-                    card.isUpgraded = true;
+                    gameManager.goldAmount -= cardUpgradeCost;
+
+                    // 카드 복제 후 업그레이드
+                    Card upgradedCard = Instantiate(card);
+                    upgradedCard.isUpgraded = true;
+                    Debug.Log($"{upgradedCard.cardTitle} has been upgraded.");
+
+                    // playerDeck에서 해당 카드만 교체
+                    for (int i = 0; i < gameManager.playerDeck.Count; i++)
+                    {
+                        if (gameManager.playerDeck[i] == card)
+                        {
+                            gameManager.playerDeck[i] = upgradedCard;
+                            Debug.Log($"{card.cardTitle} has been upgraded in the playerDeck.");
+                            break; // 첫 번째로 일치하는 카드만 교체
+                        }
+                    }
+
+                    // playerBattleDeck에서 해당 카드만 교체
+                    for (int i = 0; i < gameManager.playerBattleDeck.Count; i++)
+                    {
+                        if (gameManager.playerBattleDeck[i] == card)
+                        {
+                            gameManager.playerBattleDeck[i] = upgradedCard;
+                            Debug.Log($"{card.cardTitle} has been upgraded in the playerBattleDeck.");
+                            break; // 첫 번째로 일치하는 카드만 교체
+                        }
+                    }
+
                     gameManager.UpdateGoldNumber(0);
                     cardManagementUI.HideCardList();
-
-                    // 여기서 하나의 카드만 강화되도록 처리
-                    Debug.Log($"{card.cardTitle} 카드가 강화되었습니다.");
                 }
                 else
                 {
@@ -227,11 +383,12 @@ namespace TJ
                 Debug.Log("골드가 부족합니다.");
             }
         }
+
+
         public void ResetRefreshPrice()
         {
-            refreshPrice = 50; // 초기 새로고침 가격으로 되돌림
+            refreshPrice = baseRefreshPrice; // 초기 새로고침 가격으로 되돌림
             UpdateRefreshButtonText(); // 새로고침 버튼의 텍스트 업데이트
         }
-
     }
 }

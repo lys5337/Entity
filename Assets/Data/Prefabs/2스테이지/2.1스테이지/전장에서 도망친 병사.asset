@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: "\uC804\uC7A5\uC5D0\uC11C \uB3C4\uB9DD\uCE5C \uBCD1\uC0AC"
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uC804\uC7A5\uC5D0\uC11C \uB3C4\uB9DD\uCE5C \uBCD1\uC0AC"
+    enemyMaxHealthUI: 160
+    enemyBaseStrengthUI: 15
+    enemyBaseAmorUI: 10
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 1000
+    enemyClearGoldMinUI: 500
+  enemyActions: []
+  turns:
+  - intentType: 10
+    intentType2: 0
+    enemyEffectName: 
+    amount: 0
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: cd5f9271dfa9fbf42b6f75ff6fdd7318, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 35
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: ce046a7a7f0db474dbdf6a32603083e0, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 30
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: eae95f83c05714241bc6e059027c0248, type: 3}
+    triggerOnLowHealth: 1
+    healthThreshold: 0

@@ -38,7 +38,7 @@ namespace TJ
         }
 
         // 성향치 바를 업데이트하는 함수
-        private void UpdateTendencyBar()
+        public void UpdateTendencyBar()
         {
             if (GameManager.Instance != null)
             {
@@ -47,6 +47,9 @@ namespace TJ
 
                 // 성향치 바를 업데이트
                 tendencySlider.value = GameManager.Instance.currentTendencyValue;
+            }
+            else{
+                Debug.Log("업안됨2222");
             }
         }
 

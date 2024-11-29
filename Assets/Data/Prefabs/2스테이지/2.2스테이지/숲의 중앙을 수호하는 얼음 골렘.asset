@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: "\uC232\uC758 \uC911\uC559\uC744 \uC218\uD638\uD558\uB294 \uC5BC\uC74C
+    \uACE8\uB818"
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uC232\uC758 \uC911\uC559\uC744 \uC218\uD638\uD558\uB294 \uC5BC\uC74C
+      \uACE8\uB818"
+    enemyMaxHealthUI: 300
+    enemyBaseStrengthUI: 22
+    enemyBaseAmorUI: 10
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 4000
+    enemyClearGoldMinUI: 3000
+  enemyActions: []
+  turns:
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 2a920c9b2f9c27c47a766b632788d3e0, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 25
+    debuffAmount: 0
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: eae95f83c05714241bc6e059027c0248, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 5
+    intentType2: 0
+    enemyEffectName: 
+    amount: 15
+    debuffAmount: -5
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: f12923d22fa929e4081be26f42936576, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 10
+    intentType2: 0
+    enemyEffectName: 
+    amount: 15
+    debuffAmount: -5
+    buffType: 0
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: cd5f9271dfa9fbf42b6f75ff6fdd7318, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0

@@ -55,6 +55,15 @@ namespace TJ
 
             currentSelectedDeck = selectedDeck; // 선택된 덱을 현재 덱으로 저장
 
+            // 각 카드의 업그레이드 상태를 초기화
+            foreach (Card card in currentSelectedDeck)
+            {
+                if (card != null)
+                {
+                    card.isUpgraded = false; // 업그레이드 상태 초기화
+                }
+            }
+
             // 카드 패널을 보여줌
             cardPanel.SetActive(true);
 
@@ -97,14 +106,15 @@ namespace TJ
                 return;
             }
 
-            GameManager.Instance.playerDeck.Clear(); // 기존 플레이어 덱 초기화
+            GameManager.Instance.playerDeck.Clear();
+            GameManager.Instance.playerBattleDeck.Clear();
 
             // 선택된 덱의 카드를 플레이어 덱에 추가
             foreach (Card card in currentSelectedDeck)
             {
                 if (card != null)
                 {
-                    GameManager.Instance.playerDeck.Add(card);
+                    GameManager.Instance.playerBattleDeck.Add(card);
                 }
             }
 
@@ -121,4 +131,3 @@ namespace TJ
         }
     }
 }
-

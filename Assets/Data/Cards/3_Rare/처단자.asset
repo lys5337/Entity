@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
+  m_Name: "\uCC98\uB2E8\uC790"
+  m_EditorClassIdentifier: 
+  cardTitle: "\uCC98\uB2E8\uC790"
+  isUpgraded: 0
+  expiring: 1
+  cardDescription:
+    baseAmount: "12\uC758 \uD53C\uD574\uB97C \uC900\uB2E4. \uC801\uC758 \uD604\uC7AC
+      \uCCB4\uB825\uC774 25%\uBBF8\uB9CC\uC774\uBA74 \uCC98\uD615\uD55C\uB2E4. +\uC77C\uBC18
+      \uBAAC\uC2A4\uD130\uB9CC \uD574\uB2F9"
+    upgradedAmount: "16\uC758 \uD53C\uD574\uB97C \uC900\uB2E4. \uC801\uC758 \uD604\uC7AC
+      \uCCB4\uB825\uC774 30%\uBBF8\uB9CC\uC774\uBA74 \uCC98\uD615\uD55C\uB2E4. +\uC77C\uBC18
+      \uBAAC\uC2A4\uD130\uB9CC \uD574\uB2F9"
+  cardCost:
+    baseAmount: 1
+    upgradedAmount: 1
+  cardEffect:
+    baseAmount: 12
+    upgradedAmount: 16
+  buffAmount:
+    baseAmount: 0
+    upgradedAmount: 0
+  aditionalValue:
+    aditionalValueAmount: 0
+    upgradeAditionalValueAmount: 0
+  aditionalValueFloat:
+    aditionalValueAmountFloat: 0.25
+    upgradeAditionalValueAmountFloat: 0.3
+  aditionalValueFloat_ADD:
+    aditionalValueAmountFloat_Add: 0
+    upgradeAditionalValueAmountFloat_Add: 0
+  cardPrice:
+    cardShopPrice: 300
+    cardEnhancePrice: 500
+  cardIcon: {fileID: 21300000, guid: a8ad2d1eee86a8d469de69e9438e661a, type: 3}
+  cardType: 0
+  cardTargetType: 0
+  cardRarity: 2
+  cardDetailDescription:
+    cardDetailDescription: "\uCE7C\uB0A0\uC758 \uB179\uC73C\uB85C"

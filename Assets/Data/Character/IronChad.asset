@@ -14,11 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterClass: 0
   characterPrefab: {fileID: 0}
-  startingRelic: {fileID: 11400000, guid: e09d289eb339fea4fbe39da2d17b302c, type: 2}
+  CharacterStartHealth: 0
+  startingRelic: {fileID: 0}
   splashArt: {fileID: 0}
-  startingDeck:
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
-  - {fileID: 11400000, guid: 6ec3e0b009770664cbbcf5541fdaa3aa, type: 2}
+  startingDeck: []

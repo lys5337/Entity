@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3d499b50214f848bf91c3082c81371, type: 3}
+  m_Name: "\uC791\uC740 \uAD6C\uC2AC"
+  m_EditorClassIdentifier: 
+  relicName: "\uC791\uC740 \uAD6C\uC2AC"
+  relicIcon: {fileID: 21300000, guid: b932771751aafed40970a6222c8efbd0, type: 3}
+  relicDescription: "\uCCAB \uD134\uC5D0 \uC801\uC5D0\uAC8C \uCDE8\uC57D\uC744 1\uBD80\uC5EC"
+  relicStory: "\uC791\uC740 \uAD6C\uC2AC\uC740 \uBC1F\uC73C\uBA74 \uBBF8\uB044\uB7EC\uC9D1\uB2C8\uB2E4.\n\uB124
+    \uC704\uD5D8\uD558\uC8E0"

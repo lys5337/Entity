@@ -15,6 +15,7 @@ public class EffectManager : MonoBehaviour
     {
         foreach (Transform child in parent)
         {
+
             string fullPath = string.IsNullOrEmpty(currentPath) ? child.name : currentPath + "/" + child.name;
 
             if (child.gameObject.GetComponent<ParticleSystem>() != null)
@@ -22,10 +23,6 @@ public class EffectManager : MonoBehaviour
                 if (!effects.ContainsKey(fullPath))
                 {
                     effects.Add(fullPath, child.gameObject);
-                }
-                else
-                {
-                    Debug.LogWarning($"Effect {fullPath} is already added. Skipping duplicate.");
                 }
             }
             AddEffectsRecursively(child, fullPath);

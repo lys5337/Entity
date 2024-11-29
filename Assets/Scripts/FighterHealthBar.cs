@@ -13,6 +13,8 @@ public class FighterHealthBar : MonoBehaviour
     public TMP_Text blockNumberText;
     public TMP_Text healthText;
     public Slider healthSlider;
+    public Slider maxHealthSlider;
+
     public void DisplayBlock(int blockAmount)
     {
         if(blockAmount>0)
@@ -29,6 +31,7 @@ public class FighterHealthBar : MonoBehaviour
             blockNumberText.enabled = false;
         }
     }
+
     public void DisplayHealth(int healthAmount)
     {
         healthText.text = $"{healthAmount}/{healthSlider.maxValue}";

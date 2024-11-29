@@ -1,54 +1,64 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-[CreateAssetMenu]
-public class EnemyUI : ScriptableObject
+namespace TJ
+
 {
-    public EnemyType enemyType;
-    public enum EnemyType { Normal, Special, Elite, Mid_Boss, Boss, Hidden_Boss }
-
-    public EnemyStage enemyStage;
-    public enum EnemyStage { Stage0, Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Last_Stage, Hidden_Stage }
-
-    public EnemyAttribute enemyAttribute;
-    public enum EnemyAttribute { Non, Darkest, Divine }
-
-    public EnemyRace enemyRace;
-    public enum EnemyRace { Non, Darkest, Divine }
-
-    public EnemyInfo enemyInfo; 
-
-    [System.Serializable]
-    public struct EnemyInfo
+    [CreateAssetMenu]
+    public class EnemyUI : ScriptableObject
     {
-        public string enemyNameUI;
-        public int enemyMaxHealthUI;
-        public int enemyBaseStrengthUI;
-        public int enemyBaseBlockUI;
-        public int enemyClearGoldMaxUI;
-        public int enemyClearGoldMinUI;
-    }
+        public EnemyType enemyType;
+        public enum EnemyType { Normal, Special, Elite, Mid_Boss, Boss, Hidden_Boss }
 
-    public string getEnemyType()
-    {
-        Debug.Log("Enemy Type: " + enemyType.ToString());
-        return enemyType.ToString();
-    }
+        public EnemyStage enemyStage;
+        public enum EnemyStage { Stage0, Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Last_Stage, Hidden_Stage }
 
-    public string getEnemyStage()
-    {
-        Debug.Log("Enemy Stage: " + enemyStage.ToString());
-        return enemyStage.ToString();
-    }
+        public EnemyAttribute enemyAttribute;
+        public enum EnemyAttribute { Non, Darkest, Divine }
 
-    public string getEnemyAttribute()
-    {
-        Debug.Log("Enemy Attribute: " + enemyAttribute.ToString());
-        return enemyAttribute.ToString();
-    }
+        public EnemyRace enemyRace;
+        public enum EnemyRace { Non, Darkest, Divine }
 
-    public string getEnemyRace()
-    {
-        Debug.Log("Enemy Race: " + enemyRace.ToString());
-        return enemyRace.ToString();
+        public EnemyInfo enemyInfo;
+
+        [System.Serializable]
+        public struct EnemyInfo
+        {
+            public string enemyNameUI;
+            public int enemyMaxHealthUI;
+            public int enemyBaseStrengthUI;
+            public int enemyBaseAmorUI;
+            public int enemyBaseBlockUI;
+            public int enemyClearGoldMaxUI;
+            public int enemyClearGoldMinUI;
+        }
+
+        // 적의 행동 리스트
+        public List<EnemyAction> enemyActions;
+        public List<EnemyAction> turns = new List<EnemyAction>();
+
+        public string getEnemyType()
+        {
+            Debug.Log("Enemy Type: " + enemyType.ToString());
+            return enemyType.ToString();
+        }
+
+        public string getEnemyStage()
+        {
+            Debug.Log("Enemy Stage: " + enemyStage.ToString());
+            return enemyStage.ToString();
+        }
+
+        public string getEnemyAttribute()
+        {
+            Debug.Log("Enemy Attribute: " + enemyAttribute.ToString());
+            return enemyAttribute.ToString();
+        }
+
+        public string getEnemyRace()
+        {
+            Debug.Log("Enemy Race: " + enemyRace.ToString());
+            return enemyRace.ToString();
+        }
     }
 }

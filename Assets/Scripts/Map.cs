@@ -36,10 +36,16 @@ namespace TJ
         public int event4Floors;
         public int event5Floors;
         public int event6Floors;
-        public int event7Floors;
-        public int event8Floors;
-        public int event9Floors;
-        public int event10Floors;
+        public int eliteEvent1Floors;
+        public int eliteEvent2Floors;
+        public int eliteEvent3Floors;
+        public int bossEventFloors;
+
+        public int eventEnemy1Floors;
+        public int eventEnemy2Floors;
+        public int eventEnemy3Floors;
+        public int eventEnemy4Floors;
+        public int eventEnemy5Floors;
 
         public Encounter randomEncounter;
         public Encounter enemyEncounter;
@@ -68,12 +74,29 @@ namespace TJ
         public Encounter event4Encounter;
         public Encounter event5Encounter;
         public Encounter event6Encounter;
-        public Encounter event7Encounter;
-        public Encounter event8Encounter;
-        public Encounter event9Encounter;
-        public Encounter event10Encounter;
+        public Encounter eliteEvent1Encounter;
+        public Encounter eliteEvent2Encounter;
+        public Encounter eliteEvent3Encounter;
+        public Encounter bossEventEncounter;
+
+        public Encounter eventEnemy1Encounter;
+        public Encounter eventEnemy2Encounter;
+        public Encounter eventEnemy3Encounter;
+        public Encounter eventEnemy4Encounter;
+        public Encounter eventEnemy5Encounter;
 
         public int currentFloorNumber;
+
+        public GameObject background12A;
+        public GameObject background12B;
+        public GameObject backgroundlast;
+
+        public GameObject mapBackground12A;
+        public GameObject mapBackground12B;
+        public GameObject mapBackgroundlast;
+
+        public GameObject randomBackground12A;
+        public GameObject randomBackground12B;
 
         private void Awake()
         {
@@ -124,24 +147,50 @@ namespace TJ
                     floors[i].SetNodesActive(event5Encounter);
                 else if (i == event6Floors)
                     floors[i].SetNodesActive(event6Encounter);
-                else if (i == event7Floors)
-                    floors[i].SetNodesActive(event7Encounter);
-                else if (i == event8Floors)
-                    floors[i].SetNodesActive(event8Encounter);
-                else if (i == event9Floors)
-                    floors[i].SetNodesActive(event9Encounter);
-                else if (i == event1Floors)
-                    floors[i].SetNodesActive(event10Encounter);
+                else if (i == eliteEvent1Floors)
+                    floors[i].SetNodesActive(eliteEvent1Encounter);
+                else if (i == eliteEvent2Floors)
+                    floors[i].SetNodesActive(eliteEvent2Encounter);
+                else if (i == eliteEvent3Floors)
+                    floors[i].SetNodesActive(eliteEvent3Encounter);
+                else if (i == bossEventFloors)
+                    floors[i].SetNodesActive(bossEventEncounter);
 
-                else if (currentSceneName == "Stage0")
+                else if (i == eventEnemy1Floors)
+                    floors[i].SetNodesActive(eventEnemy1Encounter);
+                else if (i == eventEnemy2Floors)
+                    floors[i].SetNodesActive(eventEnemy2Encounter);
+                else if (i == eventEnemy3Floors)
+                    floors[i].SetNodesActive(eventEnemy3Encounter);
+                else if (i == eventEnemy4Floors)
+                    floors[i].SetNodesActive(eventEnemy4Encounter);
+                else if (i == eventEnemy5Floors)
+                    floors[i].SetNodesActive(eventEnemy5Encounter);
+
+
+
+                else if (currentSceneName == "Stage0" || currentSceneName == "Stage3.2" || currentSceneName == "Stage3.1" || currentSceneName == "Stage2.2")
                 {
                     floors[i].SetNodesActive(enemyEncounter);
+                }
+
+                else if (currentSceneName == "Stage2.1")
+                {
+                    // 랜덤하게 enemyEncounter 또는 randomEncounter 선택
+                    if (Random.value > 0.2f)
+                    {
+                        floors[i].SetNodesActive(enemyEncounter);
+                    }
+                    else
+                    {
+                        floors[i].SetNodesActive(randomEncounter);
+                    }
                 }
 
                 else
                 {
                     // 랜덤하게 enemyEncounter 또는 randomEncounter 선택
-                    if (Random.value > 0.3f)
+                    if (Random.value > 0.2f)
                     {
                         floors[i].SetNodesActive(enemyEncounter);
                     }
@@ -151,6 +200,7 @@ namespace TJ
                     }
                 }
             }
+            
         }
 
         public void ShowOptions()
@@ -169,6 +219,35 @@ namespace TJ
                     floors[i].SetNodesActiveClickable();
             }
             currentFloorNumber++;
+
+            if(background12A != null && background12B != null && backgroundlast != null
+                && mapBackground12A != null && mapBackgroundlast != null && mapBackground12B != null 
+                && randomBackground12A != null && randomBackground12B != null)
+            {
+                if(currentFloorNumber >= 12 && currentFloorNumber < 22)
+                {
+                    background12A.SetActive(false);
+                    background12B.SetActive(true);
+                    backgroundlast.SetActive(false);
+
+                    mapBackground12A.SetActive(false);
+                    mapBackground12B.SetActive(true);
+                    mapBackgroundlast.SetActive(false);
+
+                    randomBackground12A.SetActive(false);
+                    randomBackground12B.SetActive(true);
+                }
+                else if (currentFloorNumber >= 22)
+                {
+                    background12A.SetActive(false);
+                    background12B.SetActive(false);
+                    backgroundlast.SetActive(true);
+
+                    mapBackground12A.SetActive(false);
+                    mapBackground12B.SetActive(false);
+                    mapBackgroundlast.SetActive(true);
+                }
+            }
         }
 
         public void GenerateMap()
@@ -218,19 +297,22 @@ namespace TJ
                     floors[i].SetNodesActive(event5Encounter);
                 else if (i == event6Floors)
                     floors[i].SetNodesActive(event6Encounter);
-                else if (i == event7Floors)
-                    floors[i].SetNodesActive(event7Encounter);
-                else if (i == event8Floors)
-                    floors[i].SetNodesActive(event8Encounter);
-                else if (i == event9Floors)
-                    floors[i].SetNodesActive(event9Encounter);
-                else if (i == event1Floors)
-                    floors[i].SetNodesActive(event10Encounter);
+
+                else if (i == eventEnemy1Floors)
+                    floors[i].SetNodesActive(eventEnemy1Encounter);
+                else if (i == eventEnemy2Floors)
+                    floors[i].SetNodesActive(eventEnemy2Encounter);
+                else if (i == eventEnemy3Floors)
+                    floors[i].SetNodesActive(eventEnemy3Encounter);
+                else if (i == eventEnemy4Floors)
+                    floors[i].SetNodesActive(eventEnemy4Encounter);
+                else if (i == eventEnemy5Floors)
+                    floors[i].SetNodesActive(eventEnemy5Encounter);
 
                 else
                 {
                     // 랜덤하게 enemyEncounter 또는 randomEncounter 선택
-                    if (Random.value > 0.99f) 
+                    if (Random.value > 0.01f) 
                     {
                         floors[i].SetNodesActive(enemyEncounter);
                     }
@@ -283,7 +365,8 @@ namespace TJ
             shop1, shop2, shop3,
             boss, 
             event1, event2, event3, event4, event5, 
-            event6, event7, event8, event9, event10,
+            event6, eliteEvent1, eliteEvent2, eliteEvent3, bossEvent,
+            eventEnemy1, eventEnemy2, eventEnemy3, eventEnemy4, eventEnemy5
         };
         public Sprite encounterSprite;
     }

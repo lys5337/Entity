@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6688e19d71a0e4eacb4cc6ee784f4f, type: 3}
+  m_Name: 1_Goblin_Commander
+  m_EditorClassIdentifier: 
+  enemyType: 4
+  enemyStage: 1
+  enemyAttribute: 0
+  enemyRace: 0
+  enemyInfo:
+    enemyNameUI: "\uACE0\uBE14\uB9B0 \uC9C0\uD718\uAD00"
+    enemyMaxHealthUI: 200
+    enemyBaseStrengthUI: 13
+    enemyBaseAmorUI: 15
+    enemyBaseBlockUI: 0
+    enemyClearGoldMaxUI: 1000
+    enemyClearGoldMinUI: 500
+  enemyActions: []
+  turns:
+  - intentType: 4
+    intentType2: 0
+    enemyEffectName: 
+    amount: 0
+    debuffAmount: 5
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 67800317607b0f74fa12e0524d153d8f, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 1
+    intentType2: 0
+    enemyEffectName: 
+    amount: 15
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: 46a074b0942e65e49a8e62139f73fac6, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 2
+    intentType2: 0
+    enemyEffectName: 
+    amount: 20
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: eae95f83c05714241bc6e059027c0248, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 5
+    intentType2: 0
+    enemyEffectName: 
+    amount: 15
+    debuffAmount: 5
+    buffType: 7
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: d6aa819ec5995884383e3395d3ea2108, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 10
+    intentType2: 0
+    enemyEffectName: 
+    amount: 0
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: cd5f9271dfa9fbf42b6f75ff6fdd7318, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 10
+    intentType2: 0
+    enemyEffectName: 
+    amount: 0
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: cd5f9271dfa9fbf42b6f75ff6fdd7318, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0
+  - intentType: 9
+    intentType2: 0
+    enemyEffectName: 
+    amount: 50
+    debuffAmount: 0
+    buffType: 3
+    amount2: 0
+    debuffAmount2: 0
+    buffType2: 0
+    chance: 0
+    icon: {fileID: 21300000, guid: de0a6c35cd4eb904aadbb37c9f4c7eb4, type: 3}
+    triggerOnLowHealth: 0
+    healthThreshold: 0

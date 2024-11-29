@@ -17,9 +17,11 @@ namespace TJ
         public Transform relicParent;
         public GameObject relicPrefab;
         public GameObject playerStatsUIObject;
-
         public GameObject tooltipObject; // 툴팁 오브젝트 (비활성화 상태로 시작)
         public TMP_Text tooltipText;     // 툴팁 설명을 표시할 TextMeshPro 텍스트
+
+        public GameObject messagePanel;  // 메시지 패널
+        public TMP_Text messageText;     // 메시지를 표시할 TextMeshPro 텍스트
 
         private void awake()
         {
@@ -43,6 +45,12 @@ namespace TJ
             // 툴팁을 처음에는 숨김 상태로 설정
             if (tooltipObject != null)
                 tooltipObject.SetActive(false);
+
+            // 메시지 패널과 텍스트를 숨김 상태로 설정
+            if (messagePanel != null)
+                messagePanel.SetActive(false);
+            if (messageText != null)
+                messageText.gameObject.SetActive(false);
         }
 
         // 플레이어 이름을 표시하는 함수
@@ -55,9 +63,9 @@ namespace TJ
             else
             {
                 playerNameText.text = "Unknown"; // 기본값 설정
-                Debug.LogWarning("플레이어 이름이 설정되지 않았습니다.");
             }
         }
+
 
         public void DisplayHealth()
         {
@@ -77,14 +85,12 @@ namespace TJ
             // playerStatsUIObject가 null인지 확인
             if (playerStatsUIObject == null)
             {
-                Debug.LogError("playerStatsUIObject가 설정되지 않았습니다.");
                 return;
             }
 
             // 유물 리스트가 null인지 확인
             if (GameManager.Instance.relics == null || GameManager.Instance.relics.Count == 0)
             {
-                Debug.LogWarning("유물 리스트가 비어 있거나 null입니다.");
                 return;
             }
 
@@ -114,6 +120,32 @@ namespace TJ
                     Debug.LogWarning("유물 리스트에 null 값이 포함되어 있습니다.");
                 }
             }
+
+            // 메시지를 표시하는 메서드
+            
+        }
+
+        public void ShowMessage(string message)
+        {
+            if (messageText != null && messagePanel != null)
+            {
+                messageText.text = message;
+                messagePanel.SetActive(true); // 메시지 패널 활성화
+                messageText.gameObject.SetActive(true);
+
+                // 일정 시간 후에 메시지를 비활성화할 수 있도록 코루틴 사용
+                StartCoroutine(HideMessageAfterDelay(3f));
+            }
+        }
+
+        // 일정 시간 후에 메시지를 숨기는 코루틴
+        private IEnumerator HideMessageAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            if (messagePanel != null)
+                messagePanel.SetActive(false); // 메시지 패널 비활성화
+            if (messageText != null)
+                messageText.gameObject.SetActive(false);
         }
     }
 }
